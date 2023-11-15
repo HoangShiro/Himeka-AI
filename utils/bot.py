@@ -117,9 +117,10 @@ async def cslog(interaction: discord.Interaction, chat: bool = False, command: b
         await interaction.response.send_message(f"`Chỉ {ai_name}'s DEV mới có thể sử dụng lệnh này.`", ephemeral=True)
 
 @bot.tree.command(name="ping", description=f"Test commands")
-async def test_cmd(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
+async def test_cmd(interaction: discord.Interaction):
     if interaction.user.id == dev_id:
-        test()
+        ntc = test_key()
+        print(ntc)
         await interaction.response.send_message(f"Pong~!", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name}'s DEV mới có thể sử dụng lệnh này.`", ephemeral=True)

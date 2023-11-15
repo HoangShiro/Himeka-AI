@@ -58,6 +58,6 @@ async def openai_images(prompt, quality, size):
     revised_prompt = response.data[0].revised_prompt
     return image_url, revised_prompt
 
-def test():
+def test_key():
     key = oa_key.get_key()
     return key
