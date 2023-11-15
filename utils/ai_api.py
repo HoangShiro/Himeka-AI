@@ -1,10 +1,10 @@
 import asyncio
 from characterai import PyAsyncCAI
 from openai import AsyncOpenAI
-from user_files.openai_key import *
 
-from user_files.config import *
+from utils.prompting import *
 from user_files.openai_key import *
+from user_files.config import *
 
 CAc = PyAsyncCAI(cai_key)
 CAcr = c_token
@@ -43,6 +43,22 @@ async def CAI(message):
     
     return text, name
 
+# Tasks - Openai
+async def openai_task(case):
+    key = oa_key.get_key()
+    client = AsyncOpenAI(api_key=key, timeout=60)
+    prompt = getPrompt_task(case)
+
+    response = await client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=prompt,
+        max_tokens=1024,
+        temperature=1,
+        top_p=0.9
+    )
+    task = response.choices[0].message.content
+    return task
+
 # Image generate - Openai
 async def openai_images(prompt, quality, size):
     key = oa_key.get_key()
@@ -57,7 +73,3 @@ async def openai_images(prompt, quality, size):
     image_url = response.data[0].url
     revised_prompt = response.data[0].revised_prompt
     return image_url, revised_prompt
-
-def test_key():
-    key = oa_key.get_key()
-    return key
