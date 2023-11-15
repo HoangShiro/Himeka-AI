@@ -15,7 +15,7 @@ ai_last = "Shindou"
 ai_full_name = f"{ai_name} {ai_last}"
 
 # Image gen
-igen_lists = []
+igen_lists = {}
 ihq = False
 iquality = "standard"
 iportrait = False
