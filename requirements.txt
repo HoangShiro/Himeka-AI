@@ -8,3 +8,4 @@ pydub
 characterai
 booru
 nltk
+websockets
