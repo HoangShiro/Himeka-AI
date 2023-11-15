@@ -1,20 +1,59 @@
 import asyncio
-from characterai import PyAsyncCAI
 import discord
 from discord.ext import commands, tasks
 from discord.ui import View, button
+import json, os
 
 from user_files.config import *
+from utils.ai_api import *
+from utils.funcs import *
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-CAc = PyAsyncCAI(cai_key)
-CAcr = c_token
-
 ai_name = "Himeka"
 ai_last = "Shindou"
 ai_full_name = f"{ai_name} {ai_last}"
+
+# Vals.json
+bot_mood = 50
+chat_log = False
+cds_log = True
+st_log = False
+
+default_values = {
+    "bot_mood": 50.0,
+    "chat_log": False,
+    "cds_log": True,
+    "st_log": False
+}
+
+# Kiểm tra xem tệp JSON có tồn tại không
+try:
+    with open('user_files/vals.json', 'r', encoding="utf-8") as file:
+        data3 = json.load(file)
+except FileNotFoundError:
+    with open('user_files/vals.json', 'w', encoding="utf-8") as file:
+        json.dump(default_values, file)
+    # Nếu tệp không tồn tại, sử dụng giá trị mặc định
+    data3 = default_values
+
+# Gán giá trị từ data cho các biến hiện tại
+for key, value in default_values.items():
+    globals()[key] = data3.get(key, value)
+
+    # Dừng sau khi đã duyệt qua tất cả các phần tử trong default_values
+    if key == list(default_values.keys())[-1]:
+        break
+
+# Kiểm tra và thêm biến thiếu vào tệp JSON nếu cần
+for key, value in default_values.items():
+    if key not in data3:
+        data3[key] = value
+
+# Cập nhật tệp JSON với các biến mới nếu có
+with open('user_files/vals.json', 'w', encoding="utf-8") as file:
+    json.dump(data3, file)
 
 @bot.event
 async def on_ready():
@@ -46,27 +85,6 @@ async def on_message(message):
     
     return
 
-# Hàm Chat
-async def CAI(message):
-    chat = await CAc.chat.get_chat(CAcr)
-    participants = chat['participants']
-
-    # In the list of "participants",
-    # a character can be at zero or in the first place
-    if not participants[0]['is_human']:
-        tgt = participants[0]['user']['username']
-    else:
-        tgt = participants[1]['user']['username']
-
-    data = await CAc.chat.send_message(
-        chat['external_id'], tgt, message
-    )
-
-    name = data['src_char']['participant']['name']
-    text = data['replies'][0]['text']
-    
-    return text, name
-
 # Các câu lệnh
 @bot.tree.command(name="renew", description=f"Khởi động lại {ai_name}.")
 async def renew(interaction: discord.Interaction):
@@ -75,8 +93,25 @@ async def renew(interaction: discord.Interaction):
 
 @bot.tree.command(name="newchat", description="Cuộc trò chuyện mới.")
 async def newchat(interaction: discord.Interaction):
-    await interaction.response.send_message(f"*Quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
+    iuser = interaction.user.name
+    await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
     await CAc.chat.new_chat(c_token)
+    print(f"[NEW CHAT]: {iuser}")
+    print()
+
+@bot.tree.command(name="clogs", description=f"Toggle console log.")
+async def chatlog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
+    global chat_log, cds_log, st_log
+    if interaction.user.id == owner_id:
+        chat_log = chat
+        cds_log = command
+        st_log = status
+        await interaction.response.send_message(f"`Log chat ra console đã được {case}`", ephemeral=True)
+        vals_save('user_files/vals.json', 'chat_log', chat_log)
+        vals_save('user_files/vals.json', 'cds_log', cds_log)
+        vals_save('user_files/vals.json', 'st_log', st_log)
+    else:
+        await interaction.response.send_message(f"`Chỉ {ai_name}'s DEV mới có thể sử dụng lệnh này.`", ephemeral=True)
 
 def bot_run():
     bot.run(discord_bot_key)
