@@ -76,11 +76,13 @@ async def on_message(message):
         if not user_name:
             user_name = message.author.name
         umess = "{}: {}".format(user_name, message.content)
-        print(umess)
+        
         async with message.channel.typing():
             answ, ain = await CAI(umess)
-            print(f"{ain}: {answ}")
-            print()
+            if chat_log:
+                print(umess)
+                print(f"{ain}: {answ}")
+                print()
             await message.reply(answ)
     
     return
@@ -96,8 +98,9 @@ async def newchat(interaction: discord.Interaction):
     iuser = interaction.user.name
     await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
     await CAc.chat.new_chat(c_token)
-    print(f"[NEW CHAT]: {iuser}")
-    print()
+    if cds_log:
+        print(f"[NEW CHAT] - {iuser}")
+        print()
 
 @bot.tree.command(name="clogs", description=f"Toggle console log.")
 async def chatlog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
