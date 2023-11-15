@@ -75,6 +75,7 @@ async def renew(interaction: discord.Interaction):
 
 @bot.tree.command(name="newchat", description="Cuộc trò chuyện mới.")
 async def newchat(interaction: discord.Interaction):
+    await interaction.response.send_message(f"*Quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
     CAc.chat.new_chat(c_token)
 
 def bot_run():
