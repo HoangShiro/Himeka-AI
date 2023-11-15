@@ -105,7 +105,7 @@ async def newchat(interaction: discord.Interaction):
 @bot.tree.command(name="clogs", description=f"Toggle console log.")
 async def chatlog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
     global chat_log, cds_log, st_log
-    if interaction.user.id == owner_id:
+    if interaction.user.id == dev_id:
         chat_log = chat
         cds_log = command
         st_log = status

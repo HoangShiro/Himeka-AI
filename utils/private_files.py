@@ -17,7 +17,7 @@ vals_list = {
     "c_token": '',
     "discord_bot_key": '',
     "vv_key": '',
-    "ower_id": 0,
+    "dev_id": 0,
     "server_id": 0,
     "speaker": 47,
     "voice_low": 49,
