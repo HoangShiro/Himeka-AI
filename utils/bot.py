@@ -103,16 +103,24 @@ async def newchat(interaction: discord.Interaction):
         print()
 
 @bot.tree.command(name="clogs", description=f"Toggle console log.")
-async def chatlog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
+async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
     global chat_log, cds_log, st_log
     if interaction.user.id == dev_id:
         chat_log = chat
         cds_log = command
         st_log = status
-        await interaction.response.send_message(f"`Log chat ra console đã được {case}`", ephemeral=True)
+        await interaction.response.send_message(f"`Chat log: {chat_log}, Command log: {cds_log}, Status log: {st_log}.`", ephemeral=True)
         vals_save('user_files/vals.json', 'chat_log', chat_log)
         vals_save('user_files/vals.json', 'cds_log', cds_log)
         vals_save('user_files/vals.json', 'st_log', st_log)
+    else:
+        await interaction.response.send_message(f"`Chỉ {ai_name}'s DEV mới có thể sử dụng lệnh này.`", ephemeral=True)
+
+@bot.tree.command(name="ping", description=f"Test commands")
+async def test_cmd(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
+    if interaction.user.id == dev_id:
+        test()
+        await interaction.response.send_message(f"Pong~!", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name}'s DEV mới có thể sử dụng lệnh này.`", ephemeral=True)
 
