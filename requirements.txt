@@ -1,0 +1,10 @@
+discord
+openai==1.2.3
+pytz
+translate
+langdetect
+jaconv
+pydub
+characterai
+booru
+nltk
