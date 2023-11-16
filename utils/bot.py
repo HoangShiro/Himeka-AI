@@ -14,8 +14,10 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 ai_name = "Himeka"
 ai_last = "Shindou"
+gui_name = "NekoArt Studio"
 ai_full_name = f"{ai_name} {ai_last}"
 bot_cls = 0
+rt_c = 0
 
 # Image gen
 igen_lists = {}
@@ -91,6 +93,10 @@ async def on_ready():
 
     # Load button
     await load_btt()
+
+    # Time circle
+    asyncio.create_task(m_check())
+    m_check.start()
 
     print(f"{ai_name} đã khởi động")
 
@@ -336,19 +342,23 @@ async def image_gen(interaction: discord.Interaction, prompt: str = img_prompt, 
     vals_save('user_files/vals.json', 'img_prompt', prompt)
     await img_gen(interaction, prompt, quality, size)
 
-@bot.tree.command(name="renew", description=f"Kết nối lại với {ai_name}.")
+@bot.tree.command(name="reconnect", description=f"Kết nối lại với {ai_name}.")
 async def renew(interaction: discord.Interaction):
-    await interaction.response.send_message(f"*Đang kết nối lại với {ai_name}*", ephemeral=True)
+    await interaction.response.send_message(f"{ai_name}'s tablet: *đang thiết lập lại kết nối giữa {gui_name} với {ai_name}*", ephemeral=True)
     await bot.close()
 
-@bot.tree.command(name="newchat", description=f"{ai_name} ở timeline khác.")
+@bot.tree.command(name="timeleap", description=f"Gặp {ai_name} ở timeline khác.")
 async def newchat(interaction: discord.Interaction):
+    global rt_c
     iuser = interaction.user.name
-    await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
-    await CAc.chat.new_chat(c_token)
-    if cds_log:
-        print(f"[NEW CHAT] - {iuser}")
-        print()
+    if rt_c == 0:
+        await interaction.response.send_message(f"{ai_name}'s tablet: Hành động này không thể undo, {iuser} chắc chứ?")
+    else:
+        await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
+        await CAc.chat.new_chat(c_token)
+        if cds_log:
+            print(f"[NEW CHAT] - {iuser}")
+            print()
 
 @bot.tree.command(name="clogs", description=f"Nhật ký của {ai_name}")
 async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
@@ -393,6 +403,15 @@ async def rgs_bt_atv(interaction):
     quality = img_prompts['quality']
     size = img_prompts['size']
     await img_gen(interaction, prompt, quality, size)
+
+# Circle task
+@tasks.loop(seconds=60)
+async def m_check():
+    global rt_c
+    rt_c = 0
+    my_timezone = pytz.timezone('Asia/Bangkok')
+    vn_time = datetime.datetime.now(my_timezone)
+
 
 def bot_run():
     bot.run(discord_bot_key)
