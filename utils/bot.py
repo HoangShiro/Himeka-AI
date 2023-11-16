@@ -335,6 +335,7 @@ async def img_regen(message, quality, size, rq):
 @bot.tree.command(name="igen", description=f"Tạo art")
 async def image_gen(interaction: discord.Interaction, prompt: str = ai_status.img_prompt, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
     global ihq, iportrait, iscene
+    ai_status.display_statistics()
     ihq = hq
     iportrait = portrait
     iscene = scene
