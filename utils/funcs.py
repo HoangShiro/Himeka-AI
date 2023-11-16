@@ -230,6 +230,7 @@ async def hime_tablet(mess, answ):
         await v_leave(mess)
     
     # TTS
+    b_ch = None
     if mess.guild.voice_client:
         b_ch = mess.guild.voice_client.channel
     if b_ch:
