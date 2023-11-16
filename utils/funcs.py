@@ -112,6 +112,12 @@ def text_handle(text):
     else:
         text_emoji = text.lower()
     # Discord tag replace
-    for word, replacement in re_text.items():
-        final_text = text_emoji.replace(word, replacement)
-    return final_text
+    words = text_emoji.split()
+    for i in range(len(words)):
+        for key, value in re_text.items():
+            match = re.search(key, words[i], re.IGNORECASE)
+            if match:
+                rtext = re_text[key]
+                words[i] = words[i].replace(words[i], rtext)
+    result = ' '.join(words)
+    return result
