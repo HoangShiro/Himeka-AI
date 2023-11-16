@@ -86,6 +86,7 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user or message.content.startswith("."):
         return
+    
     # Phản hồi chat
     if message.content:
         user_name = message.author.nick
@@ -124,7 +125,7 @@ async def img_gen_chat(message, result):
             size = isize
         return quality, size
     if not igen_flw:
-        if re.search(r'gen|create|tạo|vẽ|draw|chụp', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and not re.search(r'lại|nữa', result, re.IGNORECASE):
+        if re.search(r'gen|create|tạo|vẽ|draw|chụp', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and not re.search(r'lại|nữa|again|more', result, re.IGNORECASE):
             quality, size = await igen_choice(result)
             iquality = quality
             isize = size
@@ -135,7 +136,7 @@ async def img_gen_chat(message, result):
             vals_save('user_files/vals.json', 'img_prompt', img_prompt)
             await img_gen(message, prompt, quality, size)
             return
-        elif re.search(r'gen|create|tạo|vẽ|draw|chụp', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and re.search(r'lại|nữa', result, re.IGNORECASE):
+        elif re.search(r'gen|create|tạo|vẽ|draw|chụp', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and re.search(r'lại|nữa|again|more', result, re.IGNORECASE):
             quality, size = await igen_choice(result)
             await img_gen(message, img_prompt, quality, size)
             return
