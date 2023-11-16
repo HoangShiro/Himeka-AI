@@ -54,9 +54,9 @@ class AllStatus:
         except (FileNotFoundError, json.JSONDecodeError):
             print(f"Error loading data from {filename}")
 
-    def display_statistics(self):
+    def show(self):
         for attr, value in vars(self).items():
-            print(f"{attr}: {value}")
+            print(f"[vals.json] - {attr}: {value}")
 
 ai_status = AllStatus()
 
@@ -334,7 +334,6 @@ async def img_regen(message, quality, size, rq):
 @bot.tree.command(name="igen", description=f"Tạo art")
 async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
     global ihq, iportrait, iscene
-    ai_status.display_statistics()
     if not prompt:
         prompt = ai_status.img_prompt
     ihq = hq
@@ -349,7 +348,6 @@ async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bo
     if scene:
         size = "1792x1024"
     ai_status.set('img_prompt', prompt)
-    print(ai_status.img_prompt)
     await img_gen(interaction, prompt, quality, size)
 
 @bot.tree.command(name="reconnect", description=f"Kết nối lại với {ai_name}.")
@@ -373,12 +371,16 @@ async def newchat(interaction: discord.Interaction):
             print()
 
 @bot.tree.command(name="clogs", description=f"Nhật ký của {ai_name}")
-async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
+async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False, get: str = None):
     if interaction.user.id == dev_id:
-        ai_status.set('chat_log', chat)
-        ai_status.set('cds_log', command)
-        ai_status.set('st_log', status)
-        await interaction.response.send_message(f"`Chat log: {chat}, Command log: {command}, Status log: {status}.`", ephemeral=True)
+        if get:
+            val = ai_status.get
+            await interaction.response.send_message(f"{val}", ephemeral=True)
+        else:
+            ai_status.set('chat_log', chat)
+            ai_status.set('cds_log', command)
+            ai_status.set('st_log', status)
+            await interaction.response.send_message(f"`Chat log: {chat}, Command log: {command}, Status log: {status}.`", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể xem nhật ký của cô ấy.`", ephemeral=True)
 
