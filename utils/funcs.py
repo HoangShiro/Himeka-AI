@@ -137,6 +137,13 @@ def text_handle(text):
                 rtext = re_text[key]
                 words[i] = words[i].replace(words[i], rtext)
     result = ' '.join(words)
+    num = result.count("!")
+    if num > 1:
+        result = "### " + result
+    elif num > 2:
+        result = "## " + result
+    elif num > 3:
+        result = "# " + result
     return result
 
 # Reply message
