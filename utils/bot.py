@@ -207,6 +207,7 @@ async def img_gen(interaction, prompt, quality, size):
             elif "billing_hard_limit_reached" in error_code:
                 error_code = "Hết cá ròi... 〒▽〒"
         else:
+            error_code = e
             print(f"Error while gen art: {e}")
     igen_lists[img_id] = {"prompt": prompt, "r_prompt": r_prompt, "quality": quality, "size": size}
     if quality == "hd":
