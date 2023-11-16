@@ -13,6 +13,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 ai_name = "Himeka"
 ai_last = "Shindou"
 ai_full_name = f"{ai_name} {ai_last}"
+bot_cls = 0
 
 # Image gen
 igen_lists = {}
@@ -172,7 +173,7 @@ async def img_gen_chat(message, result):
                     
 # Image gen dall e 3
 async def img_gen(interaction, prompt, quality, size):
-    global bot_mood, igen_lists, igen_flw, img_dprt
+    global bot_mood, igen_lists, igen_flw, img_dprt, bot_cls
     guild = bot.get_guild(server_id)
     emojis = guild.emojis
     emoji = random.choice(emojis)
@@ -218,6 +219,10 @@ async def img_gen(interaction, prompt, quality, size):
             error_message = error_code[:250]
             if "Connection error" in error_code:
                 error_code = "Lỗi kết nối... (ˉ﹃ˉ)"
+                bot_cls += 1
+                if bot_cls == 2:
+                    error_code = f"{ai_name} chạy đi fix bug chút nha... (✿◠‿◠)"
+                    error_message = "Sẽ quay lại liền nè~!"
             if not error_code:
                 error_code = f"Lỗi gì đó mà {ai_name} cũng hem biết là lỗi gì... ∑( 口 ||"
             print(f"Error while gen art: {e}")
@@ -259,6 +264,8 @@ async def img_gen(interaction, prompt, quality, size):
         igen_flw = True
         vals_save('user_files/vals.json', 'igen_flw', igen_flw)
     bot_mood +=1
+    if bot_cls == 2:
+        await bot.close()
     return
 
 # Correct prompt and gen art again
