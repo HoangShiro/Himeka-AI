@@ -193,7 +193,7 @@ async def voice_send(mess, answ):
     if mess.guild.voice_client:
         b_ch = mess.guild.voice_client.channel
         b_vc = mess.guild.voice_client
-    b_ch.play(audio_source, after=lambda e: print('Player error: %s' % e) if e else None)
+    b_vc.play(audio_source, after=lambda e: print('Player error: %s' % e) if e else None)
 
 # Join voice channel
 async def v_join(message):
