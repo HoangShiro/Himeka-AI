@@ -46,7 +46,8 @@ def extract_nouns(text):
 def process_nouns(nouns):
     words_to_remove = [f"Himeka", "you", "me", "create", "image", "'m", "sorry",
                         "inaccuracy", "let", "do", "request", "please", "wait", "moment", 
-                        "creating", "photo", "hmm", "make", "<3", "pic", "picture", "*", "rub", "draw"]
+                        "creating", "photo", "hmm", "make", "<3", "pic", "picture", "*", "rub", "draw",
+                        "continue"]
     replacement_dict = {
         "yourself": f"A cute Japanese girl with blonde hair in two pigtails, green eyes. Cute, bright, colorful colors."
     }
