@@ -3,7 +3,6 @@ from characterai import PyAsyncCAI
 from openai import AsyncOpenAI
 
 from utils.prompting import *
-from utils.funcs import remove_act, romaji_to_katakana
 from user_files.openai_key import *
 from user_files.config import *
 
@@ -76,6 +75,7 @@ async def openai_images(prompt, quality, size):
     return image_url, revised_prompt
 
 async def tts_get(text, speaker, pitch, intonation_scale, speed, st_log):
+    from utils.funcs import remove_act, romaji_to_katakana
     text_fill = remove_act(text)
     if not text_fill:
         if not text:
