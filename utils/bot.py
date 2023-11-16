@@ -97,10 +97,10 @@ async def on_ready():
     print(f"{ai_name} đã khởi động")
 
     # Continue chat
-    if iregen:
+    if ai_status.iregen:
         umess = f"Your tablet: You are continuing to draw for {ai_status.last_user}"
-        message = await mess_id_send(bot, ai_status.pr_ch_id, umess, chat_log)
-        asyncio.create_task(img_gen(message, img_prompt, iquality, isize))
+        message = await mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log)
+        asyncio.create_task(img_gen(message, ai_status.img_prompt, iquality, isize))
 
 @bot.event
 async def on_message(message):
@@ -114,7 +114,7 @@ async def on_message(message):
             user_name = message.author.name
         mess = message.content
         umess = "{}: {}".format(user_name, message.content)
-        asyncio.create_task(mess_rep(message, mess, umess, chat_log))
+        asyncio.create_task(mess_rep(message, mess, umess, ai_status.chat_log))
     
     return
 
@@ -204,7 +204,7 @@ async def img_gen(interaction, prompt, quality, size):
         user_nick = interaction.author.nick
         if not user_nick:
             user_nick = interaction.author.name
-    if cds_log:
+    if ai_status.cds_log:
         print(f"[IMG GENERATE] - {user_nick}")
         print()
     embed = discord.Embed(title=f"{ai_name} đang tạo art cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=discord.Color.blue())
@@ -298,11 +298,11 @@ async def img_gen(interaction, prompt, quality, size):
         igen_flw = True
         vals_save('user_files/vals.json', 'igen_flw', igen_flw)
     if eimg:
-        await mess_send(message, errar, chat_log)
+        await mess_send(message, errar, ai_status.chat_log)
     ai_status.update('bot_mood', 1)
     if error_code:
         if "nối" in error_code or "hem" in error_code or "vậy" in error_code:
-            await img_gen(message, img_prompt, iquality, isize)
+            await img_gen(message, ai_status.img_prompt, iquality, isize)
     if bot_cls == 2:
         iregen = True
         pr_ch_id = message.channel.id
