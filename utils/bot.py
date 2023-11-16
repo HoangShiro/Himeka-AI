@@ -83,25 +83,19 @@ async def on_ready():
     except Exception as e:
         print(e)
 
+    # Emojis load
     emojis_take(bot)
+
     # Load button
     await load_btt()
 
+    print(f"{ai_name} đã khởi động")
+
+    # Continue chat
     if iregen:
-        channel = bot.get_channel(pr_ch_id)
-        async with channel.typing():
-            umess = f"Your tablet: You are continuing to draw for {last_user}"
-            answ, ain = await CAI(umess)
-            answ = text_handle(answ)
-            if chat_log:
-                print(umess)
-                print(f"{ain}: {answ}")
-                print()
-            await channel.send(answ)
-            async for message in channel.history(limit=1):
-                pass
-            await img_gen(message, img_prompt, iquality, isize)
-    print("Himeka đã khởi động")
+        umess = f"Your tablet: You are continuing to draw for {last_user}"
+        message = await mess_rep(bot, pr_ch_id, umess, chat_log)
+        asyncio.create_task(img_gen(message, img_prompt, iquality, isize))
 
 @bot.event
 async def on_message(message):
@@ -115,16 +109,7 @@ async def on_message(message):
             user_name = message.author.name
         mess = message.content
         umess = "{}: {}".format(user_name, message.content)
-        
-        async with message.channel.typing():
-            answ, ain = await CAI(umess)
-            answ = text_handle(answ)
-            if chat_log:
-                print(umess)
-                print(f"{ain}: {answ}")
-                print()
-            await message.reply(answ)
-            asyncio.create_task(img_gen_chat(message, mess))
+        asyncio.create_task(mess_rep(message, mess, umess, chat_log))
     
     return
 
@@ -296,14 +281,7 @@ async def img_gen(interaction, prompt, quality, size):
         igen_flw = True
         vals_save('user_files/vals.json', 'igen_flw', igen_flw)
     if eimg:
-        async with message.channel.typing():
-            answ, ain = await CAI(errar)
-            answ = text_handle(answ)
-            if chat_log:
-                print(errar)
-                print(f"{ain}: {answ}")
-                print()
-            await message.channel.send(answ)
+        await mess_rep(message, errar, chat_log)
     bot_mood +=1
     if error_code:
         if "nối" in error_code or "hem" in error_code:
@@ -336,6 +314,10 @@ async def img_regen(message, quality, size, rq):
 @bot.tree.command(name="igen", description=f"Tạo art")
 async def image_gen(interaction: discord.Interaction, prompt: str = img_prompt, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
     global img_prompt, ihq, iportrait, iscene
+    iuser = interaction.user.name
+    if cds_log:
+        print(f"[IMG GENERATE] - {iuser}")
+        print()
     img_prompt = prompt
     ihq = hq
     iportrait = portrait

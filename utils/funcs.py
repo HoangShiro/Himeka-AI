@@ -3,6 +3,8 @@ from nltk import word_tokenize, pos_tag
 from translate import Translator
 from langdetect import detect
 
+from utils.bot import img_gen_chat
+from utils.ai_api import *
 from user_files.config import *
 
 nltk.download('averaged_perceptron_tagger')
@@ -122,3 +124,41 @@ def text_handle(text):
                 words[i] = words[i].replace(words[i], rtext)
     result = ' '.join(words)
     return result
+
+# Reply message
+async def mess_rep(message, mess, umess, chat_log):
+    async with message.channel.typing():
+        answ, ain = await CAI(umess)
+        answ = text_handle(answ)
+        if chat_log:
+            print(umess)
+            print(f"{ain}: {answ}")
+            print()
+        await message.reply(answ)
+        await img_gen_chat(message, mess)
+
+# Send message
+async def mess_rep(message, umess, chat_log):
+    async with message.channel.typing():
+        answ, ain = await CAI(umess)
+        answ = text_handle(answ)
+        if chat_log:
+            print(umess)
+            print(f"{ain}: {answ}")
+            print()
+        await message.channel.send(answ)
+
+# Send message with channel id
+async def mess_rep(bot, ch_id, umess, chat_log):
+    channel = bot.get_channel(ch_id)
+    async with channel.typing():
+        answ, ain = await CAI(umess)
+        answ = text_handle(answ)
+        if chat_log:
+            print(umess)
+            print(f"{ain}: {answ}")
+            print()
+        await channel.send(answ)
+        async for message in channel.history(limit=1):
+            pass
+    return message
