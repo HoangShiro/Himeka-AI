@@ -1,9 +1,9 @@
-import asyncio
+import asyncio, requests
 from characterai import PyAsyncCAI
 from openai import AsyncOpenAI
 
 from utils.prompting import *
-from utils.funcs import *
+from utils.funcs import remove_act, romaji_to_katakana
 from user_files.openai_key import *
 from user_files.config import *
 
