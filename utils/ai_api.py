@@ -88,7 +88,7 @@ async def tts_get(text, speaker, pitch, intonation_scale, speed):
     
     response = requests.get(url)
     
-    st_log = vals_load('user_files/vals.json', st_log)
+    st_log = vals_load('user_files/vals.json', 'st_log')
 
     if response.status_code == 200:
         with open('user_files/ai_voice_msg.ogg', 'wb') as f:
