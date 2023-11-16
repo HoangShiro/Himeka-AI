@@ -51,6 +51,7 @@ class AllStatus:
             for variable_name, value in data.items():
                 if hasattr(self, variable_name):
                     setattr(self, variable_name, value)
+                    print(f"\n{value}")
         except (FileNotFoundError, json.JSONDecodeError):
             print(f"Error loading data from {filename}")
 
