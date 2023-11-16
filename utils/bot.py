@@ -208,6 +208,8 @@ async def img_gen(interaction, prompt, quality, size):
                 error_code = "Hết cá ròi... 〒▽〒"
         else:
             error_code = e
+            if "Connection error" in error_code:
+                error_code = "Lỗi kết nối... (ˉ﹃ˉ)"
             print(f"Error while gen art: {e}")
     igen_lists[img_id] = {"prompt": prompt, "r_prompt": r_prompt, "quality": quality, "size": size}
     if quality == "hd":
