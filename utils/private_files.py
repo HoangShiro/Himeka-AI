@@ -25,7 +25,8 @@ vals_list = {
     "voice_asmr": 50,
     "pitch": 0,
     "intonation_scale": 1.5,
-    "speed": 1
+    "speed": 1,
+    "re_text": {}
 }
 
 # Emo list
