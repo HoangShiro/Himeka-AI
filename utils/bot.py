@@ -296,7 +296,7 @@ async def img_gen(interaction, prompt, quality, size):
     if img:
         if not igen_flw:
             img_dprt = r_prompt
-            vals_save('user_files/vals.json', 'img_dprt', img_dprt)
+            ai_status.set('img_dprt', img_dprt)
         await dl_img(img, img_id)
         file_path = f'user_files/gen_imgs/{img_id}.png'
         image_file = discord.File(file_path, filename=f"{img_id}.png")
@@ -304,10 +304,11 @@ async def img_gen(interaction, prompt, quality, size):
         await message.edit(embed=embed, view=view, attachments=[image_file])
     if img or eimg:
         igen_flw = True
-        vals_save('user_files/vals.json', 'igen_flw', igen_flw)
+        ai_status.set('igen_flw', igen_flw)
     if eimg:
         await mess_send(message, errar, ai_status.chat_log)
     ai_status.update('bot_mood', 1)
+    ai_status.update('total_draw', 1)
     if error_code:
         if "nối" in error_code or "hem" in error_code or "vậy" in error_code:
             await img_gen(message, ai_status.img_prompt, iquality, isize)
@@ -315,12 +316,12 @@ async def img_gen(interaction, prompt, quality, size):
         iregen = True
         pr_ch_id = message.channel.id
         last_user = user_nick
-        vals_save('user_files/vals.json', 'iregen', iregen)
-        vals_save('user_files/vals.json', 'pr_ch_id', pr_ch_id)
-        vals_save('user_files/vals.json', 'last_user', last_user)
+        ai_status.set('iregen', iregen)
+        ai_status.set('pr_ch_id', pr_ch_id)
+        ai_status.set('last_user', last_user)
         await bot.close()
     iregen = False
-    vals_save('user_files/vals.json', 'iregen', iregen)
+    ai_status.set('iregen', iregen)
     return
 
 # Correct prompt and gen art again
