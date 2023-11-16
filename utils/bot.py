@@ -51,9 +51,12 @@ class AllStatus:
             for variable_name, value in data.items():
                 if hasattr(self, variable_name):
                     setattr(self, variable_name, value)
-                    print(f"\n{value}")
         except (FileNotFoundError, json.JSONDecodeError):
             print(f"Error loading data from {filename}")
+
+    def display_statistics(self):
+        for attr, value in vars(self).items():
+            print(f"{attr}: {value}")
 
 ai_status = AllStatus()
 
@@ -77,7 +80,7 @@ isize = "1024x1024"
 async def on_ready():
     # Load vals
     ai_status.load('user_files/vals.json')
-
+    ai_status.display_statistics()
     # Đồng bộ hoá commands
     try:
         synced = await bot.tree.sync()
