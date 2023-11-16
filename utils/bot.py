@@ -1,4 +1,4 @@
-import asyncio, json, os, random, discord, time, datetime, re
+import asyncio, json, os, random, discord, time, datetime, re, logging
 from discord.ext import commands, tasks
 from discord.ui import View, button
 
@@ -6,6 +6,8 @@ from user_files.config import *
 from utils.ai_api import *
 from utils.funcs import *
 from utils.buttons import *
+
+logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
