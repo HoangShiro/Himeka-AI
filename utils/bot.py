@@ -149,7 +149,7 @@ async def img_gen_chat(message, result):
             await img_gen(message, img_dprt, quality, size)
             return
         # Sửa lại prompt và gen thêm
-        elif re.search(r'sửa|fix|chuyển|change|đổi|thay|thêm|add|to|qua|chọn|lấy|choose|take', result, re.IGNORECASE):
+        elif re.search(r'sửa|fix|chuyển|change|đổi|thay|thêm|add|qua|chọn|lấy|choose|take', result, re.IGNORECASE):
             quality, size = await igen_choice(result)
             lang = "en"
             translated = text_translate(result, lang)
