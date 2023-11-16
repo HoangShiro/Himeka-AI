@@ -74,9 +74,11 @@ async def openai_images(prompt, quality, size):
     revised_prompt = response.data[0].revised_prompt
     return image_url, revised_prompt
 
-async def tts_get(text, speaker, pitch, intonation_scale, speed, st_log):
-    from utils.funcs import remove_act, romaji_to_katakana
-    text_fill = remove_act(text)
+# TTS - VoiceVox
+async def tts_get(text, speaker, pitch, intonation_scale, speed):
+    from utils.funcs import remove_act, romaji_to_katakana, text_translate, vals_load
+    translated = text_translate(text, "ja")
+    text_fill = remove_act(translated)
     if not text_fill:
         if not text:
             text = "エラー エラー"
@@ -86,8 +88,9 @@ async def tts_get(text, speaker, pitch, intonation_scale, speed, st_log):
     
     response = requests.get(url)
     
-    if response.status_code == 200:
+    st_log = vals_load('user_files/vals.json', st_log)
 
+    if response.status_code == 200:
         with open('user_files/ai_voice_msg.ogg', 'wb') as f:
             f.write(response.content)
         if st_log:

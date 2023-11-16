@@ -1,4 +1,5 @@
 import json, os, nltk, requests, discord, random, re, jaconv
+from discord import FFmpegPCMAudio
 from nltk import word_tokenize, pos_tag
 from translate import Translator
 from langdetect import detect
@@ -157,8 +158,8 @@ async def mess_rep(message, mess, umess, chat_log):
             print(f"{ain}: {answ}")
             print()
         await message.reply(answ)
+        await hime_tablet(message, answ)
         await img_gen_chat(message, mess)
-
 # Send message
 async def mess_send(message, umess, chat_log):
     async with message.channel.typing():
@@ -184,3 +185,53 @@ async def mess_id_send(bot, ch_id, umess, chat_log):
         async for message in channel.history(limit=1):
             pass
     return message
+
+# Send voice
+async def voice_send(mess, answ):
+    voice = await tts_get(answ, speaker, pitch, intonation_scale, speed)
+    audio_source = FFmpegPCMAudio(voice)
+    if mess.guild.voice_client:
+        b_ch = mess.guild.voice_client.channel
+        b_vc = mess.guild.voice_client
+    b_ch.play(audio_source, after=lambda e: print('Player error: %s' % e) if e else None)
+
+# Join voice channel
+async def v_join(message):
+    u_ch_id = message.author.voice.channel.id
+    u_vc = message.author.voice.channel
+    b_ch = None
+    if message.guild.voice_client:
+        b_ch = message.guild.voice_client.channel
+        b_vc = message.guild.voice_client
+    if b_ch and b_ch.id != u_ch_id:
+        await b_vc.disconnect()
+        await u_vc.connect()
+    elif not b_ch:
+        await u_vc.connect()
+
+# Join voice channel
+async def v_leave(message):
+    b_ch = None
+    if message.guild.voice_client:
+        b_ch = message.guild.voice_client.channel
+        b_vc = message.guild.voice_client
+    if b_ch:
+        await b_vc.disconnect()
+
+# Himeka's tablet
+async def hime_tablet(mess, answ):
+    # Voice
+    join = "vc_join|join_vc|joining"
+    leave = "vc_leave|leave_vc|leaving"
+    if re.search(rf'{join}', answ, re.IGNORECASE):
+        if mess.author.voice and mess.author.voice.channel:
+            await v_join(mess)
+    if re.search(rf'{leave}', answ, re.IGNORECASE):
+        await v_leave(mess)
+    
+    # TTS
+    if mess.guild.voice_client:
+        b_ch = mess.guild.voice_client.channel
+    if b_ch:
+        asyncio.create_task(voice_send(mess, answ))
+    
