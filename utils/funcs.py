@@ -105,9 +105,11 @@ def text_handle(text):
                 emoji_take.append(emoji)
     if emoji_take:
         chosen_emoji = random.choice(emoji_take)
-    text_emoji = text.replace(f':{emoji_name}:', str(chosen_emoji))
-    text_emoji = text_emoji.lower()
-    
+    if emoji_name:
+        text_emoji = text.replace(f':{emoji_name}:', str(chosen_emoji))
+        text_emoji = text_emoji.lower()
+    else:
+        text_emoji = text.lower()
     # Discord tag replace
     for word, replacement in re_text.items():
         final_text = text_emoji.replace(word, replacement)
