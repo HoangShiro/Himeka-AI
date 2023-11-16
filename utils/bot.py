@@ -378,7 +378,7 @@ async def newchat(interaction: discord.Interaction):
         await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
         await CAc.chat.new_chat(c_token)
         ai_status.set('bot_mood', 50)
-        ai_status.update('total_tl', 1)
+        ai_status.update('roll_back', 1)
         if ai_status.cds_log:
             print(f"[NEW CHAT] - {iuser}")
             print()
