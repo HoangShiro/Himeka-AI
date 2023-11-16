@@ -225,6 +225,9 @@ async def img_gen(interaction, prompt, quality, size):
         user_nick = interaction.author.nick
         if not user_nick:
             user_nick = interaction.author.name
+    if cds_log:
+        print(f"[IMG GENERATE] - {user_nick}")
+        print()
     embed = discord.Embed(title=f"{ai_name} đang tạo art cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=discord.Color.blue())
     view = View(timeout=None)
     view.add_item(irmv_bt)
@@ -349,10 +352,6 @@ async def img_regen(message, quality, size, rq):
 @bot.tree.command(name="igen", description=f"Tạo art")
 async def image_gen(interaction: discord.Interaction, prompt: str = img_prompt, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
     global img_prompt, ihq, iportrait, iscene
-    iuser = interaction.user.name
-    if cds_log:
-        print(f"[IMG GENERATE] - {iuser}")
-        print()
     img_prompt = prompt
     ihq = hq
     iportrait = portrait
