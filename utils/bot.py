@@ -307,7 +307,7 @@ async def img_gen(interaction, prompt, quality, size):
     bot_mood +=1
     if error_code:
         if "nối" in error_code or "hem" in error_code:
-            img_gen(interaction, img_prompt, iquality, isize)
+            await img_gen(interaction, img_prompt, iquality, isize)
     if bot_cls == 2:
         iregen = True
         pr_ch_id = message.channel.id
