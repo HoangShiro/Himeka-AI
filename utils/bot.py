@@ -214,6 +214,8 @@ async def img_gen(interaction, prompt, quality, size):
                 error_code = "Hết cá ròi... 〒▽〒"
         else:
             error_code = str(e)
+            error_code = error_code[:250]
+            error_message = error_code[:250]
             if "Connection error" in error_code:
                 error_code = "Lỗi kết nối... (ˉ﹃ˉ)"
             print(f"Error while gen art: {e}")
