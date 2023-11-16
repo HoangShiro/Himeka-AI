@@ -87,7 +87,6 @@ async def tts_get(text, speaker, pitch, intonation_scale, speed):
     url = f"https://deprecatedapis.tts.quest/v2/voicevox/audio/?key={vv_key}&text={cnv_text}&speaker={speaker}&pitch={pitch}&intonationScale={intonation_scale}&speed={speed}"
     
     response = requests.get(url)
-    print(response)
     st_log = vals_load('user_files/vals.json', 'st_log')
 
     if response.status_code == 200:
@@ -98,4 +97,4 @@ async def tts_get(text, speaker, pitch, intonation_scale, speed):
     else:
         print(f"Lỗi khi tạo voice, mã lỗi: {response.status_code}")
     
-    return response.content
+    return url
