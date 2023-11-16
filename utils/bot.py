@@ -213,7 +213,7 @@ async def img_gen(interaction, prompt, quality, size):
             elif "billing_hard_limit_reached" in error_code:
                 error_code = "Hết cá ròi... 〒▽〒"
         else:
-            error_code = e
+            error_code = str(e)
             if "Connection error" in error_code:
                 error_code = "Lỗi kết nối... (ˉ﹃ˉ)"
             print(f"Error while gen art: {e}")
@@ -339,14 +339,14 @@ async def rg_bt_atv(interaction):
     prompt = img_prompts['prompt']
     quality = img_prompts['quality']
     size = img_prompts['size']
-    asyncio.create_task(img_gen(interaction, prompt, quality, size))
+    await img_gen(interaction, prompt, quality, size)
 
 async def rgs_bt_atv(interaction):
     img_prompts = igen_lists.get(interaction.message.id)
     prompt = img_prompts['r_prompt']
     quality = img_prompts['quality']
     size = img_prompts['size']
-    asyncio.create_task(img_gen(interaction, prompt, quality, size))
+    await img_gen(interaction, prompt, quality, size)
 
 def bot_run():
     bot.run(discord_bot_key)
