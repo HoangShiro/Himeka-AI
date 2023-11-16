@@ -1,10 +1,14 @@
-import json, os, nltk, requests
+import json, os, nltk, requests, discord, random, re
 from nltk import word_tokenize, pos_tag
 from translate import Translator
 from langdetect import detect
 
+from user_files.config import *
+
 nltk.download('averaged_perceptron_tagger')
 nltk.download('punkt')
+
+emojis = []
 
 # Save json
 def vals_save(file_name, variable_name, variable_value):
@@ -82,3 +86,29 @@ def text_translate(text, target_lang):
 def lang_detect(text):
     source_lang = detect(text)
     return source_lang
+
+# Emoji load
+def emojis_take(bot):
+    global emojis
+    guild = bot.get_guild(server_id)
+    emojis = guild.emojis
+
+# Text handle
+def text_handle(text):
+    # Emoji replace
+    emoji_take = []
+    matches = re.finditer(r':([^:\s]+):', text)
+    for match in matches:
+        emoji_name = match.group(1).lower()
+        for emoji in emojis:
+            if re.search(rf'{emoji_name}', emoji.name.lower()):
+                emoji_take.append(emoji)
+    if emoji_take:
+        chosen_emoji = random.choice(emoji_take)
+    text_emoji = text.replace(f':{emoji_name}:', str(chosen_emoji))
+    text_emoji = text_emoji.lower()
+    
+    # Discord tag replace
+    for word, replacement in re_text.items():
+        final_text = text_emoji.replace(word, replacement)
+    return final_text

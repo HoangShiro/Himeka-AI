@@ -77,6 +77,7 @@ async def on_ready():
     except Exception as e:
         print(e)
 
+    emojis_take(bot)
     # Load button
     await load_btt()
     print("Himeka đã khởi động")
@@ -96,6 +97,7 @@ async def on_message(message):
         
         async with message.channel.typing():
             answ, ain = await CAI(umess)
+            answ = text_handle(answ)
             if chat_log:
                 print(umess)
                 print(f"{ain}: {answ}")
