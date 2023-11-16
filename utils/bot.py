@@ -46,7 +46,8 @@ default_values = {
     "img_dprt": "sea",
     "iregen": False,
     "pr_ch_id": 0,
-    "last_user": "Shiro"
+    "last_user": "Shiro",
+    "speaker": 47
 }
 
 # Kiểm tra xem tệp JSON có tồn tại không
@@ -335,12 +336,12 @@ async def image_gen(interaction: discord.Interaction, prompt: str = img_prompt, 
     vals_save('user_files/vals.json', 'img_prompt', prompt)
     await img_gen(interaction, prompt, quality, size)
 
-@bot.tree.command(name="renew", description=f"Khởi động lại {ai_name}.")
+@bot.tree.command(name="renew", description=f"Kết nối lại với {ai_name}.")
 async def renew(interaction: discord.Interaction):
-    await interaction.response.send_message(f"{ai_name} sẽ sớm quay lại nè~!", ephemeral=True)
+    await interaction.response.send_message(f"*Đang kết nối lại với {ai_name}*", ephemeral=True)
     await bot.close()
 
-@bot.tree.command(name="newchat", description="Cuộc trò chuyện mới.")
+@bot.tree.command(name="newchat", description=f"{ai_name} ở timeline khác.")
 async def newchat(interaction: discord.Interaction):
     iuser = interaction.user.name
     await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
@@ -349,7 +350,7 @@ async def newchat(interaction: discord.Interaction):
         print(f"[NEW CHAT] - {iuser}")
         print()
 
-@bot.tree.command(name="clogs", description=f"Toggle console log.")
+@bot.tree.command(name="clogs", description=f"Nhật ký của {ai_name}")
 async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
     global chat_log, cds_log, st_log
     if interaction.user.id == dev_id:
@@ -361,16 +362,14 @@ async def cslog(interaction: discord.Interaction, chat: bool = False, command: b
         vals_save('user_files/vals.json', 'cds_log', cds_log)
         vals_save('user_files/vals.json', 'st_log', st_log)
     else:
-        await interaction.response.send_message(f"`Chỉ {ai_name}'s DEV mới có thể sử dụng lệnh này.`", ephemeral=True)
+        await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể xem nhật ký của cô ấy.`", ephemeral=True)
 
-@bot.tree.command(name="ping", description=f"Test commands")
+@bot.tree.command(name="tablet", description=f"{ai_name} tablet")
 async def test_cmd(interaction: discord.Interaction):
     if interaction.user.id == dev_id:
-        ntc = test_key()
-        print(ntc)
         await interaction.response.send_message(f"Pong~!", ephemeral=True)
     else:
-        await interaction.response.send_message(f"`Chỉ {ai_name}'s DEV mới có thể sử dụng lệnh này.`", ephemeral=True)
+        await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
 
 # Button call
 async def load_btt():

@@ -1,4 +1,4 @@
-import json, os, nltk, requests, discord, random, re
+import json, os, nltk, requests, discord, random, re, jaconv
 from nltk import word_tokenize, pos_tag
 from translate import Translator
 from langdetect import detect
@@ -88,6 +88,20 @@ def text_translate(text, target_lang):
 def lang_detect(text):
     source_lang = detect(text)
     return source_lang
+
+# Romaji -> Katakana
+def romaji_to_katakana(romaji_text):
+    katakana_text = romaji_text.lower()
+    katakana_text = jaconv.alphabet2kana(katakana_text)
+    return katakana_text
+
+# Text filter for tts
+def remove_act(text):
+    text = re.sub(r'\*([^*]+)\*', '', text)
+    text = re.sub(r'\([^)]+\)', '', text)
+    text = re.sub(r'<[^>]+>', '', text)
+    text = re.sub(r'https?://\S+', '', text)
+    return text
 
 # Emoji load
 def emojis_take(bot):
