@@ -97,6 +97,7 @@ def emojis_take(bot):
 def text_handle(text):
     # Emoji replace
     emoji_take = []
+    emoji_name = None
     matches = re.finditer(r':([^:\s]+):', text)
     for match in matches:
         emoji_name = match.group(1).lower()
