@@ -9,3 +9,4 @@ characterai
 booru
 nltk
 websockets
+PyNaCl
