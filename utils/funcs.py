@@ -35,6 +35,7 @@ def vals_load(file_name, variable_name):
         return variable_value
     except FileNotFoundError:
         print(f"File '{file_name}' not found.")
+        return None
 
 # Prompting
 def extract_nouns(text):

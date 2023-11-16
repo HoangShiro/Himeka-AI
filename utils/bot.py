@@ -14,18 +14,47 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 class AllStatus:
     def __init__(self):
+        # Status
         self.total_chat = 0
         self.roll_back = 0
-        self.bot_mood = 0
+        self.bot_mood = 50
         self.total_draw = 0
+        self.chat_log = False
+        self.cds_log = True
+        self.st_log = False
+        self.igen_flw = False
+        self.img_prompt = "sky"
+        self.img_dprt = "sea"
+        self.iregen = False
+        self.pr_ch_id = 0
+        self.last_user = "Shiro"
 
-    def update_variable(self, val_name, value):
+    def update(self, val_name, value):
         if hasattr(self, val_name):
             current_value = getattr(self, val_name)
             setattr(self, val_name, current_value + value)
             vals_save("user_files/vals.json", val_name, current_value + value)
         else:
             print(f"Error: Variable '{val_name}' not found.")
+
+    def set(self, val_name, value):
+        if hasattr(self, val_name):
+            setattr(self, val_name, value)
+            vals_save("user_files/vals.json", val_name, value)
+        else:
+            print(f"Error: Variable '{val_name}' not found.")
+
+    def load(self, filename):
+        try:
+            with open(filename, 'r') as file:
+                data = json.load(file)
+            for variable_name, value in data.items():
+                if hasattr(self, variable_name):
+                    setattr(self, variable_name, value)
+        except (FileNotFoundError, json.JSONDecodeError):
+            print(f"Error loading data from {filename}")
+
+ai_status = AllStatus()
 
 # AI name
 ai_name = "Himeka"
@@ -35,10 +64,6 @@ ai_full_name = f"{ai_name} {ai_last}"
 bot_cls = 0
 rt_c = 0
 
-# AI Status
-roll_back = 0
-total_chat = 0
-
 # Image gen
 igen_lists = {}
 ihq = False
@@ -47,62 +72,11 @@ iportrait = False
 iscene = False
 isize = "1024x1024"
 
-# Vals.json
-bot_mood = 50
-chat_log = False
-cds_log = True
-st_log = False
-igen_flw = False
-img_prompt = "sky"
-img_dprt = "sea"
-iregen = False
-pr_ch_id = 0
-last_user = "Shiro"
-default_values = {
-    "bot_mood": 50.0,
-    "chat_log": False,
-    "cds_log": True,
-    "st_log": False,
-    "igen_flw": False,
-    "img_prompt": "sky",
-    "img_dprt": "sea",
-    "iregen": False,
-    "pr_ch_id": 0,
-    "last_user": "Shiro",
-    "speaker": 47,
-    "roll_back": 0,
-    "total_chat": 0
-}
-
-# Kiểm tra xem tệp JSON có tồn tại không
-try:
-    with open('user_files/vals.json', 'r', encoding="utf-8") as file:
-        data3 = json.load(file)
-except FileNotFoundError:
-    with open('user_files/vals.json', 'w', encoding="utf-8") as file:
-        json.dump(default_values, file)
-    # Nếu tệp không tồn tại, sử dụng giá trị mặc định
-    data3 = default_values
-
-# Gán giá trị từ data cho các biến hiện tại
-for key, value in default_values.items():
-    globals()[key] = data3.get(key, value)
-
-    # Dừng sau khi đã duyệt qua tất cả các phần tử trong default_values
-    if key == list(default_values.keys())[-1]:
-        break
-
-# Kiểm tra và thêm biến thiếu vào tệp JSON nếu cần
-for key, value in default_values.items():
-    if key not in data3:
-        data3[key] = value
-
-# Cập nhật tệp JSON với các biến mới nếu có
-with open('user_files/vals.json', 'w', encoding="utf-8") as file:
-    json.dump(data3, file)
-
 @bot.event
 async def on_ready():
+    # Load vals
+    ai_status.load('user_files/vals.json')
+
     # Đồng bộ hoá commands
     try:
         synced = await bot.tree.sync()
@@ -124,8 +98,8 @@ async def on_ready():
 
     # Continue chat
     if iregen:
-        umess = f"Your tablet: You are continuing to draw for {last_user}"
-        message = await mess_id_send(bot, pr_ch_id, umess, chat_log)
+        umess = f"Your tablet: You are continuing to draw for {ai_status.last_user}"
+        message = await mess_id_send(bot, ai_status.pr_ch_id, umess, chat_log)
         asyncio.create_task(img_gen(message, img_prompt, iquality, isize))
 
 @bot.event
@@ -146,7 +120,9 @@ async def on_message(message):
 
 # Image gen dall e 3 in chat
 async def img_gen_chat(message, result):
-    global igen_flw, img_prompt, iquality, isize
+    global iquality, isize
+    igen_flw = ai_status.igen_flw
+    img_prompt = ai_status.img_prompt
     async def igen_choice(text):
         quality = None
         size = None
@@ -170,7 +146,7 @@ async def img_gen_chat(message, result):
             translated = text_translate(result, lang)
             prompt = extract_nouns(translated)
             img_prompt = prompt
-            vals_save('user_files/vals.json', 'img_prompt', img_prompt)
+            ai_status.set('img_prompt', prompt)
             await img_gen(message, prompt, quality, size)
             return
         elif re.search(r'gen|create|tạo|vẽ|draw|chụp|made', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and re.search(r'lại|nữa|again|more', result, re.IGNORECASE):
@@ -203,17 +179,20 @@ async def img_gen_chat(message, result):
             lang = "en"
             translated = text_translate(result, lang)
             prompt = extract_nouns(translated)
-            img_prompt = prompt
-            vals_save('user_files/vals.json', 'img_prompt', img_prompt)
+            ai_status.set('img_prompt', prompt)
             await img_gen(message, prompt, quality, size)
             return
         else:
             igen_flw = False
-            vals_save('user_files/vals.json', 'igen_flw', igen_flw)
+            ai_status.set('igen_flw', igen_flw)
                     
 # Image gen dall e 3
 async def img_gen(interaction, prompt, quality, size):
-    global bot_mood, igen_lists, igen_flw, img_dprt, bot_cls, iregen
+    global igen_lists, bot_cls
+    igen_flw = ai_status.igen_flw
+    img_dprt = ai_status.img_dprt
+    iregen = ai_status.iregen
+
     guild = bot.get_guild(server_id)
     emojis = guild.emojis
     emoji = random.choice(emojis)
@@ -320,7 +299,7 @@ async def img_gen(interaction, prompt, quality, size):
         vals_save('user_files/vals.json', 'igen_flw', igen_flw)
     if eimg:
         await mess_send(message, errar, chat_log)
-    bot_mood +=1
+    ai_status.update('bot_mood', 1)
     if error_code:
         if "nối" in error_code or "hem" in error_code or "vậy" in error_code:
             await img_gen(message, img_prompt, iquality, isize)
@@ -338,7 +317,7 @@ async def img_gen(interaction, prompt, quality, size):
 
 # Correct prompt and gen art again
 async def img_regen(message, quality, size, rq):
-    case = f"3[{img_dprt}][{rq}]"
+    case = f"3[{ai_status.img_dprt}][{rq}]"
     try:
         prompt = await openai_task(case)
     except Exception as e:
@@ -350,9 +329,8 @@ async def img_regen(message, quality, size, rq):
 # Các câu lệnh
 # Image Gen
 @bot.tree.command(name="igen", description=f"Tạo art")
-async def image_gen(interaction: discord.Interaction, prompt: str = img_prompt, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
-    global img_prompt, ihq, iportrait, iscene
-    img_prompt = prompt
+async def image_gen(interaction: discord.Interaction, prompt: str = ai_status.img_prompt, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
+    global ihq, iportrait, iscene
     ihq = hq
     iportrait = portrait
     iscene = scene
@@ -364,7 +342,7 @@ async def image_gen(interaction: discord.Interaction, prompt: str = img_prompt, 
         size = "1024x1792"
     if scene:
         size = "1792x1024"
-    vals_save('user_files/vals.json', 'img_prompt', prompt)
+    ai_status.set('img_prompt', prompt)
     await img_gen(interaction, prompt, quality, size)
 
 @bot.tree.command(name="reconnect", description=f"Kết nối lại với {ai_name}.")
@@ -382,21 +360,18 @@ async def newchat(interaction: discord.Interaction):
     else:
         await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
         await CAc.chat.new_chat(c_token)
-        if cds_log:
+        ai_status.set('bot_mood', 50)
+        if ai_status.cds_log:
             print(f"[NEW CHAT] - {iuser}")
             print()
 
 @bot.tree.command(name="clogs", description=f"Nhật ký của {ai_name}")
 async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False):
-    global chat_log, cds_log, st_log
     if interaction.user.id == dev_id:
-        chat_log = chat
-        cds_log = command
-        st_log = status
-        await interaction.response.send_message(f"`Chat log: {chat_log}, Command log: {cds_log}, Status log: {st_log}.`", ephemeral=True)
-        vals_save('user_files/vals.json', 'chat_log', chat_log)
-        vals_save('user_files/vals.json', 'cds_log', cds_log)
-        vals_save('user_files/vals.json', 'st_log', st_log)
+        ai_status.set('chat_log', chat)
+        ai_status.set('cds_log', command)
+        ai_status.set('st_log', status)
+        await interaction.response.send_message(f"`Chat log: {chat}, Command log: {command}, Status log: {status}.`", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể xem nhật ký của cô ấy.`", ephemeral=True)
 
