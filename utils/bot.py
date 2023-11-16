@@ -96,7 +96,7 @@ async def on_ready():
     # Continue chat
     if iregen:
         umess = f"Your tablet: You are continuing to draw for {last_user}"
-        message = await mess_rep(bot, pr_ch_id, umess, chat_log)
+        message = await mess_id_send(bot, pr_ch_id, umess, chat_log)
         asyncio.create_task(img_gen(message, img_prompt, iquality, isize))
 
 @bot.event
@@ -283,7 +283,7 @@ async def img_gen(interaction, prompt, quality, size):
         igen_flw = True
         vals_save('user_files/vals.json', 'igen_flw', igen_flw)
     if eimg:
-        await mess_rep(message, errar, chat_log)
+        await mess_send(message, errar, chat_log)
     bot_mood +=1
     if error_code:
         if "nối" in error_code or "hem" in error_code:

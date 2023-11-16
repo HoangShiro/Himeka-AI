@@ -138,7 +138,7 @@ async def mess_rep(message, mess, umess, chat_log):
         await img_gen_chat(message, mess)
 
 # Send message
-async def mess_rep(message, umess, chat_log):
+async def mess_send(message, umess, chat_log):
     async with message.channel.typing():
         answ, ain = await CAI(umess)
         answ = text_handle(answ)
@@ -149,7 +149,7 @@ async def mess_rep(message, umess, chat_log):
         await message.channel.send(answ)
 
 # Send message with channel id
-async def mess_rep(bot, ch_id, umess, chat_log):
+async def mess_id_send(bot, ch_id, umess, chat_log):
     channel = bot.get_channel(ch_id)
     async with channel.typing():
         answ, ain = await CAI(umess)
