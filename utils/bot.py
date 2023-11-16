@@ -175,9 +175,14 @@ async def img_gen(interaction, prompt, quality, size):
     guild = bot.get_guild(server_id)
     emojis = guild.emojis
     emoji = random.choice(emojis)
-    user_nick = interaction.user.nick
-    if not user_nick:
-        user_nick = interaction.user.name
+    if isinstance(interaction, discord.Interaction):
+        user_nick = interaction.user.nick
+        if not user_nick:
+            user_nick = interaction.user.name
+    elif isinstance(interaction, discord.Message):
+        user_nick = interaction.author.nick
+        if not user_nick:
+            user_nick = interaction.author.name
     embed = discord.Embed(title=f"{ai_name} đang tạo art cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=discord.Color.blue())
     view = View(timeout=None)
     view.add_item(irmv_bt)
