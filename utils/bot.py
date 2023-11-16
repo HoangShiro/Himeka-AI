@@ -130,7 +130,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if message.author == bot.user or message.content.startswith("."):
+    if message.author == bot.user or message.content.startswith(".", "<"):
         return
     
     # Phản hồi chat
@@ -379,8 +379,6 @@ async def newchat(interaction: discord.Interaction):
     else:
         await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
         await CAc.chat.new_chat(c_token)
-        roll_back += 1
-        vals_save('user_files/vals.json', 'roll_back', roll_back)
         if cds_log:
             print(f"[NEW CHAT] - {iuser}")
             print()
