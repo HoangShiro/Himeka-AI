@@ -375,10 +375,10 @@ async def newchat(interaction: discord.Interaction):
     iuser = interaction.user.name
     if rt_c == 0:
         await interaction.response.send_message(f"{ai_name}'s tablet: Hành động này không thể undo, {iuser} chắc chứ?", ephemeral=True)
+        roll_back += 1
     else:
         await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
         await CAc.chat.new_chat(c_token)
-        roll_back += 1
         vals_save('user_files/vals.json', 'roll_back', roll_back)
         if cds_log:
             print(f"[NEW CHAT] - {iuser}")
