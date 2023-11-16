@@ -80,7 +80,6 @@ isize = "1024x1024"
 async def on_ready():
     # Load vals
     ai_status.load('user_files/vals.json')
-    ai_status.display_statistics()
     # Đồng bộ hoá commands
     try:
         synced = await bot.tree.sync()
@@ -348,6 +347,7 @@ async def image_gen(interaction: discord.Interaction, prompt: str = ai_status.im
     if scene:
         size = "1792x1024"
     ai_status.set('img_prompt', prompt)
+    print(ai_status.img_prompt)
     await img_gen(interaction, prompt, quality, size)
 
 @bot.tree.command(name="reconnect", description=f"Kết nối lại với {ai_name}.")
