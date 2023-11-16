@@ -103,6 +103,7 @@ async def on_message(message):
             asyncio.create_task(img_gen_chat(message, mess))
     
     return
+
 # Image gen dall e 3 in chat
 async def img_gen_chat(message, result):
     global igen_flw, img_prompt, iquality, isize
@@ -338,14 +339,14 @@ async def rg_bt_atv(interaction):
     prompt = img_prompts['prompt']
     quality = img_prompts['quality']
     size = img_prompts['size']
-    await img_gen(interaction, prompt, quality, size)
+    asyncio.create_task(img_gen(interaction, prompt, quality, size))
 
 async def rgs_bt_atv(interaction):
     img_prompts = igen_lists.get(interaction.message.id)
     prompt = img_prompts['r_prompt']
     quality = img_prompts['quality']
     size = img_prompts['size']
-    await img_gen(interaction, prompt, quality, size)
+    asyncio.create_task(img_gen(interaction, prompt, quality, size))
 
 def bot_run():
     bot.run(discord_bot_key)
