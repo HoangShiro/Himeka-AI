@@ -19,6 +19,8 @@ class AllStatus:
         self.roll_back = 0
         self.bot_mood = 50
         self.total_draw = 0
+        self.total_rcn = 0
+        self.total_tl = 0
         self.chat_log = False
         self.cds_log = True
         self.st_log = False
@@ -108,6 +110,7 @@ async def on_ready():
     if ai_status.iregen:
         umess = f"Your tablet: You are continuing to draw for {ai_status.last_user}"
         message = await mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log)
+        ai_status.update('total_chat', 1)
         asyncio.create_task(img_gen(message, ai_status.img_prompt, iquality, isize))
 
 @bot.event
@@ -123,6 +126,7 @@ async def on_message(message):
         mess = message.content
         umess = "{}: {}".format(user_name, message.content)
         asyncio.create_task(mess_rep(message, mess, umess, ai_status.chat_log))
+        ai_status.update('total_chat', 1)
     
     return
 
@@ -307,6 +311,7 @@ async def img_gen(interaction, prompt, quality, size):
         ai_status.set('igen_flw', igen_flw)
     if eimg:
         await mess_send(message, errar, ai_status.chat_log)
+        ai_status.update('total_chat', 1)
     ai_status.update('bot_mood', 1)
     ai_status.update('total_draw', 1)
     if error_code:
@@ -359,6 +364,7 @@ async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bo
 @bot.tree.command(name="reconnect", description=f"Kết nối lại với {ai_name}.")
 async def renew(interaction: discord.Interaction):
     await interaction.response.send_message(f"{ai_name}'s tablet: *đang thiết lập lại kết nối giữa {gui_name} với {ai_name}*", ephemeral=True)
+    ai_status.update('total_rcn', 1)
     await bot.close()
 
 @bot.tree.command(name="timeleap", description=f"Gặp {ai_name} ở timeline khác.")
@@ -372,6 +378,7 @@ async def newchat(interaction: discord.Interaction):
         await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
         await CAc.chat.new_chat(c_token)
         ai_status.set('bot_mood', 50)
+        ai_status.update('total_tl', 1)
         if ai_status.cds_log:
             print(f"[NEW CHAT] - {iuser}")
             print()
