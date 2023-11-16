@@ -3,7 +3,6 @@ from nltk import word_tokenize, pos_tag
 from translate import Translator
 from langdetect import detect
 
-from utils.bot import img_gen_chat
 from utils.ai_api import *
 from user_files.config import *
 
@@ -127,6 +126,7 @@ def text_handle(text):
 
 # Reply message
 async def mess_rep(message, mess, umess, chat_log):
+    from utils.bot import img_gen_chat
     async with message.channel.typing():
         answ, ain = await CAI(umess)
         answ = text_handle(answ)
