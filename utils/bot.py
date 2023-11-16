@@ -31,6 +31,9 @@ st_log = False
 igen_flw = False
 img_prompt = "sky"
 img_dprt = "sea"
+iregen = False
+pr_ch_id = 0
+last_user = "Shiro"
 default_values = {
     "bot_mood": 50.0,
     "chat_log": False,
@@ -38,7 +41,10 @@ default_values = {
     "st_log": False,
     "igen_flw": False,
     "img_prompt": "sky",
-    "img_dprt": "sea"
+    "img_dprt": "sea",
+    "iregen": False,
+    "pr_ch_id": 0,
+    "last_user": "Shiro"
 }
 
 # Kiểm tra xem tệp JSON có tồn tại không
@@ -80,6 +86,21 @@ async def on_ready():
     emojis_take(bot)
     # Load button
     await load_btt()
+
+    if iregen:
+        channel = bot.get_channel(pr_ch_id)
+        async with channel.typing():
+            umess = f"Your tablet: You are continuing to draw for {last_user}"
+            answ, ain = await CAI(umess)
+            answ = text_handle(answ)
+            if chat_log:
+                print(umess)
+                print(f"{ain}: {answ}")
+                print()
+            await channel.send(answ)
+            async for message in channel.history(limit=1):
+                pass
+            await img_gen(message, img_prompt, iquality, isize)
     print("Himeka đã khởi động")
 
 @bot.event
@@ -176,7 +197,7 @@ async def img_gen_chat(message, result):
                     
 # Image gen dall e 3
 async def img_gen(interaction, prompt, quality, size):
-    global bot_mood, igen_lists, igen_flw, img_dprt, bot_cls
+    global bot_mood, igen_lists, igen_flw, img_dprt, bot_cls, iregen
     guild = bot.get_guild(server_id)
     emojis = guild.emojis
     emoji = random.choice(emojis)
@@ -201,6 +222,8 @@ async def img_gen(interaction, prompt, quality, size):
     view.add_item(rg_bt)
     img = None
     eimg = None
+    errar = None
+    error_code = None
     try:
         img, r_prompt = await openai_images(prompt, quality, size)
         view.add_item(rgs_bt)
@@ -212,22 +235,28 @@ async def img_gen(interaction, prompt, quality, size):
             error_message = error_message[:250]
             if "content_policy_violation" in error_code:
                 error_code = "Prompt không an toàn... つ﹏⊂"
+                errar = f"Your tablet: *Error* What you're drawing is a bit inappropriate."
             elif "rate_limit_exceeded" in error_code:
                 error_code = "Đợi 1 phút nữa nhé... ≧﹏≦"
+                errar = f"Your tablet: *freeze* {user_nick} asks you to draw too fast causing the tablet to freeze, tell them to wait."
             elif "billing_hard_limit_reached" in error_code:
                 error_code = "Hết cá ròi... 〒▽〒"
+                errar = "Your tablet: *Out of battery*"
         else:
             error_code = str(e)
             error_code = error_code[:250]
             error_message = error_code[:250]
             if "Connection error" in error_code:
                 error_code = "Lỗi kết nối... (ˉ﹃ˉ)"
+                errar = "Your tablet: Software error while drawing, try restarting your drawing app."
                 bot_cls += 1
                 if bot_cls == 2:
-                    error_code = f"{ai_name} chạy đi fix bug chút nha... (✿◠‿◠)"
+                    error_code = f"{ai_name} khởi động lại tablet xíu nha... (✿◠‿◠)"
                     error_message = "Sẽ quay lại liền nè~!"
+                    errar = f"Your tablet: *Error error* Please ask {user_nick} to wait while restart your tablet."
             if not error_code:
                 error_code = f"Lỗi gì đó mà {ai_name} cũng hem biết là lỗi gì... ∑( 口 ||"
+                errar = f"Your tablet: An unknown error occurred and your drawing file was lost. Please redraw."
             print(f"Error while gen art: {e}")
     igen_lists[img_id] = {"prompt": prompt, "r_prompt": r_prompt, "quality": quality, "size": size}
     if quality == "hd":
@@ -266,9 +295,28 @@ async def img_gen(interaction, prompt, quality, size):
     if img or eimg:
         igen_flw = True
         vals_save('user_files/vals.json', 'igen_flw', igen_flw)
+    if eimg:
+        async with message.channel.typing():
+            answ, ain = await CAI(errar)
+            answ = text_handle(answ)
+            if chat_log:
+                print(errar)
+                print(f"{ain}: {answ}")
+                print()
+            await message.channel.send(answ)
     bot_mood +=1
+    if "nối" in error_code or "hem" in error_code:
+        img_gen(interaction, img_prompt, iquality, isize)
     if bot_cls == 2:
+        iregen = True
+        pr_ch_id = message.channel.id
+        last_user = user_nick
+        vals_save('user_files/vals.json', 'iregen', iregen)
+        vals_save('user_files/vals.json', 'pr_ch_id', pr_ch_id)
+        vals_save('user_files/vals.json', 'last_user', last_user)
         await bot.close()
+    iregen = False
+    vals_save('user_files/vals.json', 'iregen', iregen)
     return
 
 # Correct prompt and gen art again
