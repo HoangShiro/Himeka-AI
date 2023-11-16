@@ -332,9 +332,11 @@ async def img_regen(message, quality, size, rq):
 # Các câu lệnh
 # Image Gen
 @bot.tree.command(name="igen", description=f"Tạo art")
-async def image_gen(interaction: discord.Interaction, prompt: str = ai_status.img_prompt, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
+async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
     global ihq, iportrait, iscene
     ai_status.display_statistics()
+    if not prompt:
+        prompt = ai_status.img_prompt
     ihq = hq
     iportrait = portrait
     iscene = scene
