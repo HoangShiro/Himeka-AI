@@ -162,7 +162,7 @@ async def img_gen_chat(message, result):
             size = isize
         return quality, size
     if not igen_flw:
-        if re.search(r'gen|create|tạo|vẽ|draw|chụp', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and not re.search(r'lại|nữa|again|more', result, re.IGNORECASE):
+        if re.search(r'gen|create|tạo|vẽ|draw|chụp|made', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and not re.search(r'lại|nữa|again|more', result, re.IGNORECASE):
             quality, size = await igen_choice(result)
             iquality = quality
             isize = size
@@ -173,7 +173,7 @@ async def img_gen_chat(message, result):
             vals_save('user_files/vals.json', 'img_prompt', img_prompt)
             await img_gen(message, prompt, quality, size)
             return
-        elif re.search(r'gen|create|tạo|vẽ|draw|chụp', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and re.search(r'lại|nữa|again|more', result, re.IGNORECASE):
+        elif re.search(r'gen|create|tạo|vẽ|draw|chụp|made', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and re.search(r'lại|nữa|again|more', result, re.IGNORECASE):
             quality, size = await igen_choice(result)
             await img_gen(message, img_prompt, quality, size)
             return
@@ -249,15 +249,19 @@ async def img_gen(interaction, prompt, quality, size):
             error_code = e.response.json()['error']['code']
             print(f"Error while gen art: {error_code} - {error_message}")
             error_message = error_message[:250]
-            if "content_policy_violation" in error_code:
-                error_code = "Prompt không an toàn... つ﹏⊂"
-                errar = f"Your tablet: *Error* What you're drawing is a bit inappropriate."
-            elif "rate_limit_exceeded" in error_code:
-                error_code = "Đợi 1 phút nữa nhé... ≧﹏≦"
-                errar = f"Your tablet: *freeze* {user_nick} asks you to draw too fast causing the tablet to freeze, tell them to wait."
-            elif "billing_hard_limit_reached" in error_code:
-                error_code = "Hết cá ròi... 〒▽〒"
-                errar = "Your tablet: *Out of battery*"
+            if error_code != 502:
+                if "content_policy_violation" in error_code:
+                    error_code = "Prompt không an toàn... つ﹏⊂"
+                    errar = f"Your tablet: *Error* What you're drawing is a bit inappropriate."
+                elif "rate_limit_exceeded" in error_code:
+                    error_code = "Đợi 1 phút nữa nhé... ≧﹏≦"
+                    errar = f"Your tablet: *freeze* {user_nick} asks you to draw too fast causing the tablet to freeze, tell them to wait."
+                elif "billing_hard_limit_reached" in error_code:
+                    error_code = "Hết cá ròi... 〒▽〒"
+                    errar = "Your tablet: *Out of battery*"
+            else:
+                error_code = "Ah, lỗi gì vậy ta? (ˉ▽ˉ；)..."
+                errar = "Your tablet: Software error while drawing, try restarting your drawing app."
         else:
             error_code = str(e)
             error_code = error_code[:250]
@@ -315,7 +319,7 @@ async def img_gen(interaction, prompt, quality, size):
         await mess_send(message, errar, chat_log)
     bot_mood +=1
     if error_code:
-        if "nối" in error_code or "hem" in error_code:
+        if "nối" in error_code or "hem" in error_code or "vậy" in error_code:
             await img_gen(message, img_prompt, iquality, isize)
     if bot_cls == 2:
         iregen = True
