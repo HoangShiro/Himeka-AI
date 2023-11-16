@@ -218,6 +218,8 @@ async def img_gen(interaction, prompt, quality, size):
             error_message = error_code[:250]
             if "Connection error" in error_code:
                 error_code = "Lỗi kết nối... (ˉ﹃ˉ)"
+            if not error_code:
+                error_code = f"Lỗi gì đó mà {ai_name} cũng hem biết là lỗi gì... ∑( 口 ||"
             print(f"Error while gen art: {e}")
     igen_lists[img_id] = {"prompt": prompt, "r_prompt": r_prompt, "quality": quality, "size": size}
     if quality == "hd":
