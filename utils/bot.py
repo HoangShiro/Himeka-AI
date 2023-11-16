@@ -12,12 +12,32 @@ logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+class AllStatus:
+    def __init__(self):
+        self.total_chat = 0
+        self.roll_back = 0
+        self.bot_mood = 0
+        self.total_draw = 0
+
+    def update_variable(self, val_name, value):
+        if hasattr(self, val_name):
+            current_value = getattr(self, val_name)
+            setattr(self, val_name, current_value + value)
+            vals_save("user_files/vals.json", val_name, current_value + value)
+        else:
+            print(f"Error: Variable '{val_name}' not found.")
+
+# AI name
 ai_name = "Himeka"
 ai_last = "Shindou"
 gui_name = "NekoArt Studio"
 ai_full_name = f"{ai_name} {ai_last}"
 bot_cls = 0
 rt_c = 0
+
+# AI Status
+roll_back = 0
+total_chat = 0
 
 # Image gen
 igen_lists = {}
@@ -49,7 +69,9 @@ default_values = {
     "iregen": False,
     "pr_ch_id": 0,
     "last_user": "Shiro",
-    "speaker": 47
+    "speaker": 47,
+    "roll_back": 0,
+    "total_chat": 0
 }
 
 # Kiểm tra xem tệp JSON có tồn tại không
@@ -352,10 +374,12 @@ async def newchat(interaction: discord.Interaction):
     global rt_c
     iuser = interaction.user.name
     if rt_c == 0:
-        await interaction.response.send_message(f"{ai_name}'s tablet: Hành động này không thể undo, {iuser} chắc chứ?")
+        await interaction.response.send_message(f"{ai_name}'s tablet: Hành động này không thể undo, {iuser} chắc chứ?", ephemeral=True)
     else:
         await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
         await CAc.chat.new_chat(c_token)
+        roll_back += 1
+        vals_save('user_files/vals.json', 'roll_back', roll_back)
         if cds_log:
             print(f"[NEW CHAT] - {iuser}")
             print()
@@ -411,7 +435,6 @@ async def m_check():
     rt_c = 0
     my_timezone = pytz.timezone('Asia/Bangkok')
     vn_time = datetime.datetime.now(my_timezone)
-
 
 def bot_run():
     bot.run(discord_bot_key)
