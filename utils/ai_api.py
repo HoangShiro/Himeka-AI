@@ -86,7 +86,7 @@ async def tts_get(text, speaker, pitch, intonation_scale, speed):
     cnv_text = romaji_to_katakana(text_fill)
     url = f"https://deprecatedapis.tts.quest/v2/voicevox/audio/?key={vv_key}&text={cnv_text}&speaker={speaker}&pitch={pitch}&intonationScale={intonation_scale}&speed={speed}"
     
-    response = requests.get(url)
+    """response = requests.get(url)
     st_log = vals_load('user_files/vals.json', 'st_log')
 
     if response.status_code == 200:
@@ -95,6 +95,6 @@ async def tts_get(text, speaker, pitch, intonation_scale, speed):
         if st_log:
             print(f"Voice đã được tải về thành công.")
     else:
-        print(f"Lỗi khi tạo voice, mã lỗi: {response.status_code}")
+        print(f"Lỗi khi tạo voice, mã lỗi: {response.status_code}")"""
     
     return url
