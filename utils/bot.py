@@ -44,6 +44,11 @@ class AllStatus:
         else:
             print(f"Error: Variable '{val_name}' not found.")
 
+    def get(self, val_name):
+        if hasattr(self, val_name):
+            value = getattr(self, val_name)
+        return value
+    
     def load(self, filename):
         try:
             with open(filename, 'r') as file:
@@ -374,7 +379,7 @@ async def newchat(interaction: discord.Interaction):
 async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False, get: str = None):
     if interaction.user.id == dev_id:
         if get:
-            val = ai_status.get
+            val = ai_status.get(get)
             await interaction.response.send_message(f"{val}", ephemeral=True)
         else:
             ai_status.set('chat_log', chat)
