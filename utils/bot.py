@@ -172,6 +172,7 @@ async def img_gen_chat(message, result):
             return
         else:
             igen_flw = False
+            vals_save('user_files/vals.json', 'igen_flw', igen_flw)
                     
 # Image gen dall e 3
 async def img_gen(interaction, prompt, quality, size):
