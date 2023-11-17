@@ -244,24 +244,25 @@ async def img_gen(interaction, prompt, quality, size):
     emoji = random.choice(emojis)
 
     user_nick = None
-    if isinstance(interaction, discord.SlashCommand):
-        user_nick = interaction.user.nick
-        if not user_nick:
-            user_nick = interaction.user.name
-    elif isinstance(interaction, discord.Message):
+    if isinstance(interaction, discord.Message):
         user_nick = interaction.author.nick
         if not user_nick:
             user_nick = interaction.author.name
+    else:
+        user_nick = interaction.user.nick
+        if not user_nick:
+            user_nick = interaction.user.name
     if ai_status.cds_log:
         print(f"[IMG GENERATE] - {user_nick}")
         print()
     embed = discord.Embed(title=f"{ai_name} đang tạo art cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=discord.Color.blue())
     view = View(timeout=None)
     view.add_item(irmv_bt)
-    if isinstance(interaction, discord.Interaction):
-        await interaction.response.send_message(embed=embed, view=view)
-    elif isinstance(interaction, discord.Message):
+    if isinstance(interaction, discord.Message):
         await interaction.channel.send(embed=embed, view=view)
+    else:
+        await interaction.response.send_message(embed=embed, view=view)
+
     async for message in interaction.channel.history(limit=1):
         img_id = message.id
     r_prompt = prompt
