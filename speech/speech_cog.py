@@ -18,12 +18,16 @@ class SpeechCog(commands.Cog):
     @discord.slash_command()
     async def start(self, ctx: discord.ApplicationContext):
         """Start transcription."""
-        guild = self.bot.get_guild(ctx.guild_id)
         voice = ctx.author.voice
         if not voice:
             return await ctx.respond("You're not in a vc right now")
 
-        vc = guild.voice_client
+        if ctx.guild.id in self.connections:
+        # Nếu bot đã trong voice chat, thoát khỏi voice chat
+            await self.connections[ctx.guild.id].disconnect()
+            del self.connections[ctx.guild.id]
+
+        vc = await voice.channel.connect()
         self.connections.update({ctx.guild.id: vc})
 
         # The recording takes place in the sink object.
@@ -44,7 +48,8 @@ class SpeechCog(commands.Cog):
             await ctx.respond("Not recording in this guild.")
 
     async def stop_callback(self, sink):
-        await sink.vc.disconnect()
+        pass
+        #await sink.vc.disconnect()
 
     def speech_callback_bridge(self, recognizer, audio, ctx, user):
         asyncio.run_coroutine_threadsafe(
