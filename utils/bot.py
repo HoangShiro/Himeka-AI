@@ -379,10 +379,11 @@ async def img_regen(message, quality, size, rq):
     await img_gen(message, prompt, quality, size)
 
 # Các câu lệnh
-@bot.tree.command(name="igen", description=f"Tạo art")
-async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
-    if interaction.guild is None:
-        return await interaction.response.send_message(f"{ai_name}'s tablet: {ai_name} chỉ có thể vẽ cho bạn trong {gui_name}.", ephemeral=True)
+@bot.command(name="igen", description=f"Tạo art")
+async def image_gen(ctx: commands.Context, prompt: str = None, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
+    if ctx.guild is None:
+        return await ctx.send(f"{ai_name}'s tablet: {ai_name} chỉ có thể vẽ cho bạn trong {gui_name}.")
+    
     global ihq, iportrait, iscene
     if not prompt:
         prompt = ai_status.img_prompt
@@ -398,7 +399,7 @@ async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bo
     if scene:
         size = "1792x1024"
     ai_status.set('img_prompt', prompt)
-    await img_gen(interaction, prompt, quality, size)
+    await img_gen(ctx, prompt, quality, size)
 
 @bot.tree.command(name="reconnect", description=f"Kết nối lại với {ai_name}.")
 async def renew(interaction: discord.Interaction):
