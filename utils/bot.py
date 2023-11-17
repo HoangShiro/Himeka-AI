@@ -7,6 +7,8 @@ from utils.ai_api import *
 from utils.funcs import *
 from utils.buttons import *
 
+from speech.speech_cog import SpeechCog
+
 logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
 intents = discord.Intents.all()
@@ -96,7 +98,10 @@ async def on_ready():
     global emojis
     # Load vals
     ai_status.load('user_files/vals.json')
-    await bot.load_extension("speech.speech_cog")
+    
+    speech_cog = SpeechCog(bot)
+    await bot.add_command(speech_cog.start)
+    await bot.add_command(speech_cog.stop)
     # get emojis
     guild = bot.get_guild(server_id)
     emojis = guild.emojis

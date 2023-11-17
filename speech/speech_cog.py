@@ -11,7 +11,7 @@ logger = logging.getLogger("speech.speech_cog")
 
 
 class SpeechCog(commands.Cog):
-    def __init__(self, bot, text_update_callback=None):
+    def __init__(self, bot):
         self.bot = bot
         self.connections = {}  # Cache of voice connections
 
