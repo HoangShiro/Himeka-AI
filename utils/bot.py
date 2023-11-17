@@ -241,7 +241,9 @@ async def img_gen(interaction, prompt, quality, size):
     iregen = ai_status.iregen
 
     emoji = random.choice(emojis)
-    if isinstance(interaction, discord.Interaction):
+
+    user_nick = None
+    if isinstance(interaction, discord.SlashCommand):
         user_nick = interaction.user.nick
         if not user_nick:
             user_nick = interaction.user.name
