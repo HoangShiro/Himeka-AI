@@ -4,7 +4,7 @@ import logging
 import discord
 from discord.ext import commands
 from speech_recognition import RequestError, UnknownValueError
-
+from user_files.config import *
 from speech.sr_sink import SRSink
 
 logger = logging.getLogger("speech.speech_cog")
@@ -18,11 +18,12 @@ class SpeechCog(commands.Cog):
     @discord.slash_command()
     async def start(self, ctx: discord.ApplicationContext):
         """Start transcription."""
+        guild = self.bot.get_guild(ctx.guild_id)
         voice = ctx.author.voice
         if not voice:
             return await ctx.respond("You're not in a vc right now")
 
-        vc = await voice.channel.connect()
+        vc = guild.voice_client
         self.connections.update({ctx.guild.id: vc})
 
         # The recording takes place in the sink object.
@@ -51,6 +52,8 @@ class SpeechCog(commands.Cog):
         )
 
     async def speech_callback(self, recognizer, audio, ctx, user):
+        from utils.ai_api import CAI, tts_get
+        from utils.funcs import vals_load
         try:
             text = recognizer.recognize_google(audio, language='vi-VN')
         except UnknownValueError:
@@ -61,6 +64,13 @@ class SpeechCog(commands.Cog):
                 exc_info=e,
             )
         else:
+            chat_log = vals_load('user_files/vals.json', 'chat_log')
+            answ, ain = await CAI(text)
+            url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
+            if chat_log:
+                print(text)
+                print(f"{ain}: {answ}")
+                print()
             await ctx.send(f"<@{user}> said: {text}")
 
 
