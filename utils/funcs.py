@@ -237,8 +237,7 @@ async def v_leave(message):
         b_ch = message.guild.voice_client.channel
         b_vc = message.guild.voice_client
     if b_ch:
-        url = await sob('bye')
-        await voice_send(url, await b_vc.disconnect())
+        await b_vc.disconnect()
         pr_vch_id = None
         vals_save('user_files/vals.json', 'pr_vch_id', pr_vch_id)
 
