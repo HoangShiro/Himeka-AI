@@ -52,7 +52,8 @@ def process_nouns(nouns):
                         "creating", "photo", "hmm", "make", "<3", "pic", "picture", "*", "rub", "draw",
                         "continue", "himeka", "generate", "art", "lem", "okay"]
     replacement_dict = {
-        "yourself": f"A cute Japanese girl with blonde hair in two pigtails, green eyes. Cute, bright, colorful colors."
+        "yourself": f"A cute Japanese girl with blonde hair in two pigtails, green eyes. Cute, bright, colorful colors.",
+        "iw": "a giant ring-shaped space station connected to the center by shafts, in space, high technology architecture."
     }
     style = ", anime style"
     nouns = [replacement_dict.get(noun.lower(), noun) for noun in nouns if noun.lower() not in words_to_remove]
