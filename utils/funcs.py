@@ -195,9 +195,9 @@ async def voice_send(mess, answ):
     voice = await tts_get(answ, speaker, pitch, intonation_scale, speed)
     audio_source = FFmpegPCMAudio(voice)
     if mess.guild.voice_client:
-        b_ch = mess.guild.voice_client.channel
+        await asyncio.sleep(0.5)
         b_vc = mess.guild.voice_client
-    b_vc.play(audio_source, after=lambda e: print('Player error: %s' % e) if e else None)
+        b_vc.play(audio_source, after=lambda e: print('Player error: %s' % e) if e else None)
 
 # Join voice channel
 async def v_join(message):
