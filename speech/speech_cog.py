@@ -17,8 +17,8 @@ class SpeechCog(commands.Cog):
         self.connections = {}  # Cache of voice connections
 
     @discord.slash_command()
-    async def start(self, ctx: discord.ApplicationContext):
-        """Start transcription."""
+    async def vchat(self, ctx: discord.ApplicationContext):
+        """Voice chat with Himeka."""
         voice = ctx.author.voice
         if not voice:
             return await ctx.respond("You're not in a vc right now")
@@ -38,8 +38,8 @@ class SpeechCog(commands.Cog):
         await ctx.respond("Himeka's tablet: Himeka can hear voice now.", )
 
     @discord.slash_command()
-    async def stop(self, ctx: discord.ApplicationContext):
-        """Stop transcription."""
+    async def vstop(self, ctx: discord.ApplicationContext):
+        """Stop voice chat with Himeka."""
         if ctx.guild.id in self.connections:
             vc = self.connections[ctx.guild.id]
             vc.stop_recording()
