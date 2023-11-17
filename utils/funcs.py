@@ -254,8 +254,11 @@ async def hime_tablet(mess, answ):
     vc = None
     if mess.guild.voice_client:
         vc = mess.guild.voice_client.channel
-    if vc:
-        await voice_make_tts(mess, answ)
+        
+    if mess.author.voice and mess.author.voice.channel:
+        user_voice_channel = mess.author.voice.channel
+        if vc and vc == user_voice_channel:
+            await voice_make_tts(mess, answ)
     
     
 # Count downt
