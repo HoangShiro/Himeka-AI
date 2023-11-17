@@ -377,7 +377,7 @@ async def img_regen(message, quality, size, rq):
     await img_gen(message, prompt, quality, size)
 
 # Các câu lệnh
-@bot.command(name="igen", description=f"Tạo art")
+@bot.slash_command(name="igen", description=f"Tạo art")
 async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
     if interaction.guild is None:
         return await interaction.response.send_message(f"{ai_name}'s tablet: {ai_name} chỉ có thể vẽ cho bạn trong {gui_name}.", ephemeral=True)
@@ -398,7 +398,7 @@ async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bo
     ai_status.set('img_prompt', prompt)
     await img_gen(interaction, prompt, quality, size)
 
-@bot.command(name="reconnect", description=f"Kết nối lại với {ai_name}.")
+@bot.slash_command(name="reconnect", description=f"Kết nối lại với {ai_name}.")
 async def renew(interaction: discord.Interaction):
     if interaction.guild is None:
         return await interaction.response.send_message(f"{ai_name}'s tablet: bạn đang ở ngoài {gui_name}.", ephemeral=True)
@@ -406,7 +406,7 @@ async def renew(interaction: discord.Interaction):
     ai_status.update('total_rcn', 1)
     await bot.close()
 
-@bot.command(name="timeleap", description=f"Gặp {ai_name} ở timeline khác.")
+@bot.slash_command(name="timeleap", description=f"Gặp {ai_name} ở timeline khác.")
 async def newchat(interaction: discord.Interaction):
     if interaction.guild is None:
         return await interaction.response.send_message(f"{ai_name}'s tablet: {ai_name} chưa từng tiếp xúc với bạn ở đây.", ephemeral=True)
@@ -424,7 +424,7 @@ async def newchat(interaction: discord.Interaction):
             print(f"[NEW CHAT] - {iuser}")
             print()
 
-@bot.command(name="clogs", description=f"Nhật ký của {ai_name}")
+@bot.slash_command(name="clogs", description=f"Nhật ký của {ai_name}")
 async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False, get: str = None):
     if interaction.user.id == dev_id:
         if get:
@@ -438,7 +438,7 @@ async def cslog(interaction: discord.Interaction, chat: bool = False, command: b
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể xem nhật ký của cô ấy.`", ephemeral=True)
 
-@bot.command(name="tablet", description=f"{ai_name} tablet")
+@bot.slash_command(name="tablet", description=f"{ai_name} tablet")
 async def test_cmd(interaction: discord.Interaction):
     if interaction.user.id == dev_id:
         await interaction.response.send_message(f"Pong~!", ephemeral=True)
