@@ -10,7 +10,8 @@ from utils.buttons import *
 logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
 intents = discord.Intents.all()
-bot = discord.Bot(intents=intents)
+bot = commands.Bot(intents=intents)
+
 bot.load_extension("speech.speech_cog")
 # Configuration of speech logger
 logging.basicConfig(format="%(message)s")
