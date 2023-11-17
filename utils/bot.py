@@ -7,8 +7,6 @@ from utils.ai_api import *
 from utils.funcs import *
 from utils.buttons import *
 
-from speech.speech_cog import SpeechCog
-
 logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
 intents = discord.Intents.all()
@@ -99,17 +97,17 @@ async def on_ready():
     # Load vals
     ai_status.load('user_files/vals.json')
     
-    await bot.load_extension("path.to.speech_cog")
+    await bot.load_extension('speech/speech_cog.py')
     # get emojis
     guild = bot.get_guild(server_id)
     emojis = guild.emojis
 
     # Đồng bộ hoá commands
-    try:
+    """try:
         synced = await bot.tree.sync()
         print(f"Đã đồng bộ {len(synced)} lệnh.")
     except Exception as e:
-        print(e)
+        print(e)"""
 
     # Emojis load
     emojis_take(bot)
