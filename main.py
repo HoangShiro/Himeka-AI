@@ -27,7 +27,7 @@ if __name__ == '__main__':
     update_cfg("user_files/moods.py", mood_names)
     json_update('user_files/vals.json', default_values)
 
-    try:
-        start()
-    except Exception as e:
-        print("Start bot error: {0}".format(e))
+    #try:
+    start()
+    #except Exception as e:
+        #print("Start bot error: {0}".format(e))
