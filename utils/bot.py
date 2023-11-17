@@ -111,6 +111,8 @@ async def on_ready():
     asyncio.create_task(m_check())
     m_check.start()
 
+    await bot.change_presence(activity=discord.Game(name="Moeka baka"))
+
     print(f"{ai_name} đã khởi động")
 
     # Continue chat
