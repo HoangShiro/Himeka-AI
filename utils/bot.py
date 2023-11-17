@@ -29,6 +29,7 @@ class AllStatus:
         self.img_dprt = "sea"
         self.iregen = False
         self.pr_ch_id = 0
+        self.pr_vch_id = 0
         self.last_user = "Shiro"
 
     def update(self, val_name, value):
@@ -112,6 +113,14 @@ async def on_ready():
         message = await mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log)
         ai_status.update('total_chat', 1)
         asyncio.create_task(img_gen(message, ai_status.img_prompt, iquality, isize))
+    
+    # Continue voice
+    pr_v = ai_status.pr_vch_id
+    if pr_v:
+        vc = bot.get_channel(pr_v)
+        await vc.connect()
+        sound = await sob('greeting')
+        await voice_send(sound, vc)
 
 @bot.event
 async def on_voice_state_update(member, before, after):

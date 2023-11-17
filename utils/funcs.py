@@ -160,7 +160,7 @@ async def mess_rep(message, mess, umess, chat_log):
             print(f"{ain}: {answ}")
             print()
         await message.reply(answ)
-        await hime_tablet(message, answ)
+        asyncio.create_task(hime_tablet(message, answ))
         await img_gen_chat(message, mess)
 # Send message
 async def mess_send(message, umess, chat_log):
@@ -191,13 +191,30 @@ async def mess_id_send(bot, ch_id, umess, chat_log):
     return message
 
 # Send voice
-async def voice_send(mess, answ):
-    voice = await tts_get(answ, speaker, pitch, intonation_scale, speed)
-    audio_source = FFmpegPCMAudio(voice)
+async def voice_send(url, ch):
+    audio_source = FFmpegPCMAudio(url)
+    await asyncio.sleep(0.5)
+    ch.play(audio_source, after=lambda e: print('Player error: %s' % e) if e else None)
+
+# Voice make
+async def voice_make_tts(mess, answ):
+    url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
     if mess.guild.voice_client:
-        await asyncio.sleep(0.5)
+        b_ch = mess.guild.voice_client.channel.id
         b_vc = mess.guild.voice_client
-        b_vc.play(audio_source, after=lambda e: print('Player error: %s' % e) if e else None)
+        await voice_send(url, b_vc)
+        vals_save('user_files/vals.json', 'pr_vch_id', b_ch)
+
+# Soundboard get
+async def sob(sound_list, sound=None):
+    audio_dir = "/sound"
+    if not sound:
+        audio_dir = f"./sound/{sound_list}"
+        audio_files = [os.path.join(audio_dir, f) for f in os.listdir(audio_dir) if f.endswith(".wav")]
+        audio_file = random.choice(audio_files)
+    else:
+        audio_file = f"{audio_dir}/{sound}"
+    return audio_file
 
 # Join voice channel
 async def v_join(message):
@@ -221,23 +238,27 @@ async def v_leave(message):
         b_vc = message.guild.voice_client
     if b_ch:
         await b_vc.disconnect()
+        pr_vch_id = None
+        vals_save('user_files/vals.json', 'pr_vch_id', pr_vch_id)
 
 # Himeka's tablet
 async def hime_tablet(mess, answ):
-    # Voice
+    # Voice join
     if re.search(rf'vc', answ, re.IGNORECASE) and re.search(rf'join', answ, re.IGNORECASE):
         if mess.author.voice and mess.author.voice.channel:
             await v_join(mess)
+
+    # TTS
+    vc = None
+    if mess.guild.voice_client:
+        vc = mess.guild.voice_client.channel
+    if vc:
+        await voice_make_tts(mess, answ)
+
+    # Voice leave
     if re.search(rf'vc', answ, re.IGNORECASE) and re.search(rf'leav', answ, re.IGNORECASE):
         await v_leave(mess)
     
-    # TTS
-    b_ch = None
-    if mess.guild.voice_client:
-        b_ch = mess.guild.voice_client.channel
-    if b_ch:
-        asyncio.create_task(voice_send(mess, answ))
-
 # Count downt
 async def count_down(user_timers, user):
     while user_timers[user] > 0:
