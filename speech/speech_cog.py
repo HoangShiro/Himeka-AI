@@ -76,7 +76,7 @@ class SpeechCog(commands.Cog):
                 print(text)
                 print(f"{ain}: {answ}")
                 print()
-            await ctx.send(f"<@{user}> said: {text}")
+            await ctx.send(answ)
 
 
 def setup(bot):
