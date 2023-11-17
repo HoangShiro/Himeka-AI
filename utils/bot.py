@@ -114,6 +114,18 @@ async def on_ready():
         asyncio.create_task(img_gen(message, ai_status.img_prompt, iquality, isize))
 
 @bot.event
+async def on_voice_state_update(member, before, after):
+    if member == bot.user:
+        return
+    bot_voice_channel = bot.voice_clients[0].channel if bot.voice_clients else None
+    if after.channel == bot_voice_channel and after.channel is not None and before.channel is None:
+        if member.name not in user_timers:
+            user_timers[member.name] = 60
+            asyncio.create_task(count_down(user_timers, member.name))
+            umess = (f"Your tablet: {member.name} joined voice channel {bot_voice_channel.name} with you")
+            asyncio.create_task(mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log))
+
+@bot.event
 async def on_message(message):
     if message.author == bot.user or message.content.startswith((".", "<")):
         return
@@ -129,18 +141,6 @@ async def on_message(message):
         ai_status.update('total_chat', 1)
     
     return
-
-@bot.event
-async def on_voice_state_update(member, before, after):
-    if member == bot.user:
-        return
-    bot_voice_channel = bot.voice_clients[0].channel if bot.voice_clients else None
-    if after.channel == bot_voice_channel and after.channel is not None and before.channel is None:
-        if member.name not in user_timers:
-            user_timers[member.name] = 60
-            asyncio.create_task(count_down(user_timers, member.name))
-            umess = (f"Your tablet: {member.name} joined voice channel {bot_voice_channel.name} with you")
-            asyncio.create_task(mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log))
 
 # Image gen dall e 3 in chat
 async def img_gen_chat(message, result):
