@@ -377,7 +377,7 @@ async def img_regen(message, quality, size, rq):
 
 # Các câu lệnh
 @bot.slash_command(name="igen", description=f"Tạo art")
-async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
+async def image_gen(interaction: discord.SlashCommand, prompt: str = None, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
     if interaction.guild is None:
         return await interaction.response.send_message(f"{ai_name}'s tablet: {ai_name} chỉ có thể vẽ cho bạn trong {gui_name}.", ephemeral=True)
     global ihq, iportrait, iscene
