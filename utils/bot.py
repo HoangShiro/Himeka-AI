@@ -363,7 +363,7 @@ async def img_regen(message, quality, size, rq):
 
 # Các câu lệnh
 # Image Gen
-@bot.tree.command(name="igen", description=f"Tạo art", guild=server_id)
+@bot.tree.command(name="igen", description=f"Tạo art", guild = bot.get_guild(server_id))
 async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bool = ihq, portrait: bool = iportrait, scene: bool = iscene):
     global ihq, iportrait, iscene
     if not prompt:
@@ -382,13 +382,13 @@ async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bo
     ai_status.set('img_prompt', prompt)
     await img_gen(interaction, prompt, quality, size)
 
-@bot.tree.command(name="reconnect", description=f"Kết nối lại với {ai_name}.", guild=server_id)
+@bot.tree.command(name="reconnect", description=f"Kết nối lại với {ai_name}.", guild = bot.get_guild(server_id))
 async def renew(interaction: discord.Interaction):
     await interaction.response.send_message(f"{ai_name}'s tablet: *đang thiết lập lại kết nối giữa {gui_name} với {ai_name}*", ephemeral=True)
     ai_status.update('total_rcn', 1)
     await bot.close()
 
-@bot.tree.command(name="timeleap", description=f"Gặp {ai_name} ở timeline khác.", guild=server_id)
+@bot.tree.command(name="timeleap", description=f"Gặp {ai_name} ở timeline khác.", guild = bot.get_guild(server_id))
 async def newchat(interaction: discord.Interaction):
     global rt_c
     iuser = interaction.user.name
