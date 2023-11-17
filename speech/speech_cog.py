@@ -15,7 +15,7 @@ class SpeechCog(commands.Cog):
         self.bot = bot
         self.connections = {}  # Cache of voice connections
 
-    @discord.command()
+    @discord.slash_command()
     async def start(self, ctx: discord.ApplicationContext):
         """Start transcription."""
         voice = ctx.author.voice
@@ -31,7 +31,7 @@ class SpeechCog(commands.Cog):
 
         await ctx.respond("The transcription has started!")
 
-    @discord.command()
+    @discord.slash_command()
     async def stop(self, ctx: discord.ApplicationContext):
         """Stop transcription."""
         if ctx.guild.id in self.connections:
