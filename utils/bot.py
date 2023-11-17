@@ -10,7 +10,7 @@ from utils.buttons import *
 logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = discord.Bot(intents=intents)
 
 # Configuration of speech logger
 logging.basicConfig(format="%(message)s")
