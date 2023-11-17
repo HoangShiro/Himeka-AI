@@ -123,8 +123,7 @@ async def on_ready():
     # Continue voice
     pr_v = ai_status.pr_vch_id
     if pr_v:
-        vc = bot.get_channel(pr_v)
-        await vc.connect()
+        vc = await bot.get_channel(pr_v).connect()
         sound = await sob('greeting')
         await voice_send(sound, vc)
 
