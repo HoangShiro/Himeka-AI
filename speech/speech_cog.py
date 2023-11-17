@@ -4,6 +4,7 @@ import logging
 import discord
 from discord.ext import commands
 from speech_recognition import RequestError, UnknownValueError
+from discord import FFmpegPCMAudio
 from user_files.config import *
 from speech.sr_sink import SRSink
 
@@ -34,7 +35,7 @@ class SpeechCog(commands.Cog):
         # SRSink will discard the audio once is transcribed.
         vc.start_recording(SRSink(self.speech_callback_bridge, ctx), self.stop_callback)
 
-        await ctx.respond("The transcription has started!")
+        await ctx.respond("Himeka's tablet: Himeka can hear voice now.", )
 
     @discord.slash_command()
     async def stop(self, ctx: discord.ApplicationContext):
@@ -72,11 +73,19 @@ class SpeechCog(commands.Cog):
             chat_log = vals_load('user_files/vals.json', 'chat_log')
             answ, ain = await CAI(text)
             url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
+            voice_channel = ctx.author.voice.channel
+
+            if voice_channel:
+                # Check if the bot is already in a voice channel
+                voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+            await ctx.send(answ)
+            asyncio.sleep(0.5)
+            voice_client.play(FFmpegPCMAudio(url), after=lambda e: print('done', e))
+
             if chat_log:
                 print(text)
                 print(f"{ain}: {answ}")
                 print()
-            await ctx.send(answ)
 
 
 def setup(bot):
