@@ -342,7 +342,7 @@ async def img_gen(interaction, prompt, quality, size):
         file_path = f'user_files/gen_imgs/{img_id}.png'
         image_file = discord.File(file_path, filename=f"{img_id}.png")
         embed.set_image(url=f"attachment://{image_file.filename}")
-        await message.edit(embed=embed, view=view, attachments=[image_file])
+        await message.edit(embed=embed, view=view, files=[image_file])
     if img or eimg:
         igen_flw = True
         ai_status.set('igen_flw', igen_flw)
