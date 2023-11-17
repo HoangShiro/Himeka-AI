@@ -11,8 +11,7 @@ logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
-guild = bot.get_guild(server_id)
-emojis = guild.emojis
+emojis = []
 
 class AllStatus:
     def __init__(self):
@@ -88,8 +87,13 @@ isize = "1024x1024"
 
 @bot.event
 async def on_ready():
+    global emojis
     # Load vals
     ai_status.load('user_files/vals.json')
+    # get emojis
+    guild = bot.get_guild(server_id)
+    emojis = guild.emojis
+
     # Đồng bộ hoá commands
     try:
         synced = await bot.tree.sync()
