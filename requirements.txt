@@ -21,7 +21,7 @@ charset-normalizer
 frozenlist
 idna
 multidict
-
+py-cord
 pycparser
 requests
 SpeechRecognition
