@@ -11,6 +11,14 @@ logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
+
+bot.load_extension("speech.speech_cog")
+
+# Configuration of speech logger
+logging.basicConfig(format="%(message)s")
+logger = logging.getLogger("speech.speech_cog")
+logger.setLevel(logging.WARNING)
+
 emojis = []
 
 class AllStatus:
