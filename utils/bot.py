@@ -97,7 +97,7 @@ async def on_ready():
     # Load vals
     ai_status.load('user_files/vals.json')
     
-    await bot.load_extension('speech/speech_cog.py')
+    await bot.load_extension("speech.speech_cog")
     # get emojis
     guild = bot.get_guild(server_id)
     emojis = guild.emojis
