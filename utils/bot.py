@@ -141,7 +141,7 @@ async def on_voice_state_update(member, before, after):
 
 @bot.event
 async def on_message(message):
-    if message.author == bot.user or message.content.startswith((".", "<")):
+    if message.author == bot.user or message.content.startswith((".", "<", "!")):
         return
     
     # Phản hồi chat
