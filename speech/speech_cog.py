@@ -79,7 +79,7 @@ class SpeechCog(commands.Cog):
                 # Check if the bot is already in a voice channel
                 voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
             await ctx.send(answ)
-            asyncio.sleep(0.5)
+            await asyncio.sleep(0.5)
             voice_client.play(FFmpegPCMAudio(url), after=lambda e: print('done', e))
 
             if chat_log:
