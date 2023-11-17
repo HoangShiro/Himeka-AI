@@ -237,16 +237,20 @@ async def v_leave(message):
         b_ch = message.guild.voice_client.channel
         b_vc = message.guild.voice_client
     if b_ch:
+        url = await sob('bye')
+        voice_send(url, b_ch)
         await b_vc.disconnect()
         pr_vch_id = None
         vals_save('user_files/vals.json', 'pr_vch_id', pr_vch_id)
 
 # Himeka's tablet
 async def hime_tablet(mess, answ):
-    # Voice join
+    # Voice
     if re.search(rf'vc', answ, re.IGNORECASE) and re.search(rf'join', answ, re.IGNORECASE):
         if mess.author.voice and mess.author.voice.channel:
             await v_join(mess)
+    if re.search(rf'vc', answ, re.IGNORECASE) and re.search(rf'leav', answ, re.IGNORECASE):
+        await v_leave(mess)
 
     # TTS
     vc = None
@@ -254,10 +258,7 @@ async def hime_tablet(mess, answ):
         vc = mess.guild.voice_client.channel
     if vc:
         await voice_make_tts(mess, answ)
-
-    # Voice leave
-    if re.search(rf'vc', answ, re.IGNORECASE) and re.search(rf'leav', answ, re.IGNORECASE):
-        await v_leave(mess)
+    
     
 # Count downt
 async def count_down(user_timers, user):
