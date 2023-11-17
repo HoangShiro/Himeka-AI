@@ -72,13 +72,11 @@ class SpeechCog(commands.Cog):
         else:
             chat_log = vals_load('user_files/vals.json', 'chat_log')
             answ, ain = await CAI(text)
+            await ctx.send(answ)
             url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
             voice_channel = ctx.author.voice.channel
-
             if voice_channel:
-                # Check if the bot is already in a voice channel
                 voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-            await ctx.send(answ)
             await asyncio.sleep(0.5)
             voice_client.play(FFmpegPCMAudio(url), after=lambda e: print('done', e))
 
