@@ -172,6 +172,7 @@ async def mess_send(message, umess, chat_log):
             print(f"{ain}: {answ}")
             print()
         await message.channel.send(answ)
+        await hime_tablet(message, answ)
 
 # Send message with channel id
 async def mess_id_send(bot, ch_id, umess, chat_log):
@@ -186,6 +187,7 @@ async def mess_id_send(bot, ch_id, umess, chat_log):
         await channel.send(answ)
         async for message in channel.history(limit=1):
             pass
+        await hime_tablet(message, answ)
     return message
 
 # Send voice
