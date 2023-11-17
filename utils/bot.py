@@ -11,7 +11,7 @@ logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
 intents = discord.Intents.all()
 bot = discord.Bot(intents=intents)
-
+bot.load_extension("speech.speech_cog")
 # Configuration of speech logger
 logging.basicConfig(format="%(message)s")
 logger = logging.getLogger("speech.speech_cog")
@@ -96,8 +96,7 @@ async def on_ready():
     global emojis
     # Load vals
     ai_status.load('user_files/vals.json')
-    
-    bot.load_extension("speech.speech_cog")
+
     # get emojis
     guild = bot.get_guild(server_id)
     emojis = guild.emojis
