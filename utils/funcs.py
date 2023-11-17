@@ -11,6 +11,7 @@ nltk.download('averaged_perceptron_tagger')
 nltk.download('punkt')
 
 emojis = []
+user_timers = {}
 
 # Save json
 def vals_save(file_name, variable_name, variable_value):
@@ -234,4 +235,10 @@ async def hime_tablet(mess, answ):
         b_ch = mess.guild.voice_client.channel
     if b_ch:
         asyncio.create_task(voice_send(mess, answ))
-    
+
+# Count downt
+async def count_down(user_timers, user):
+    while user_timers[user] > 0:
+        user_timers[user] -= 1
+        await asyncio.sleep(1)
+    del user_timers[user]
