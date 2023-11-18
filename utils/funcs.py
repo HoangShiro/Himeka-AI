@@ -243,10 +243,10 @@ async def v_leave(message):
 # Himeka's tablet
 async def hime_tablet(mess, answ):
     # Voice
-    if re.search(rf'vc', answ, re.IGNORECASE) and re.search(rf'join', answ, re.IGNORECASE):
+    if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'jo|ju', answ, re.IGNORECASE):
         if mess.author.voice and mess.author.voice.channel:
             await v_join(mess)
-    if re.search(rf'vc', answ, re.IGNORECASE) and re.search(rf'leav', answ, re.IGNORECASE):
+    if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'leav|out', answ, re.IGNORECASE):
         await v_leave(mess)
 
     # TTS
