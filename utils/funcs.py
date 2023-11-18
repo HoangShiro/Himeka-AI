@@ -255,7 +255,7 @@ async def hime_tablet(mess, answ):
         await v_leave(mess)
     
     # Status/IW's card
-    if re.search(rf'my|hime', answ, re.IGNORECASE) and re.search(rf'card|status|lv', answ, re.IGNORECASE):
+    if re.search(rf'my|hime', answ, re.IGNORECASE) and re.search(rf'card|status|lv', answ, re.IGNORECASE) and re.search(rf'here|show|give', answ, re.IGNORECASE):
         embed, view = await status_make()
         await mess.channel.send(embed=embed, view=view)
 
