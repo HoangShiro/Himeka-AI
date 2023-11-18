@@ -245,12 +245,19 @@ async def v_leave(message):
 
 # Himeka's tablet
 async def hime_tablet(mess, answ):
+    from utils.bot import status_make
+
     # Voice
     if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'jo|ju', answ, re.IGNORECASE):
         if mess.author.voice and mess.author.voice.channel:
             await v_join(mess)
     if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'leav|out', answ, re.IGNORECASE):
         await v_leave(mess)
+    
+    # Status/IW's card
+    if re.search(rf'my|hime', answ, re.IGNORECASE) and re.search(rf'card|status|lv', answ, re.IGNORECASE):
+        embed, view = await status_make()
+        await mess.channel.send(embed=embed, view=view)
 
     # TTS
     vc = None
