@@ -9,6 +9,7 @@ booru
 nltk
 websockets
 PyNaCl
+opencv-python
 
 aiohttp
 aiosignal
