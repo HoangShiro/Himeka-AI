@@ -316,7 +316,7 @@ async def img_gen(interaction, prompt, quality, size):
         quality = "Standard"
     if img:
     # Tạo một Embed để gửi hình ảnh
-        embed = discord.Embed(description=f"🏷️ {prompt}", color=discord.Color.blue())
+        embed = discord.Embed(description=f"🏷️ {prompt}", color=0xffa3af)
         embed.add_field(name=f"🌸 {quality}       🖼️ {size}", value="", inline=False)
         embed.set_image(url=img)
     else:
