@@ -4,11 +4,7 @@ import json
 
 # openai key list
 openai_key = {
-    "oak_1": '',
-    "oak_2": '',
-    "oak_3": '',
-    "oak_4": '',
-    "oak_5": '',
+    "oak_1": ''
 }
 
 # Config.py

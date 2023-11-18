@@ -341,8 +341,7 @@ async def img_gen(interaction, prompt, quality, size):
         await dl_img(img, img_id)
         file_path = f'user_files/gen_imgs/{img_id}.png'
         color = await img_get_color(file_path)
-        print(color)
-        embed = discord.Embed(description=f"🏷️ {prompt}", color=color)
+        embed = discord.Embed(description=f"🏷️ {prompt}", color=discord.Colour.from_rgb(*color))
         embed.add_field(name=f"🌸 {quality}       🖼️ {size}", value="", inline=False)
         image_file = discord.File(file_path, filename=f"{img_id}.png")
         embed.set_image(url=f"attachment://{image_file.filename}")
