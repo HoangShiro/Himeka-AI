@@ -7,6 +7,7 @@ from user_files.openai_key import *
 from user_files.config import *
 
 CAc = PyAsyncCAI(cai_key)
+CAcr = c_token
 
 # Roll key
 class KeyM:
@@ -24,7 +25,6 @@ oa_key = KeyM()
 # Chat - CAI
 async def CAI(message):
     from utils.bot import ai_name
-    CAcr = c_token
     try:
         chat = await CAc.chat.get_chat(CAcr)
         participants = chat['participants']
