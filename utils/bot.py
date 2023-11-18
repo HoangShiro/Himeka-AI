@@ -386,8 +386,8 @@ async def status_make():
         return emood
     
     emood = await set_emood(ai_status.bot_mood)
-    embed=discord.Embed(title="The Head of Libra's city", description="IW's card lv: 4", color=0xffa3af)
-    embed.set_author(name=f"{ai_full_name}", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs",
+    embed=discord.Embed(title=f"{ai_full_name}", description="IW's card lv: 4", color=0xffa3af)
+    embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs",
                      icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.add_field(name="Status", value="Happily in NekoArt Studio", inline=False)
