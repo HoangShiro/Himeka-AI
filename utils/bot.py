@@ -122,13 +122,6 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name="Moeka baka"))
 
     print(f"{ai_name} đã khởi động")
-
-    # Continue chat
-    if ai_status.iregen:
-        umess = f"Your tablet: You are continuing to draw for {ai_status.last_user}"
-        message = await mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log)
-        ai_status.update('total_chat', 1)
-        asyncio.create_task(img_gen(message, ai_status.img_prompt, iquality, isize))
     
     # Continue voice
     pr_v = ai_status.pr_vch_id
@@ -136,6 +129,13 @@ async def on_ready():
         vc = await bot.get_channel(pr_v).connect()
         sound = await sob('greeting')
         await voice_send(sound, vc)
+        
+    # Continue chat
+    if ai_status.iregen:
+        umess = f"Your tablet: You are continuing to draw for {ai_status.last_user}"
+        message = await mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log)
+        ai_status.update('total_chat', 1)
+        asyncio.create_task(img_gen(message, ai_status.img_prompt, iquality, isize))
 
 @bot.event
 async def on_voice_state_update(member, before, after):
