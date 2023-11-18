@@ -3,7 +3,9 @@ from discord import FFmpegPCMAudio
 from nltk import word_tokenize, pos_tag
 from translate import Translator
 from langdetect import detect
+from discord.ui import View
 
+from utils.buttons import *
 from utils.ai_api import *
 from user_files.config import *
 
@@ -146,16 +148,16 @@ def text_handle(text):
 async def mess_rep(message, mess, umess, chat_log):
     from utils.bot import img_gen_chat
     async with message.channel.typing():
+        view = View()
         answ, ain, busy = await CAI(umess)
         answ = text_handle(answ)
         if chat_log:
             print(umess)
             print(f"{ain}: {answ}")
             print()
-        if not busy:
-            await message.reply(answ)
-        else:
-            await message.author.send(answ)
+        if busy:
+            view.add_item(irmv_bt)
+        await message.reply(answ, view=view)
         asyncio.create_task(hime_tablet(message, answ))
         await img_gen_chat(message, mess)
 # Send message
