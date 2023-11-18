@@ -24,23 +24,27 @@ oa_key = KeyM()
 
 # Chat - CAI
 async def CAI(message):
-    chat = await CAc.chat.get_chat(CAcr)
-    participants = chat['participants']
+    from utils.bot import ai_name
+    try:
+        chat = await CAc.chat.get_chat(CAcr)
+        participants = chat['participants']
 
-    # In the list of "participants",
-    # a character can be at zero or in the first place
-    if not participants[0]['is_human']:
-        tgt = participants[0]['user']['username']
-    else:
-        tgt = participants[1]['user']['username']
+        # In the list of "participants",
+        # a character can be at zero or in the first place
+        if not participants[0]['is_human']:
+            tgt = participants[0]['user']['username']
+        else:
+            tgt = participants[1]['user']['username']
 
-    data = await CAc.chat.send_message(
-        chat['external_id'], tgt, message
-    )
+        data = await CAc.chat.send_message(
+            chat['external_id'], tgt, message
+        )
 
-    name = data['src_char']['participant']['name']
-    text = data['replies'][0]['text']
-    
+        name = data['src_char']['participant']['name']
+        text = data['replies'][0]['text']
+    except Exception as e:
+        text = f"{ai_name}'s tablet: Himeka đang bận, cô ấy sẽ trả lời bạn sau."
+        name = "ERROR"
     return text, name
 
 # Tasks - Openai
