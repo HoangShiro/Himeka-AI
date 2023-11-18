@@ -277,5 +277,5 @@ async def img_get_color(path):
     hist = cv2.calcHist([image_rgb], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
     max_index = np.unravel_index(hist.argmax(), hist.shape)
     r, g, b = int(max_index[0]), int(max_index[1]), int(max_index[2])
-    print(r, g, b)
+    print(f"{r}, {g}, {b}")
     return r, g, b
