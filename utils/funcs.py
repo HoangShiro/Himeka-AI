@@ -293,5 +293,4 @@ async def img_get_color(path):
     if b > cmax:
         b -= cmin
 
-    print(f"{r}, {g}, {b}")
     return r, g, b
