@@ -278,5 +278,5 @@ async def img_get_color(path):
     max_index = np.unravel_index(hist.argmax(), hist.shape)
     most_frequent_color = (max_index[0], max_index[1], max_index[2])
     hex_color = "0x{:02X}{:02X}{:02X}".format(*most_frequent_color)
-    hex_color = hex_color.lower()
-    return hex_color
+    int_color = int(hex_color, 16) & 0xFFFFFF
+    return int_color
