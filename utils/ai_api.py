@@ -44,7 +44,8 @@ async def CAI(message):
         text = data['replies'][0]['text']
     except Exception as e:
         text = f"{ai_name}'s tablet: Himeka đang bận, cô ấy sẽ trả lời bạn sau."
-        name = "ERROR"
+        name = "Rena"
+        print("CAI error: ", str(e))
     return text, name
 
 # Tasks - Openai
