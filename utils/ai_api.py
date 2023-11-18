@@ -45,7 +45,7 @@ async def CAI(message):
 
         busy = False
     except Exception as e:
-        text = f"{ai_name}'s tablet: Himeka đang bận, cô ấy sẽ trả lời bạn sau."
+        text = f"```fix\n{ai_name}'s tablet: Himeka đang bận, cô ấy sẽ trả lời bạn sau.\n```"
         name = "Rena"
         busy = True
         print("CAI error: ", str(e))
