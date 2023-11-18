@@ -277,4 +277,5 @@ async def img_get_color(path):
     hist = cv2.calcHist([image_rgb], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
     max_index = np.unravel_index(hist.argmax(), hist.shape)
     most_frequent_color = (max_index[0], max_index[1], max_index[2])
-    return most_frequent_color
+    color_str = f"0x{most_frequent_color[0]:02x}{most_frequent_color[1]:02x}{most_frequent_color[2]:02x}"
+    return color_str
