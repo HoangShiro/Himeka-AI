@@ -42,11 +42,14 @@ async def CAI(message):
 
         name = data['src_char']['participant']['name']
         text = data['replies'][0]['text']
+
+        busy = False
     except Exception as e:
         text = f"{ai_name}'s tablet: Himeka đang bận, cô ấy sẽ trả lời bạn sau."
         name = "Rena"
+        busy = True
         print("CAI error: ", str(e))
-    return text, name
+    return text, name, busy
 
 # Tasks - Openai
 async def openai_task(case):

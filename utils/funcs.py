@@ -140,32 +140,28 @@ def text_handle(text):
                 rtext = re_text[key]
                 words[i] = words[i].replace(words[i], rtext)
     result = ' '.join(words)
-    num = result.count("!")
-    if num > 1:
-        result = "### " + result
-    elif num > 2:
-        result = "## " + result
-    elif num > 3:
-        result = "# " + result
     return result
 
 # Reply message
 async def mess_rep(message, mess, umess, chat_log):
     from utils.bot import img_gen_chat
     async with message.channel.typing():
-        answ, ain = await CAI(umess)
+        answ, ain, busy = await CAI(umess)
         answ = text_handle(answ)
         if chat_log:
             print(umess)
             print(f"{ain}: {answ}")
             print()
-        await message.reply(answ)
+        if not busy:
+            await message.reply(answ)
+        else:
+            await message.author.send(answ)
         asyncio.create_task(hime_tablet(message, answ))
         await img_gen_chat(message, mess)
 # Send message
 async def mess_send(message, umess, chat_log):
     async with message.channel.typing():
-        answ, ain = await CAI(umess)
+        answ, ain, busy = await CAI(umess)
         answ = text_handle(answ)
         if chat_log:
             print(umess)
@@ -178,7 +174,7 @@ async def mess_send(message, umess, chat_log):
 async def mess_id_send(bot, ch_id, umess, chat_log):
     channel = bot.get_channel(ch_id)
     async with channel.typing():
-        answ, ain = await CAI(umess)
+        answ, ain, busy = await CAI(umess)
         answ = text_handle(answ)
         if chat_log:
             print(umess)

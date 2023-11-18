@@ -255,7 +255,7 @@ async def img_gen(interaction, prompt, quality, size):
     if ai_status.cds_log:
         print(f"[IMG GENERATE] - {user_nick}")
         print()
-    embed = discord.Embed(title=f"{ai_name} đang tạo art cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=discord.Color.blue())
+    embed = discord.Embed(title=f"{ai_name} đang vẽ cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=discord.Color.blue())
     view = View(timeout=None)
     view.add_item(irmv_bt)
     if isinstance(interaction, discord.Message):
