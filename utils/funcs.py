@@ -274,9 +274,20 @@ async def count_down(user_timers, user):
 async def img_get_color(path):
     image = cv2.imread(path)
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    hist = cv2.calcHist([image_rgb], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
-    max_index = np.unravel_index(hist.argmax(), hist.shape)
-    most_frequent_color = (max_index[0], max_index[1], max_index[2])
+    # Resize ảnh
+    image_resized = cv2.resize(image_rgb, (256, 256))
+    # Tính toán histogram
+    hist = cv2.calcHist([image_resized], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
+    # Loại bỏ màu trắng và đen
+    max_index = np.unravel_index(np.argsort(hist, axis=None)[-1], hist.shape)
+    if max_index == (0, 0, 0) or max_index == (255, 255, 255):
+        # Nếu là màu đen hoặc trắng, chọn màu xuất hiện thứ hai
+        second_max_index = np.unravel_index(np.argsort(hist, axis=None)[-2], hist.shape)
+        most_frequent_color = (second_max_index[0], second_max_index[1], second_max_index[2])
+    else:
+        most_frequent_color = max_index
+    # Chuyển đổi sang hex và int
     hex_color = "0x{:02X}{:02X}{:02X}".format(*most_frequent_color)
     int_color = int(hex_color, 16)
+
     return int_color
