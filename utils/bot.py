@@ -255,8 +255,7 @@ async def img_gen(interaction, prompt, quality, size):
     if ai_status.cds_log:
         print(f"[IMG GENERATE] - {user_nick}")
         print()
-    testc = 396092
-    embed = discord.Embed(title=f"{ai_name} đang vẽ cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=testc)
+    embed = discord.Embed(title=f"{ai_name} đang vẽ cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=0xffa3af)
     view = View(timeout=None)
     view.add_item(irmv_bt)
     if isinstance(interaction, discord.Message):
@@ -342,6 +341,7 @@ async def img_gen(interaction, prompt, quality, size):
         await dl_img(img, img_id)
         file_path = f'user_files/gen_imgs/{img_id}.png'
         color = await img_get_color(file_path)
+        print(color)
         embed = discord.Embed(description=f"🏷️ {prompt}", color=color)
         embed.add_field(name=f"🌸 {quality}       🖼️ {size}", value="", inline=False)
         image_file = discord.File(file_path, filename=f"{img_id}.png")
