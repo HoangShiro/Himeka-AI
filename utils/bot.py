@@ -340,6 +340,9 @@ async def img_gen(interaction, prompt, quality, size):
             ai_status.set('img_dprt', img_dprt)
         await dl_img(img, img_id)
         file_path = f'user_files/gen_imgs/{img_id}.png'
+        color = await img_get_color(file_path)
+        embed = discord.Embed(description=f"🏷️ {prompt}", color=color)
+        embed.add_field(name=f"🌸 {quality}       🖼️ {size}", value="", inline=False)
         image_file = discord.File(file_path, filename=f"{img_id}.png")
         embed.set_image(url=f"attachment://{image_file.filename}")
         await message.edit(embed=embed, view=view, files=[image_file])

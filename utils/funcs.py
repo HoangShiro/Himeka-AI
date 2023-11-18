@@ -1,4 +1,7 @@
 import json, os, nltk, requests, discord, random, re, jaconv
+import cv2, asyncio
+import numpy as np
+
 from discord import FFmpegPCMAudio
 from nltk import word_tokenize, pos_tag
 from translate import Translator
@@ -266,3 +269,13 @@ async def count_down(user_timers, user):
         user_timers[user] -= 1
         await asyncio.sleep(1)
     del user_timers[user]
+
+# Get color
+async def img_get_color(path):
+    image = cv2.imread(path)
+    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    hist = cv2.calcHist([image_rgb], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
+    max_index = np.unravel_index(hist.argmax(), hist.shape)
+    most_frequent_color = (max_index[0], max_index[1], max_index[2])
+    hex_color = "0x{:02X}{:02X}{:02X}".format(*most_frequent_color)
+    return hex_color
