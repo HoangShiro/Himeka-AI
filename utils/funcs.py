@@ -278,15 +278,20 @@ async def img_get_color(path):
     max_index = np.unravel_index(hist.argmax(), hist.shape)
     r, g, b = int(max_index[0]), int(max_index[1]), int(max_index[2])
 
-    cmin = 20
-    cmax = 230
-    if r < cmin or g < cmin or b < cmin:
+    cmin = 30
+    cmax = 240
+    if r < cmin:
         r += cmin
+    if g < cmin:
         g += cmin
+    if b < cmin:
         b += cmin
-    if r > cmax or g > cmax or b > cmax:
+    if r > cmax:
         r -= cmin
+    if g > cmax:
         g -= cmin
+    if b > cmax:
         b -= cmin
+
     print(f"{r}, {g}, {b}")
     return r, g, b
