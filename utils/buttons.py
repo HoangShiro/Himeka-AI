@@ -16,7 +16,7 @@ st_bt3 = discord.ui.Button(label="❤️", custom_id="st3", style=discord.Button
 
 # Status
 async def status_make():
-    from utils.bot import ai_status
+    from utils.bot import ai_status, ai_full_name
     async def set_emood(bot_mood):
         bot_mood = max(1, min(bot_mood, 99))
         emood_count = (bot_mood+20) // 20
