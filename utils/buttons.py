@@ -14,11 +14,16 @@ st_bt1 = discord.ui.Button(label="❤️", custom_id="st1", style=discord.Button
 st_bt2 = discord.ui.Button(label="❤️", custom_id="st2", style=discord.ButtonStyle.grey)
 st_bt3 = discord.ui.Button(label="❤️", custom_id="st3", style=discord.ButtonStyle.grey)
 
+hi_bt = discord.ui.Button(label="😺 Himeka", custom_id="himeka", style=discord.ButtonStyle.green)
+li_bt = discord.ui.Button(label="🌆 Libra", custom_id="libra", style=discord.ButtonStyle.green)
+
 # Button call
 async def load_btt():
     irmv_bt.callback = irmv_bt_atv
     rg_bt.callback = rg_bt_atv
     rgs_bt.callback = rgs_bt_atv
+    hi_bt.callback = hime_bt
+    li_bt.callback = libra_bt
 
 async def irmv_bt_atv(interaction):
     await interaction.message.delete()
@@ -39,8 +44,16 @@ async def rgs_bt_atv(interaction):
     size = img_prompts['size']
     await img_gen(interaction, prompt, quality, size)
 
+async def hime_bt(interaction):
+    embed, view = await status_himeka()
+    await interaction.response.edit_message(embed=embed, view=view)
+
+async def libra_bt(interaction):
+    embed, view = await status_himeka()
+    await interaction.response.edit_message(embed=embed, view=view)
+
 # Status
-async def status_make():
+async def status_himeka():
     from utils.bot import ai_status, ai_full_name
     async def set_emood(bot_mood):
         bot_mood = max(1, min(bot_mood, 99))
@@ -62,4 +75,24 @@ async def status_make():
     embed.add_field(name="🕒 Time leap", value=ai_status.roll_back, inline=True)
     view = View()
     view.add_item(irmv_bt)
+    view.add_item(li_bt)
+    return embed, view
+
+async def status_libra():
+    from utils.funcs import dot_num
+    from utils.bot import ai_status
+    pops = await dot_num(1263865 + (ai_status.total_chat*2))
+    bld = await dot_num(1762315 + (ai_status.total_draw))
+    vhc = int(bld/3) + int(pops/2)
+    embed=discord.Embed(title="♎ Libra", description="Một trong 2 thành phố dân cư lớn nhất trên IW. Sở hữu mọi loại cơ sở vật chất, ẩm thực. Libra có đời sống cao, văn minh và sạch đẹp, nhiều cây xanh và luôn chào đón những khách du lịch trái đất cũng như từ các space colony khác. Tập đoàn Shindou có vốn đầu tư bất động sản lớn nhất vào thành phố này.", color=0x3db5ff)
+    embed.set_author(name="Thành phố dân cư chính", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727546130767902/Libra.png")
+    embed.add_field(name=f"👨🏻‍👩‍👧‍👦🏻 {pops} (up to 5M)", value="💳 ~lv 3", inline=True)
+    embed.add_field(name="🗺️ 820km² (up to 1200)", value="🛫 158 port", inline=True)
+    embed.add_field(name=f"🌆 {bld}", value=f"🛰️ {vhc}", inline=True)
+    embed.add_field(name="🕰️ 2018 -> 2023", value="", inline=True)
+    embed.set_footer(text="Để thăm quan Libra, cần thấp nhất card IW lv1")
+    view = View()
+    view.add_item(irmv_bt)
+    view.add_item(hi_bt)
     return embed, view

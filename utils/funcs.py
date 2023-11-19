@@ -255,7 +255,7 @@ async def hime_tablet(mess, answ):
     
     # Status/IW's card
     if re.search(rf'my|hime', answ, re.IGNORECASE) and re.search(rf'card|status|lv', answ, re.IGNORECASE) and re.search(rf'here|show|give', answ, re.IGNORECASE):
-        embed, view = await status_make()
+        embed, view = await status_himeka()
         await mess.channel.send(embed=embed, view=view)
 
     # TTS
@@ -300,3 +300,13 @@ async def img_get_color(path):
         b -= cmin
 
     return r, g, b
+
+async def dot_num(number):
+        num_str = str(number)
+        num_digits = len(num_str)
+        formatted_str = ""
+        for i in range(num_digits - 1, -1, -1):
+            formatted_str = num_str[i] + formatted_str
+            if (num_digits - i) % 3 == 0 and i != 0:
+                formatted_str = "." + formatted_str 
+        return formatted_str

@@ -430,7 +430,7 @@ async def newchat(interaction: discord.Interaction):
 
 @bot.slash_command(name="status", description=f"{ai_name} tablet")
 async def status_show(interaction: discord.Interaction):
-    embed, view = await status_make()
+    embed, view = await status_himeka()
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="clogs", description=f"Nhật ký của {ai_name}")
