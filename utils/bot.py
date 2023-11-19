@@ -255,7 +255,7 @@ async def img_gen(interaction, prompt, quality, size):
     if ai_status.cds_log:
         print(f"[IMG GENERATE] - {user_nick}")
         print()
-    embed = discord.Embed(title=f"{ai_name} đang vẽ cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=0xffa3af)
+    embed = discord.Embed(title=f"{ai_name} đang vẽ cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=0xffbf75)
     view = View(timeout=None)
     view.add_item(irmv_bt)
     if isinstance(interaction, discord.Message):
@@ -316,7 +316,7 @@ async def img_gen(interaction, prompt, quality, size):
         quality = "Standard"
     if img:
     # Tạo một Embed để gửi hình ảnh
-        embed = discord.Embed(description=f"🏷️ {prompt}", color=0xffa3af)
+        embed = discord.Embed(description=f"🏷️ {prompt}", color=0xffbf75)
         embed.add_field(name=f"🌸 {quality}       🖼️ {size}", value="", inline=False)
         embed.set_image(url=img)
     else:
