@@ -15,7 +15,8 @@ st_bt2 = discord.ui.Button(label="❤️", custom_id="st2", style=discord.Button
 st_bt3 = discord.ui.Button(label="❤️", custom_id="st3", style=discord.ButtonStyle.grey)
 
 hi_bt = discord.ui.Button(label="😺 Himeka", custom_id="himeka", style=discord.ButtonStyle.green)
-li_bt = discord.ui.Button(label="🌆 Libra", custom_id="libra", style=discord.ButtonStyle.green)
+li_bt = discord.ui.Button(label="🌆 Libra", custom_id="libra", style=discord.ButtonStyle.blurple)
+iw_bt = discord.ui.Button(label="🛰️ IW", custom_id="iw", style=discord.ButtonStyle.blurple)
 
 # Button call
 async def load_btt():
@@ -24,6 +25,7 @@ async def load_btt():
     rgs_bt.callback = rgs_bt_atv
     hi_bt.callback = hime_bt
     li_bt.callback = libra_bt
+    iw_bt.callback = iw_bt_atv
 
 async def irmv_bt_atv(interaction):
     await interaction.message.delete()
@@ -52,6 +54,10 @@ async def libra_bt(interaction):
     embed, view = await status_libra()
     await interaction.response.edit_message(embed=embed, view=view)
 
+async def iw_bt_atv(interaction):
+    embed, view = await status_iw()
+    await interaction.response.edit_message(embed=embed, view=view)
+
 # Status
 async def status_himeka():
     from utils.bot import ai_status, ai_full_name
@@ -76,6 +82,7 @@ async def status_himeka():
     view = View(timeout=None)
     view.add_item(irmv_bt)
     view.add_item(li_bt)
+    view.add_item(iw_bt)
     return embed, view
 
 async def status_libra():
@@ -90,12 +97,39 @@ async def status_libra():
     embed=discord.Embed(title="♎ Ｌｉｂｒａ", description="Một trong 2 thành phố dân cư lớn nhất trên IW. Sở hữu mọi loại cơ sở vật chất, ẩm thực. Libra có đời sống cao, văn minh và sạch đẹp, nhiều cây xanh và luôn chào đón những khách du lịch trái đất cũng như từ các space colony khác. Tập đoàn Shindou có vốn đầu tư bất động sản lớn nhất vào thành phố này.", color=0x3db5ff)
     embed.set_author(name="Thành phố dân cư chính", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727546130767902/Libra.png")
-    embed.add_field(name=f"👨🏻‍👩 {pops} (up to 5M)", value="💳 ~lv 3", inline=True)
+    embed.add_field(name=f"👨🏻‍👩 {pops} (up to 5M)", value="💳 lv 1~4", inline=True)
     embed.add_field(name="🗺️ 820km² (up to 1200)", value="🛫 158 port", inline=True)
     embed.add_field(name=f"🌆 {blds}", value=f"🛰️ {vhcs}", inline=True)
-    embed.add_field(name="🕰️ 2018 -> 2023", value="", inline=True)
+    embed.add_field(name="🕰️ 2018 -> Hiện tại", value="", inline=True)
     embed.set_footer(text="Để thăm quan Libra, cần card IW thấp nhất là lv1")
     view = View(timeout=None)
     view.add_item(irmv_bt)
     view.add_item(hi_bt)
+    view.add_item(iw_bt)
+    return embed, view
+
+async def status_iw():
+    from utils.funcs import dot_num
+    from utils.bot import ai_status
+    pop = 6638256 + (ai_status.total_chat*10)
+    pops = await dot_num(pop)
+    bld = 1762315 + (ai_status.total_draw)
+    vhc = int(bld/3) + int(pop/2)
+    embed=discord.Embed(title="♎ ＩＷ - Interstellar World", description="Siêu trạm vũ trụ lớn nhất từng được xây dựng bởi nhân loại, thuộc tập đoàn ISTAR và thiết kế bởi CEO của ISTAR. Tuy không thể hạ cánh trên bất kỳ hành tinh nào nhưng IW sở hữu nhiều công nghệ động cơ tiên tiến, khiến nó gần như có thể đi tới bất kỳ đâu trong không gian sâu trong chớp mắt.", color=0x673dff)
+    embed.set_author(name="Siêu trạm vũ trụ & thuộc địa không gian di động", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727559422525520/IW.png")
+    embed.add_field(name="Life Supports technology:", value="Hệ thống tái tạo khí quyển, trọng lực.", inline=False)
+    embed.add_field(name="Engine technology:", value="Particle engine: 17, Jump/Wormhole Drive: 2", inline=False)
+    embed.add_field(name="Core:", value="Plasma fusion reactor: 5, Laser reactor: 8", inline=False)
+    embed.add_field(name="Weapons:", value="Super particle cannon: 1, particle cannon: 8", inline=False)
+    embed.add_field(name="Shell:", value="Titanium reinforced, multi-layer force field", inline=False)
+    embed.add_field(name=f"👨🏻‍👩 {pops}", value="🛫 620.156 port", inline=True)
+    embed.add_field(name=f"👨🏻‍👩 {pops}", value="🛫 620.156 port", inline=True)
+    embed.add_field(name="🗺️ 28500km²", value="🪐 200kmø", inline=True)
+    embed.add_field(name="🕰️ 2018 -> Hiện tại", value="", inline=True)
+    embed.set_footer(text="Có thể tới IW bằng spacecraft cá nhân hoặc thang máy vũ trụ ISKY.")
+    view = View(timeout=None)
+    view.add_item(irmv_bt)
+    view.add_item(hi_bt)
+    view.add_item(li_bt)
     return embed, view
