@@ -254,10 +254,10 @@ async def hime_tablet(mess, answ):
         await v_leave(mess)
     
     # Status/IW's card
-    if re.search(rf'my|hime|tôi|mình|tớ', answ, re.IGNORECASE) and re.search(rf'card|status|lv|thông', answ, re.IGNORECASE) and re.search(rf'here|show|give|đây|ra|đưa', answ, re.IGNORECASE):
+    if re.search(rf'my|hime|tôi|mình|tớ', answ, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ', answ, re.IGNORECASE) and re.search(rf'here|show|give|đây|ra|đưa', answ, re.IGNORECASE):
         embed, view = await status_himeka()
         await mess.channel.send(embed=embed, view=view)
-    if re.search(rf'what|how|show|có', answ, re.IGNORECASE) and re.search(rf'is|những|bao', answ, re.IGNORECASE) and re.search(rf'card|lv', answ, re.IGNORECASE):
+    if re.search(rf'what|how|show|có', answ, re.IGNORECASE) and re.search(rf'is|những|bao', answ, re.IGNORECASE) and re.search(rf'card|lv|thẻ', answ, re.IGNORECASE):
         embed, view = await status_card()
         await mess.channel.send(embed=embed, view=view)
 
