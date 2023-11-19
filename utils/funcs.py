@@ -267,8 +267,7 @@ async def hime_tablet(mess, answ):
         user_voice_channel = mess.author.voice.channel
         if vc and vc == user_voice_channel:
             await voice_make_tts(mess, answ)
-    
-    
+     
 # Count downt
 async def count_down(user_timers, user):
     while user_timers[user] > 0:

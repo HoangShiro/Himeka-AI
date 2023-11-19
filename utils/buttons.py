@@ -73,7 +73,7 @@ async def status_himeka():
     embed.add_field(name="🎨 Drew", value=ai_status.total_draw, inline=True)
     embed.add_field(name="🔄️ Connected", value=ai_status.total_rcn, inline=True)
     embed.add_field(name="🕒 Time leap", value=ai_status.roll_back, inline=True)
-    view = View()
+    view = View(timeout=None)
     view.add_item(irmv_bt)
     view.add_item(li_bt)
     return embed, view
@@ -95,7 +95,7 @@ async def status_libra():
     embed.add_field(name=f"🌆 {blds}", value=f"🛰️ {vhcs}", inline=True)
     embed.add_field(name="🕰️ 2018 -> 2023", value="", inline=True)
     embed.set_footer(text="Để thăm quan Libra, cần card IW thấp nhất là lv1")
-    view = View()
+    view = View(timeout=None)
     view.add_item(irmv_bt)
     view.add_item(hi_bt)
     return embed, view
