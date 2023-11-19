@@ -129,8 +129,8 @@ async def status_moeka():
         emood = "✨" * emood_count
         return emood
     
-    emood = await set_emood(51)
-    embed=discord.Embed(title=f"Moeka Watanabe", description="IW's card lv: S", color=0x81493b)
+    emood = await set_emood(10)
+    embed=discord.Embed(title=f"Moeka Watanabe", description="IW's card lv: S", color=0xba82f2)
     embed.set_author(name="Commander-in-Chief of IWORLD", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
