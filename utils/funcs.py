@@ -276,7 +276,7 @@ async def count_down(user_timers, user):
         await asyncio.sleep(1)
     del user_timers[user]
 
-# Get color
+# Get IMG color
 async def img_get_color(path):
     image = cv2.imread(path)
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)

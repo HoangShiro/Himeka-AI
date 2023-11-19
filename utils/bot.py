@@ -454,29 +454,6 @@ async def test_cmd(interaction: discord.Interaction):
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
 
-# Button call
-async def load_btt():
-    irmv_bt.callback = irmv_bt_atv
-    rg_bt.callback = rg_bt_atv
-    rgs_bt.callback = rgs_bt_atv
-
-async def irmv_bt_atv(interaction):
-    await interaction.message.delete()
-
-async def rg_bt_atv(interaction):
-    img_prompts = igen_lists.get(interaction.message.id)
-    prompt = img_prompts['prompt']
-    quality = img_prompts['quality']
-    size = img_prompts['size']
-    await img_gen(interaction, prompt, quality, size)
-
-async def rgs_bt_atv(interaction):
-    img_prompts = igen_lists.get(interaction.message.id)
-    prompt = img_prompts['r_prompt']
-    quality = img_prompts['quality']
-    size = img_prompts['size']
-    await img_gen(interaction, prompt, quality, size)
-
 # Circle task
 @tasks.loop(seconds=60)
 async def m_check():

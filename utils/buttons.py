@@ -14,6 +14,31 @@ st_bt1 = discord.ui.Button(label="❤️", custom_id="st1", style=discord.Button
 st_bt2 = discord.ui.Button(label="❤️", custom_id="st2", style=discord.ButtonStyle.grey)
 st_bt3 = discord.ui.Button(label="❤️", custom_id="st3", style=discord.ButtonStyle.grey)
 
+# Button call
+async def load_btt():
+    irmv_bt.callback = irmv_bt_atv
+    rg_bt.callback = rg_bt_atv
+    rgs_bt.callback = rgs_bt_atv
+
+async def irmv_bt_atv(interaction):
+    await interaction.message.delete()
+
+async def rg_bt_atv(interaction):
+    from utils.bot import igen_lists, img_gen
+    img_prompts = igen_lists.get(interaction.message.id)
+    prompt = img_prompts['prompt']
+    quality = img_prompts['quality']
+    size = img_prompts['size']
+    await img_gen(interaction, prompt, quality, size)
+
+async def rgs_bt_atv(interaction):
+    from utils.bot import igen_lists, img_gen
+    img_prompts = igen_lists.get(interaction.message.id)
+    prompt = img_prompts['r_prompt']
+    quality = img_prompts['quality']
+    size = img_prompts['size']
+    await img_gen(interaction, prompt, quality, size)
+
 # Status
 async def status_make():
     from utils.bot import ai_status, ai_full_name
