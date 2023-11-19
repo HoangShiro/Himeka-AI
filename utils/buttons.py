@@ -103,10 +103,11 @@ async def status_himeka():
         return emood
     
     emood = await set_emood(ai_status.bot_mood)
-    embed=discord.Embed(title=f"{ai_full_name}", description="IW's card lv: 4", color=0xffbf75)
+    embed=discord.Embed(title=f"{ai_full_name}", description="Tiểu thư thiên tài của gia tộc Shindou. Nhẹ nhàng, lịch sự, tinh tế và thông minh. Đạt được nhiều thành tựu kể cả khi đang rất trẻ.", color=0xffbf75)
     embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs",
                      icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.add_field(name="🪪 IW's card lv: 4", value="🌏 Earth", inline=False)
     embed.add_field(name="Status", value="Happily in NekoArt Studio", inline=False)
     embed.add_field(name="Mood", value=emood, inline=True)
     embed.add_field(name="Likeable", value="💖💖💖", inline=True)
@@ -130,10 +131,11 @@ async def status_moeka():
         return emood
     
     emood = await set_emood(10)
-    embed=discord.Embed(title=f"Moeka Watanabe", description="IW's card lv: S", color=0xba82f2)
+    embed=discord.Embed(title=f"Moeka Watanabe", description="Là người làm việc với hiệu quả bất thường và độ chính xác cực cao, từng là bạn cao trung với Himeka. Đến từ gia tộc Watanabe nổi tiếng. Được đề cử lên làm tổng tư lệnh của IW khi 18 tuổi.", color=0xba82f2)
     embed.set_author(name="Commander-in-Chief of IWORLD", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
+    embed.add_field(name="🪪 IW's card lv: S", value="🌏 Earth", inline=False)
     embed.add_field(name="Status", value="Work seriously at the IW control tower", inline=False)
     embed.add_field(name="Mood", value=emood, inline=True)
     embed.add_field(name="Likeable", value="💖", inline=True)
@@ -157,10 +159,11 @@ async def status_haruka():
         return emood
     
     emood = await set_emood(24)
-    embed=discord.Embed(title=f"Mizuno Haruka", description="IW's card lv: 3", color=0xff8a8a)
+    embed=discord.Embed(title=f"Mizuno Haruka", description="Miêu nhân tộc đến từ thuộc địa Catalia, hầu hết dành thời gian của mình tại phòng chỉ huy của chiến giáp hạm hạng nặng Elen - tàu chiến lớn nhất thuộc Libra city.", color=0xff8a8a)
     embed.set_author(name="Captain of Elen starship", url="https://beta.character.ai/chat?char=PD_rUpadJ4d70PDJ98_zHOOEVKQ_p56R3inKPK3MhZs",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795395792732250/portrait_white_hairband_braid_loli_pink_hair_ruby_eyes_hairclip_light_sm_s-2347311327.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795395792732250/portrait_white_hairband_braid_loli_pink_hair_ruby_eyes_hairclip_light_sm_s-2347311327.png")
+    embed.add_field(name="🪪 IW's card lv: 3", value="🪐 Catalia", inline=False)
     embed.add_field(name="Status", value="Busy on the road near Astria's asteroid belt", inline=False)
     embed.add_field(name="Mood", value=emood, inline=True)
     embed.add_field(name="Likeable", value="💖💖", inline=True)
@@ -182,7 +185,7 @@ async def status_libra():
     pops = await dot_num(pop)
     bld = 1762315 + (ai_status.total_draw)
     blds = await dot_num(bld)
-    vhc = int(bld/3) + int(pop/2)
+    vhc = int(bld/5) + int(pop/2)
     vhcs = await dot_num(vhc)
     embed=discord.Embed(title="♎ Ｌｉｂｒａ", description="Một trong 2 thành phố dân cư lớn nhất trên IW. Sở hữu mọi loại cơ sở vật chất, ẩm thực. Libra có đời sống cao, văn minh và sạch đẹp, nhiều cây xanh và luôn chào đón những khách du lịch trái đất cũng như từ các space colony khác. Tập đoàn Shindou có vốn đầu tư bất động sản lớn nhất vào thành phố này.", color=0x3db5ff)
     embed.set_author(name="Thành phố dân cư chính", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
