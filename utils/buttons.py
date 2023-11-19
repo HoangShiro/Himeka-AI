@@ -29,9 +29,16 @@ async def load_btt():
     irmv_bt.callback = irmv_bt_atv
     rg_bt.callback = rg_bt_atv
     rgs_bt.callback = rgs_bt_atv
+
+    char_bt.callback = char_atv
     hi_bt.callback = hime_bt
+    mo_bt.callback = moe_bt
+    ha_bt.callback = haru_bt
+
+    map_bt.callback = map_atv
     li_bt.callback = libra_bt
     iw_bt.callback = iw_bt_atv
+    iwm_bt.callback = iw_map_atv
 
 async def irmv_bt_atv(interaction):
     await interaction.message.delete()
