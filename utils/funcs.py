@@ -59,7 +59,7 @@ def process_nouns(nouns):
                         "continue", "himeka", "generate", "art", "lem", "okay"]
     replacement_dict = {
         "yourself": f"A cute Japanese girl with blonde hair in two pigtails, green eyes. Cute, bright, colorful colors.",
-        "iw": "a giant ring-shaped space station connected to the center by shafts, in space, high technology architecture."
+        "iw": "a super giant ring-shaped space station connected to the center by shafts, in space, high technology architecture."
     }
     style = ", anime style"
     nouns = [replacement_dict.get(noun.lower(), noun) for noun in nouns if noun.lower() not in words_to_remove]
@@ -245,7 +245,6 @@ async def v_leave(message):
 
 # Himeka's tablet
 async def hime_tablet(mess, answ):
-    from utils.bot import status_make
 
     # Voice
     if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'jo|ju', answ, re.IGNORECASE):
