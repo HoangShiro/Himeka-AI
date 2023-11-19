@@ -14,15 +14,15 @@ st_bt1 = discord.ui.Button(label="❤️", custom_id="st1", style=discord.Button
 st_bt2 = discord.ui.Button(label="❤️", custom_id="st2", style=discord.ButtonStyle.grey)
 st_bt3 = discord.ui.Button(label="❤️", custom_id="st3", style=discord.ButtonStyle.grey)
 
-char_bt = discord.ui.Button(label="🚺", custom_id="charbt", style=discord.ButtonStyle.green)
-hi_bt = discord.ui.Button(label="♀️ Himeka", custom_id="himeka", style=discord.ButtonStyle.blurple)
-mo_bt = discord.ui.Button(label="♀️ Moeka", custom_id="moeka", style=discord.ButtonStyle.blurple)
-ha_bt = discord.ui.Button(label="♀️ Haruka", custom_id="haruka", style=discord.ButtonStyle.blurple)
+char_bt = discord.ui.Button(label="🚺", custom_id="charbt", style=discord.ButtonStyle.blurple)
+hi_bt = discord.ui.Button(label="♀️ Himeka", custom_id="himeka", style=discord.ButtonStyle.green)
+mo_bt = discord.ui.Button(label="♀️ Moeka", custom_id="moeka", style=discord.ButtonStyle.green)
+ha_bt = discord.ui.Button(label="♀️ Haruka", custom_id="haruka", style=discord.ButtonStyle.green)
 
-map_bt = discord.ui.Button(label="🪐", custom_id="map", style=discord.ButtonStyle.green)
-li_bt = discord.ui.Button(label="🌆 Libra", custom_id="libra", style=discord.ButtonStyle.blurple)
-iw_bt = discord.ui.Button(label="🛰️ IW", custom_id="iw", style=discord.ButtonStyle.blurple)
-iwm_bt = discord.ui.Button(label="🗺️ IW Map", custom_id="iwm", style=discord.ButtonStyle.blurple)
+map_bt = discord.ui.Button(label="🪐", custom_id="map", style=discord.ButtonStyle.blurple)
+li_bt = discord.ui.Button(label="🌆 Libra", custom_id="libra", style=discord.ButtonStyle.green)
+iw_bt = discord.ui.Button(label="🛰️ IW", custom_id="iw", style=discord.ButtonStyle.green)
+iwm_bt = discord.ui.Button(label="🗺️ IW Map", custom_id="iwm", style=discord.ButtonStyle.green)
 
 # Button call
 async def load_btt():
@@ -103,7 +103,7 @@ async def status_himeka():
         return emood
     
     emood = await set_emood(ai_status.bot_mood)
-    embed=discord.Embed(title=f"{ai_full_name}", description="IW's card lv: 4", color=0xffa3af)
+    embed=discord.Embed(title=f"{ai_full_name}", description="IW's card lv: 4", color=0xffbf75)
     embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs",
                      icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
@@ -131,12 +131,12 @@ async def status_moeka():
     
     emood = await set_emood(51)
     embed=discord.Embed(title=f"Moeka Watanabe", description="IW's card lv: S", color=0x81493b)
-    embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY",
-                     icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
-    embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.set_author(name="Commander-in-Chief of IWORLD", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY",
+                     icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
     embed.add_field(name="Status", value="Work seriously at the IW control tower", inline=False)
     embed.add_field(name="Mood", value=emood, inline=True)
-    embed.add_field(name="Likeable", value="💖💖", inline=True)
+    embed.add_field(name="Likeable", value="💖", inline=True)
     embed.add_field(name="💬 Chats", value="0", inline=True)
     embed.add_field(name="🎨 Drew", value="0", inline=True)
     embed.add_field(name="🔄️ Connected", value="?", inline=True)
@@ -156,18 +156,18 @@ async def status_haruka():
         emood = "✨" * emood_count
         return emood
     
-    emood = await set_emood(ai_status.bot_mood)
-    embed=discord.Embed(title=f"{ai_full_name}", description="IW's card lv: 4", color=0xffa3af)
-    embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs",
-                     icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
-    embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
-    embed.add_field(name="Status", value="Happily in NekoArt Studio", inline=False)
+    emood = await set_emood(24)
+    embed=discord.Embed(title=f"Mizuno Haruka", description="IW's card lv: 3", color=0xff8a8a)
+    embed.set_author(name="Captain of Elen starship", url="https://beta.character.ai/chat?char=PD_rUpadJ4d70PDJ98_zHOOEVKQ_p56R3inKPK3MhZs",
+                     icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795395792732250/portrait_white_hairband_braid_loli_pink_hair_ruby_eyes_hairclip_light_sm_s-2347311327.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795395792732250/portrait_white_hairband_braid_loli_pink_hair_ruby_eyes_hairclip_light_sm_s-2347311327.png")
+    embed.add_field(name="Status", value="Busy on the road near Astria's asteroid belt", inline=False)
     embed.add_field(name="Mood", value=emood, inline=True)
-    embed.add_field(name="Likeable", value="💖💖💖", inline=True)
-    embed.add_field(name="💬 Chats", value=ai_status.total_chat, inline=True)
-    embed.add_field(name="🎨 Drew", value=ai_status.total_draw, inline=True)
-    embed.add_field(name="🔄️ Connected", value=ai_status.total_rcn, inline=True)
-    embed.add_field(name="🕒 Time leap", value=ai_status.roll_back, inline=True)
+    embed.add_field(name="Likeable", value="💖💖", inline=True)
+    embed.add_field(name="💬 Chats", value="0", inline=True)
+    embed.add_field(name="🎨 Drew", value="0", inline=True)
+    embed.add_field(name="🔄️ Connected", value="?", inline=True)
+    embed.add_field(name="🕒 Time leap", value="?", inline=True)
     view = View(timeout=None)
     view.add_item(irmv_bt)
     view.add_item(map_bt)
