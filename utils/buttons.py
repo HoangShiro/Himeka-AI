@@ -40,6 +40,7 @@ async def load_btt():
     li_bt.callback = libra_bt
     iw_bt.callback = iw_bt_atv
     iwm_bt.callback = iw_map_atv
+    iwc_bt.callback = iwc_atv
 
 async def irmv_bt_atv(interaction):
     await interaction.message.delete()
