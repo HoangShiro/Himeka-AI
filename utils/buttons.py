@@ -171,7 +171,7 @@ async def status_haruka():
     view = View(timeout=None)
     view.add_item(irmv_bt)
     view.add_item(map_bt)
-    view.add_item(ha_bt)
+    view.add_item(hi_bt)
     view.add_item(mo_bt)
     return embed, view
 
