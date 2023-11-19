@@ -49,7 +49,7 @@ async def hime_bt(interaction):
     await interaction.response.edit_message(embed=embed, view=view)
 
 async def libra_bt(interaction):
-    embed, view = await status_himeka()
+    embed, view = await status_libra()
     await interaction.response.edit_message(embed=embed, view=view)
 
 # Status
