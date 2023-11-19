@@ -14,9 +14,15 @@ st_bt1 = discord.ui.Button(label="❤️", custom_id="st1", style=discord.Button
 st_bt2 = discord.ui.Button(label="❤️", custom_id="st2", style=discord.ButtonStyle.grey)
 st_bt3 = discord.ui.Button(label="❤️", custom_id="st3", style=discord.ButtonStyle.grey)
 
-hi_bt = discord.ui.Button(label="😺 Himeka", custom_id="himeka", style=discord.ButtonStyle.green)
+char_bt = discord.ui.Button(label="🚺", custom_id="charbt", style=discord.ButtonStyle.green)
+hi_bt = discord.ui.Button(label="♀️ Himeka", custom_id="himeka", style=discord.ButtonStyle.blurple)
+mo_bt = discord.ui.Button(label="♀️ Moeka", custom_id="moeka", style=discord.ButtonStyle.blurple)
+ha_bt = discord.ui.Button(label="♀️ Haruka", custom_id="haruka", style=discord.ButtonStyle.blurple)
+
+map_bt = discord.ui.Button(label="🪐", custom_id="map", style=discord.ButtonStyle.green)
 li_bt = discord.ui.Button(label="🌆 Libra", custom_id="libra", style=discord.ButtonStyle.blurple)
 iw_bt = discord.ui.Button(label="🛰️ IW", custom_id="iw", style=discord.ButtonStyle.blurple)
+iwm_bt = discord.ui.Button(label="🗺️ IW Map", custom_id="iwm", style=discord.ButtonStyle.blurple)
 
 # Button call
 async def load_btt():
@@ -46,8 +52,26 @@ async def rgs_bt_atv(interaction):
     size = img_prompts['size']
     await img_gen(interaction, prompt, quality, size)
 
+# Character
+async def char_atv(interaction):
+    embed, view = await status_himeka()
+    await interaction.response.edit_message(embed=embed, view=view)
+
 async def hime_bt(interaction):
     embed, view = await status_himeka()
+    await interaction.response.edit_message(embed=embed, view=view)
+
+async def moe_bt(interaction):
+    embed, view = await status_moeka()
+    await interaction.response.edit_message(embed=embed, view=view)
+
+async def haru_bt(interaction):
+    embed, view = await status_haruka()
+    await interaction.response.edit_message(embed=embed, view=view)
+
+# Map
+async def map_atv(interaction):
+    embed, view = await status_libra()
     await interaction.response.edit_message(embed=embed, view=view)
 
 async def libra_bt(interaction):
@@ -56,6 +80,10 @@ async def libra_bt(interaction):
 
 async def iw_bt_atv(interaction):
     embed, view = await status_iw()
+    await interaction.response.edit_message(embed=embed, view=view)
+
+async def iw_map_atv(interaction):
+    embed, view = await status_iwm()
     await interaction.response.edit_message(embed=embed, view=view)
 
 # Status
@@ -81,8 +109,63 @@ async def status_himeka():
     embed.add_field(name="🕒 Time leap", value=ai_status.roll_back, inline=True)
     view = View(timeout=None)
     view.add_item(irmv_bt)
-    view.add_item(li_bt)
-    view.add_item(iw_bt)
+    view.add_item(map_bt)
+    view.add_item(mo_bt)
+    view.add_item(ha_bt)
+    return embed, view
+
+async def status_moeka():
+    from utils.bot import ai_status
+    async def set_emood(bot_mood):
+        bot_mood = max(1, min(bot_mood, 99))
+        emood_count = (bot_mood+20) // 20
+        emood = "✨" * emood_count
+        return emood
+    
+    emood = await set_emood(51)
+    embed=discord.Embed(title=f"Moeka Watanabe", description="IW's card lv: S", color=0x81493b)
+    embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY",
+                     icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.add_field(name="Status", value="Work seriously at the IW control tower", inline=False)
+    embed.add_field(name="Mood", value=emood, inline=True)
+    embed.add_field(name="Likeable", value="💖💖", inline=True)
+    embed.add_field(name="💬 Chats", value="0", inline=True)
+    embed.add_field(name="🎨 Drew", value="0", inline=True)
+    embed.add_field(name="🔄️ Connected", value="?", inline=True)
+    embed.add_field(name="🕒 Time leap", value="?", inline=True)
+    view = View(timeout=None)
+    view.add_item(irmv_bt)
+    view.add_item(map_bt)
+    view.add_item(hi_bt)
+    view.add_item(ha_bt)
+    return embed, view
+
+async def status_haruka():
+    from utils.bot import ai_status, ai_full_name
+    async def set_emood(bot_mood):
+        bot_mood = max(1, min(bot_mood, 99))
+        emood_count = (bot_mood+20) // 20
+        emood = "✨" * emood_count
+        return emood
+    
+    emood = await set_emood(ai_status.bot_mood)
+    embed=discord.Embed(title=f"{ai_full_name}", description="IW's card lv: 4", color=0xffa3af)
+    embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs",
+                     icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.add_field(name="Status", value="Happily in NekoArt Studio", inline=False)
+    embed.add_field(name="Mood", value=emood, inline=True)
+    embed.add_field(name="Likeable", value="💖💖💖", inline=True)
+    embed.add_field(name="💬 Chats", value=ai_status.total_chat, inline=True)
+    embed.add_field(name="🎨 Drew", value=ai_status.total_draw, inline=True)
+    embed.add_field(name="🔄️ Connected", value=ai_status.total_rcn, inline=True)
+    embed.add_field(name="🕒 Time leap", value=ai_status.roll_back, inline=True)
+    view = View(timeout=None)
+    view.add_item(irmv_bt)
+    view.add_item(map_bt)
+    view.add_item(ha_bt)
+    view.add_item(mo_bt)
     return embed, view
 
 async def status_libra():
@@ -104,8 +187,9 @@ async def status_libra():
     embed.set_footer(text="Để thăm quan Libra, cần card IW thấp nhất là lv1")
     view = View(timeout=None)
     view.add_item(irmv_bt)
-    view.add_item(hi_bt)
+    view.add_item(char_bt)
     view.add_item(iw_bt)
+    view.add_item(iwm_bt)
     return embed, view
 
 async def status_iw():
@@ -130,6 +214,31 @@ async def status_iw():
     embed.set_footer(text="Có thể tới IW bằng spacecraft cá nhân hoặc thang máy vũ trụ ISKY.")
     view = View(timeout=None)
     view.add_item(irmv_bt)
-    view.add_item(hi_bt)
+    view.add_item(char_bt)
     view.add_item(li_bt)
+    view.add_item(iwm_bt)
+    return embed, view
+
+async def status_iwm():
+    from utils.funcs import dot_num
+    from utils.bot import ai_status
+    pop = 6638256 + (ai_status.total_chat*10)
+    pops = await dot_num(pop)
+    bld = 1762315 + (ai_status.total_draw)
+    vhc = int(bld/3) + int(pop/2)
+    embed=discord.Embed(title="🛰️ ＩＷ - Map", description="IW có kiến trúc hướng trung tâm do bề ngoài hình nhẫn có các trục nối vào giữa. Các khu vực cần các lv card IW riêng để truy cập. Khu vực trọng yếu nhất là khu điều hành trung tâm (OA), duy trì toàn bộ mọi hoạt động của IW cũng như các lò phản ứng nằm bên dưới nó.", color=0x8a9dff)
+    embed.set_author(name="Bản đồ cấu trúc IW", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727559422525520/IW.png")
+    embed.add_field(name=f"⏺️ Center", value="Operating Area (OA) - 540km²", inline=True)
+    embed.add_field(name=f"🔼 North", value="Libra City - 820km²", inline=True)
+    embed.add_field(name="🔽 Southern", value="Virgo City - 850km²(Under construction)", inline=True)
+    embed.add_field(name="◀️ West", value="Production Area - 265km²", inline=True)
+    embed.add_field(name="▶️ East", value="Factory Area - 698km²", inline=True)
+    embed.add_field(name="⏹️ Below", value="Factory Area - 84km²", inline=True)
+    embed.set_footer(text="Phần đáy của IW có thể kết nối với thang máy vũ trụ ISKY ở độ cao 32km.")
+    view = View(timeout=None)
+    view.add_item(irmv_bt)
+    view.add_item(char_bt)
+    view.add_item(li_bt)
+    view.add_item(iw_bt)
     return embed, view
