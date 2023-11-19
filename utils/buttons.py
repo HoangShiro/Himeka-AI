@@ -92,7 +92,7 @@ async def status_libra():
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727546130767902/Libra.png")
     embed.add_field(name=f"👨🏻‍👩‍👧‍👦🏻 {pops} (up to 5M)", value="💳 ~lv 3", inline=True)
     embed.add_field(name="🗺️ 820km² (up to 1200)", value="🛫 158 port", inline=True)
-    embed.add_field(name=f"🌆 {blds}", value=f"🛰️ {vhc}", inline=True)
+    embed.add_field(name=f"🌆 {blds}", value=f"🛰️ {vhcs}", inline=True)
     embed.add_field(name="🕰️ 2018 -> 2023", value="", inline=True)
     embed.set_footer(text="Để thăm quan Libra, cần thấp nhất card IW lv1")
     view = View()
