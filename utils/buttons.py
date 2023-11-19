@@ -23,6 +23,7 @@ map_bt = discord.ui.Button(label="🪐", custom_id="map", style=discord.ButtonSt
 li_bt = discord.ui.Button(label="🌆 Libra", custom_id="libra", style=discord.ButtonStyle.green)
 iw_bt = discord.ui.Button(label="🛰️ IW", custom_id="iw", style=discord.ButtonStyle.green)
 iwm_bt = discord.ui.Button(label="🗺️ IW Map", custom_id="iwm", style=discord.ButtonStyle.green)
+iwc_bt = discord.ui.Button(label="🗺️ IW Map", custom_id="iwm", style=discord.ButtonStyle.green)
 
 # Button call
 async def load_btt():
@@ -91,6 +92,10 @@ async def iw_bt_atv(interaction):
 
 async def iw_map_atv(interaction):
     embed, view = await status_iwm()
+    await interaction.response.edit_message(embed=embed, view=view)
+
+async def iwc_atv(interaction):
+    embed, view = await status_card()
     await interaction.response.edit_message(embed=embed, view=view)
 
 # Status
@@ -200,6 +205,7 @@ async def status_libra():
     view.add_item(char_bt)
     view.add_item(iw_bt)
     view.add_item(iwm_bt)
+    view.add_item(iwc_bt)
     return embed, view
 
 async def status_iw():
@@ -221,12 +227,13 @@ async def status_iw():
     embed.add_field(name=f"🌍 Earth", value="🌠 150.000 LY", inline=True)
     embed.add_field(name="🗺️ 28500km²", value="🪐 200kmø", inline=True)
     embed.add_field(name="🕰️ 2018 -> Hiện tại", value="", inline=True)
-    embed.set_footer(text="Có thể tới IW bằng spacecraft cá nhân hoặc thang máy vũ trụ ISKY.")
+    embed.set_footer(text="Có thể tới IW bằng spacecraft cá nhân hoặc thang máy vũ trụ ISKY, cần card IW thấp nhất là lv1.")
     view = View(timeout=None)
     view.add_item(irmv_bt)
     view.add_item(char_bt)
     view.add_item(li_bt)
     view.add_item(iwm_bt)
+    view.add_item(iwc_bt)
     return embed, view
 
 async def status_iwm():
@@ -251,22 +258,24 @@ async def status_iwm():
     view.add_item(char_bt)
     view.add_item(li_bt)
     view.add_item(iw_bt)
+    view.add_item(iwc_bt)
     return embed, view
 
 async def status_card():
-    embed=discord.Embed(title="🪪 ＩＷ's Card level", description="IW có kiến trúc hướng trung tâm do bề ngoài hình nhẫn có các trục nối vào giữa. Các khu vực cần các lv card IW riêng để truy cập. Khu vực trọng yếu nhất là khu điều hành trung tâm (OA), duy trì toàn bộ mọi hoạt động của IW cũng như các lò phản ứng nằm bên dưới nó.", color=0x82f295)
-    embed.set_author(name="Bản đồ cấu trúc IW", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727559422525520/IW.png")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727559422525520/IW.png")
-    embed.add_field(name=f"⏺️ Center", value="Operating Area (OA) - 540km²", inline=True)
-    embed.add_field(name=f"🔼 North", value="Libra City - 820km²", inline=True)
-    embed.add_field(name="🔽 Southern", value="Virgo City - 850km²(Under construction)", inline=True)
-    embed.add_field(name="◀️ West", value="Production Area - 265km²", inline=True)
-    embed.add_field(name="▶️ East", value="Factory Area - 698km²", inline=True)
-    embed.add_field(name="⏹️ Below", value="Factory Area - 84km²", inline=True)
-    embed.set_footer(text="Phần đáy của IW có thể kết nối với thang máy vũ trụ ISKY ở độ cao 32km.")
+    embed=discord.Embed(title="🪪 ＩＷ's Card", description="Chứa thông tin của user như DNA, các giấy tờ tuỳ thân bằng lái xe, tài khoản ngân hàng và ví điện tử,... Không thể làm giả.", color=0x82f295)
+    embed.set_author(name="Information/security card", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
+    embed.add_field(name=f"🪪 lv.1: Travel", value="Thấp nhất, dành cho khách du lịch thăm quan tại Libra và Virgo. Không thể rời khỏi thành phố mà không được phép.", inline=False)
+    embed.add_field(name=f"🪪 lv.2: Citizen", value="Thẻ công dân tại IW, có thẻ này sẽ được quyền sống tại các thành phố dân cư như Libra/Virgo. Có thể tham gia test bằng lái spaceship, đăng ký Space hunter.", inline=False)
+    embed.add_field(name="🪪 lv.3: Work", value="Được cấp khi làm việc tại IW.", inline=False)
+    embed.add_field(name="🪪 lv.4: Senior officials", value="Giám đốc các phòng ban tại IW.", inline=False)
+    embed.add_field(name="🪪 lv.5: Senior Leadership", value="Làm việc tại Khu vực điều hành trung tâm (Operating Area), tháp điều khiển. Được phép truy cập hầu hết các cơ sở hạ tầng tại IW.", inline=False)
+    embed.add_field(name="🪪 lv.S: Special", value="Hội đồng quản trị ISTAR, thẻ mức cao nhất cùng quyền hành cao nhất. Truy cập tất cả cơ sở hạ tầng kể cả vùng cấm hoặc tuyệt mật.", inline=False)
+    embed.set_footer(text="ISTAR - Interstellar Space Tech And Research, tập đoàn vũ trụ đa quốc gia. Phát minh ra Particle engine, ISKY(toà nhà chọc trời cao 32km tích hợp thang máy vũ trụ), IW, hệ thống thẻ IW.")
     view = View(timeout=None)
     view.add_item(irmv_bt)
     view.add_item(char_bt)
     view.add_item(li_bt)
     view.add_item(iw_bt)
+    view.add_item(iwm_bt)
     return embed, view
