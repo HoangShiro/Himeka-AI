@@ -83,7 +83,7 @@ async def status_libra():
     from utils.bot import ai_status
     pops = await dot_num(1263865 + (ai_status.total_chat*2))
     bld = await dot_num(1762315 + (ai_status.total_draw))
-    vhc = int(bld/3) + int(pops/2)
+    vhc = int(await dot_num((1762315 + (ai_status.total_draw))/3) + int((1263865 + (ai_status.total_chat*2))/2))
     embed=discord.Embed(title="♎ Libra", description="Một trong 2 thành phố dân cư lớn nhất trên IW. Sở hữu mọi loại cơ sở vật chất, ẩm thực. Libra có đời sống cao, văn minh và sạch đẹp, nhiều cây xanh và luôn chào đón những khách du lịch trái đất cũng như từ các space colony khác. Tập đoàn Shindou có vốn đầu tư bất động sản lớn nhất vào thành phố này.", color=0x3db5ff)
     embed.set_author(name="Thành phố dân cư chính", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727546130767902/Libra.png")
