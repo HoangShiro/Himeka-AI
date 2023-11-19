@@ -14,7 +14,7 @@ st_bt1 = discord.ui.Button(label="❤️", custom_id="st1", style=discord.Button
 st_bt2 = discord.ui.Button(label="❤️", custom_id="st2", style=discord.ButtonStyle.grey)
 st_bt3 = discord.ui.Button(label="❤️", custom_id="st3", style=discord.ButtonStyle.grey)
 
-char_bt = discord.ui.Button(label="🚺", custom_id="charbt", style=discord.ButtonStyle.blurple)
+char_bt = discord.ui.Button(label="💟", custom_id="charbt", style=discord.ButtonStyle.blurple)
 hi_bt = discord.ui.Button(label="♀️ Himeka", custom_id="himeka", style=discord.ButtonStyle.green)
 mo_bt = discord.ui.Button(label="♀️ Moeka", custom_id="moeka", style=discord.ButtonStyle.green)
 ha_bt = discord.ui.Button(label="♀️ Haruka", custom_id="haruka", style=discord.ButtonStyle.green)
