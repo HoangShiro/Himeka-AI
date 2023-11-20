@@ -20,6 +20,10 @@ async def m_check():
             ready = await check_cai_ready(answ)
             if ready:
                 await voice_rcn()
+                if ai_status.st_log:
+                    print(f"{ai_name}'s tablet: đã nhắc {ai_name} thức dậy.")
+                if ai_status.chat_log:
+                    print(f"{ai_name}: {answ}")
 
     # Tới giờ nghỉ trưa
     if ai_status.non_time:
@@ -30,6 +34,10 @@ async def m_check():
             ready = await check_cai_ready(answ)
             if ready:
                 await v_leave_nc()
+                if ai_status.st_log:
+                    print(f"{ai_name}'s tablet: đã nhắc {ai_name} đi ăn trưa.")
+                if ai_status.chat_log:
+                    print(f"{ai_name}: {answ}")
 
     # Giờ làm việc chiều
     if ai_status.atn_time:
@@ -40,6 +48,10 @@ async def m_check():
             ready = await check_cai_ready(answ)
             if ready:
                 await voice_rcn()
+                if ai_status.st_log:
+                    print(f"{ai_name}'s tablet: đã nhắc {ai_name} tiếp tục công việc buổi chiều.")
+                if ai_status.chat_log:
+                    print(f"{ai_name}: {answ}")
 
     # Tới giờ đi ngủ
     if ai_status.night_time:
@@ -50,6 +62,10 @@ async def m_check():
             ready = await check_cai_ready(answ)
             if ready:
                 await v_leave_nc()
+                if ai_status.st_log:
+                    print(f"{ai_name}'s tablet: đã nhắc {ai_name} đi ngủ.")
+                if ai_status.chat_log:
+                    print(f"{ai_name}: {answ}")
 
     # Reset time
     if vn_time.hour == 1:
