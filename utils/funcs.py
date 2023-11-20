@@ -147,8 +147,9 @@ def text_handle(text):
     return result
 
 # Reply message
-async def mess_rep(message, mess, umess, chat_log):
-    from utils.bot import img_gen_chat
+async def mess_rep(message, mess, user_name, chat_log):
+    from utils.bot import img_gen_chat, ai_status
+    umess = "{}: {}".format(user_name, message.content)
     async with message.channel.typing():
         view = View()
         answ, ain, busy = await CAI(umess)
@@ -160,10 +161,12 @@ async def mess_rep(message, mess, umess, chat_log):
         if busy:
             view.add_item(irmv_bt)
         await message.reply(answ, view=view)
-        asyncio.create_task(hime_tablet(message, answ))
+        ai_status.update('total_chat', 1)
+        asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
         await img_gen_chat(message, mess)
 # Send message
 async def mess_send(message, umess, chat_log):
+    from utils.bot import ai_status
     async with message.channel.typing():
         answ, ain, busy = await CAI(umess)
         answ = text_handle(answ)
@@ -173,10 +176,12 @@ async def mess_send(message, umess, chat_log):
             print()
         if not busy:
             await message.channel.send(answ)
-        await hime_tablet(message, answ)
+            ai_status.update('total_chat', 1)
+        await hime_tablet(message, answ, chat_log)
 
 # Send message with channel id
 async def mess_id_send(bot, ch_id, umess, chat_log):
+    from utils.bot import ai_status
     channel = bot.get_channel(ch_id)
     async with channel.typing():
         answ, ain, busy = await CAI(umess)
@@ -187,9 +192,10 @@ async def mess_id_send(bot, ch_id, umess, chat_log):
             print()
         if not busy:
             await channel.send(answ)
+            ai_status.update('total_chat', 1)
         async for message in channel.history(limit=1):
             pass
-        await hime_tablet(message, answ)
+        await hime_tablet(message, answ, chat_log)
     return message
 
 # Send voice
@@ -243,13 +249,36 @@ async def v_leave(message):
         pr_vch_id = None
         vals_save('user_files/vals.json', 'pr_vch_id', pr_vch_id)
 
-# Himeka's tablet
-async def hime_tablet(mess, answ):
+# Reconnect to voice channel
+async def voice_rcn():
+    from utils.bot import bot, ai_status
+    pr_v = ai_status.pr_vch_id
+    if pr_v:
+        vc = await bot.get_channel(pr_v).connect()
+        sound = await sob('greeting')
+        await voice_send(sound, vc)
 
+# Voice leave without chat
+async def v_leave_nc():
+    from utils.bot import bot, ai_status
+    ch_id = ai_status.pr_vch_id
+    if ch_id:
+        vch = bot.get_channel(ch_id)
+        vc = discord.utils.get(bot.voice_clients, guild=vch.guild)
+        if vc and vc.is_connected():
+            await vc.disconnect()
+
+
+# Himeka's tablet
+async def hime_tablet(mess, answ, chat_log, uname=None):
+    from utils.bot import ai_name
     # Voice
     if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'jo|ju', answ, re.IGNORECASE):
         if mess.author.voice and mess.author.voice.channel:
             await v_join(mess)
+        else:
+            umess = f"{ai_name}'s tablet: Can't find {uname} in any voice channel, ask {uname} for that."
+            await mess_send(mess, umess, chat_log)
     if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'leav|out', answ, re.IGNORECASE):
         await v_leave(mess)
     
@@ -257,7 +286,7 @@ async def hime_tablet(mess, answ):
     if re.search(rf'my|hime|tôi|mình|tớ', answ, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ', answ, re.IGNORECASE) and re.search(rf'here|show|give|đây|ra|đưa', answ, re.IGNORECASE):
         embed, view = await status_himeka()
         await mess.channel.send(embed=embed, view=view)
-    if re.search(rf'what|how|show|có', answ, re.IGNORECASE) and re.search(rf'is|những|bao', answ, re.IGNORECASE) and re.search(rf'card|lv|thẻ', answ, re.IGNORECASE):
+    if re.search(rf'lev|lv', answ, re.IGNORECASE) and re.search(rf'of', answ, re.IGNORECASE) and re.search(rf'card', answ, re.IGNORECASE):
         embed, view = await status_card()
         await mess.channel.send(embed=embed, view=view)
 
@@ -304,6 +333,7 @@ async def img_get_color(path):
 
     return r, g, b
 
+# Add dot to number
 async def dot_num(number):
         num_str = str(number)
         num_digits = len(num_str)
@@ -313,3 +343,19 @@ async def dot_num(number):
             if (num_digits - i) % 3 == 0 and i != 0:
                 formatted_str = "." + formatted_str 
         return formatted_str
+
+# Check cai chat
+async def check_cai_ready(answ):
+    from utils.bot import bot, ai_status
+    ready = True
+    if answ.startswith("```"):
+        if ai_status.bot_cls < 1:
+            ai_status.update('bot_cls', 1)
+            bot.close()
+        else:
+            ready = False
+        return ready
+    else:
+        if ai_status.bot_cls != 0:
+            ai_status.set('bot_cls', 0)
+        return ready

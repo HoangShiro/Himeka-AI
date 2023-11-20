@@ -6,6 +6,7 @@ from user_files.config import *
 from utils.ai_api import *
 from utils.funcs import *
 from utils.buttons import *
+from utils.daily import *
 
 logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
@@ -39,6 +40,12 @@ class AllStatus:
         self.pr_ch_id = 0
         self.pr_vch_id = 0
         self.last_user = "Shiro"
+        self.day_time = False
+        self.non_time = False
+        self.atn_time = False
+        self.night_time = False
+        self.rt_c = 0
+        self.bot_cls = 0
 
     def update(self, val_name, value):
         if hasattr(self, val_name):
@@ -81,8 +88,6 @@ ai_name = "Himeka"
 ai_last = "Shindou"
 gui_name = "NekoArt Studio"
 ai_full_name = f"{ai_name} {ai_last}"
-bot_cls = 0
-rt_c = 0
 
 # Image gen
 igen_lists = {}
@@ -102,13 +107,6 @@ async def on_ready():
     guild = bot.get_guild(server_id)
     emojis = guild.emojis
 
-    # Đồng bộ hoá commands
-    """try:
-        synced = await bot.tree.sync()
-        print(f"Đã đồng bộ {len(synced)} lệnh.")
-    except Exception as e:
-        print(e)"""
-
     # Emojis load
     emojis_take(bot)
 
@@ -124,17 +122,12 @@ async def on_ready():
     print(f"{ai_name} đã khởi động")
     
     # Continue voice
-    pr_v = ai_status.pr_vch_id
-    if pr_v:
-        vc = await bot.get_channel(pr_v).connect()
-        sound = await sob('greeting')
-        await voice_send(sound, vc)
+    await voice_rcn()
 
-    # Continue chat
+    # Continue draw
     if ai_status.iregen:
         umess = f"Your tablet: You are continuing to draw for {ai_status.last_user}"
         message = await mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log)
-        ai_status.update('total_chat', 1)
         asyncio.create_task(img_gen(message, ai_status.img_prompt, iquality, isize))
 
 @bot.event
@@ -160,9 +153,7 @@ async def on_message(message):
         if not user_name:
             user_name = message.author.name
         mess = message.content
-        umess = "{}: {}".format(user_name, message.content)
-        asyncio.create_task(mess_rep(message, mess, umess, ai_status.chat_log))
-        ai_status.update('total_chat', 1)
+        asyncio.create_task(mess_rep(message, mess, user_name, ai_status.chat_log))
     
     return
 
@@ -236,7 +227,7 @@ async def img_gen_chat(message, result):
                     
 # Image gen dall e 3
 async def img_gen(interaction, prompt, quality, size):
-    global igen_lists, bot_cls
+    global igen_lists
     igen_flw = ai_status.igen_flw
     img_dprt = ai_status.img_dprt
     iregen = ai_status.iregen
@@ -300,8 +291,8 @@ async def img_gen(interaction, prompt, quality, size):
             if "Connection error" in error_code:
                 error_code = "Lỗi kết nối... (ˉ﹃ˉ)"
                 errar = "Your tablet: Software error while drawing, try restarting your drawing app."
-                bot_cls += 1
-                if bot_cls == 2:
+                ai_status.update('bot_cls', 1)
+                if ai_status.bot_cls == 2:
                     error_code = f"{ai_name} khởi động lại tablet xíu nha... (✿◠‿◠)"
                     error_message = "Sẽ quay lại liền nè~!"
                     errar = f"Your tablet: *Error error* Please ask {user_nick} to wait while restart your tablet."
@@ -351,19 +342,19 @@ async def img_gen(interaction, prompt, quality, size):
         ai_status.set('igen_flw', igen_flw)
     if eimg:
         await mess_send(message, errar, ai_status.chat_log)
-        ai_status.update('total_chat', 1)
     ai_status.update('bot_mood', 1)
     ai_status.update('total_draw', 1)
     if error_code:
         if "nối" in error_code or "hem" in error_code or "vậy" in error_code:
             await img_gen(message, ai_status.img_prompt, iquality, isize)
-    if bot_cls == 2:
+    if ai_status.bot_cls == 2:
         iregen = True
         pr_ch_id = message.channel.id
         last_user = user_nick
         ai_status.set('iregen', iregen)
         ai_status.set('pr_ch_id', pr_ch_id)
         ai_status.set('last_user', last_user)
+        ai_status.set('bot_cls', 0)
         await bot.close()
     iregen = False
     ai_status.set('iregen', iregen)
@@ -414,16 +405,16 @@ async def renew(interaction: discord.Interaction):
 async def newchat(interaction: discord.Interaction):
     if interaction.guild is None:
         return await interaction.response.send_message(f"{ai_name}'s tablet: {ai_name} chưa từng tiếp xúc với bạn ở đây.", ephemeral=True)
-    global rt_c
     iuser = interaction.user.name
-    if rt_c == 0:
+    if ai_status.rt_c == 0:
         await interaction.response.send_message(f"{ai_name}'s tablet: Hành động này không thể undo, {iuser} chắc chứ?", ephemeral=True)
-        rt_c += 1
+        ai_status.update('rt_c', 1)
     else:
         await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
         await CAc.chat.new_chat(c_token)
         ai_status.set('bot_mood', 50)
         ai_status.update('roll_back', 1)
+        ai_status.set('rt_c', 0)
         if ai_status.cds_log:
             print(f"[NEW CHAT] - {iuser}")
             print()
@@ -453,14 +444,6 @@ async def test_cmd(interaction: discord.Interaction):
         await interaction.response.send_message(f"Pong~!", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
-
-# Circle task
-@tasks.loop(seconds=60)
-async def m_check():
-    global rt_c
-    rt_c = 0
-    my_timezone = pytz.timezone('Asia/Bangkok')
-    vn_time = datetime.datetime.now(my_timezone)
 
 def bot_run():
     bot.run(discord_bot_key)
