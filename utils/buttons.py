@@ -67,11 +67,15 @@ async def rgs_bt_atv(interaction):
     await img_gen(interaction, prompt, quality, size)
 
 # Wakeup
-async def wake_up(uname=None):
+async def wake_up(interaction):
     from utils.bot import bot, ai_status
     from utils.funcs import mess_id_send, cont_sleep
     ai_status.set('sleeping', False)
     await cont_sleep()
+    uname = None
+    uname = interaction.user.nick
+    if not uname:
+        uname = interaction.user.name
     if uname:
         my_timezone = pytz.timezone('Asia/Bangkok')
         vn_time = datetime.datetime.now(my_timezone)
