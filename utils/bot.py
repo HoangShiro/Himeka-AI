@@ -44,6 +44,7 @@ class AllStatus:
         self.non_time = False
         self.atn_time = False
         self.night_time = False
+        self.sleeping = False
         self.bot_ivd = False
         self.rt_c = 0
         self.bot_cls = 0

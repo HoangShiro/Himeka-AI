@@ -24,31 +24,34 @@ oa_key = KeyM()
 
 # Chat - CAI
 async def CAI(message):
-    from utils.bot import ai_name
-    try:
-        chat = await CAc.chat.get_chat(CAcr)
-        participants = chat['participants']
+    from utils.bot import ai_name, ai_status
+    name = "Rena"
+    busy = True
+    if not ai_status.sleeping:
+        try:
+            chat = await CAc.chat.get_chat(CAcr)
+            participants = chat['participants']
 
-        # In the list of "participants",
-        # a character can be at zero or in the first place
-        if not participants[0]['is_human']:
-            tgt = participants[0]['user']['username']
-        else:
-            tgt = participants[1]['user']['username']
+            # In the list of "participants",
+            # a character can be at zero or in the first place
+            if not participants[0]['is_human']:
+                tgt = participants[0]['user']['username']
+            else:
+                tgt = participants[1]['user']['username']
 
-        data = await CAc.chat.send_message(
-            chat['external_id'], tgt, message
-        )
+            data = await CAc.chat.send_message(
+                chat['external_id'], tgt, message
+            )
 
-        name = data['src_char']['participant']['name']
-        text = data['replies'][0]['text']
+            name = data['src_char']['participant']['name']
+            text = data['replies'][0]['text']
 
-        busy = False
-    except Exception as e:
-        text = f"```{ai_name}'s tablet: Himeka đang bận hoặc kết nối không ổn định, thử gõ /reconnect, đợi 20s rồi gọi lại cô ấy.```"
-        name = "Rena"
-        busy = True
-        print("CAI error: ", str(e))
+            busy = False
+        except Exception as e:
+            text = "error"
+            print("CAI error: ", str(e))
+    else:
+        text = "sleep"
     return text, name, busy
 
 # Tasks - Openai

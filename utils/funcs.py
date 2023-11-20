@@ -151,7 +151,8 @@ async def mess_rep(message, mess, user_name, chat_log):
     from utils.bot import img_gen_chat, ai_status
     umess = "{}: {}".format(user_name, message.content)
     async with message.channel.typing():
-        view = View()
+        view = View(timeout=None)
+        view.add_item(irmv_bt)
         answ, ain, busy = await CAI(umess)
         answ = text_handle(answ)
         if chat_log:
@@ -159,11 +160,16 @@ async def mess_rep(message, mess, user_name, chat_log):
             print(f"{ain}: {answ}")
             print()
         if busy:
-            view.add_item(irmv_bt)
-        await message.reply(answ, view=view)
+            embed = await rina_notice(answ, user_name)
+            if "sleep" in answ:
+                view.add_item(wu_bt)
+            await message.reply(embed=embed, view=view)
+        else: 
+            await message.reply(answ)
         ai_status.update('total_chat', 1)
         asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
         await img_gen_chat(message, mess)
+
 # Send message
 async def mess_send(message, umess, chat_log):
     from utils.bot import ai_status
@@ -268,7 +274,6 @@ async def v_leave_nc():
         if vc and vc.is_connected():
             await vc.disconnect()
 
-
 # Himeka's tablet
 async def hime_tablet(mess, answ, chat_log, uname=None):
     from utils.bot import ai_name, ai_status
@@ -351,7 +356,7 @@ async def dot_num(number):
 async def check_cai_ready(answ):
     from utils.bot import bot, ai_status
     ready = True
-    if answ.startswith("```"):
+    if "error" in answ:
         if ai_status.bot_cls < 1:
             ai_status.update('bot_cls', 1)
             bot.close()
@@ -362,3 +367,11 @@ async def check_cai_ready(answ):
         if ai_status.bot_cls != 0:
             ai_status.set('bot_cls', 0)
         return ready
+    
+# Continue sleep
+async def cont_sleep():
+    from utils.bot import ai_status
+    if not ai_status.sleeping:
+        asyncio.sleep(120)
+        ai_status.set('sleeping', True)
+    return

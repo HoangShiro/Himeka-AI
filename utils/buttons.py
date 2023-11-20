@@ -1,4 +1,4 @@
-import discord
+import discord, datetime, pytz
 from discord.ui import View
 
 rmv_bt = discord.ui.Button(label="➖", custom_id="remove", style=discord.ButtonStyle.grey)
@@ -9,6 +9,7 @@ continue_bt = discord.ui.Button(label="✨ continue", custom_id="continue", styl
 rgs_bt = discord.ui.Button(label="✨ similar", custom_id="rgs", style=discord.ButtonStyle.green)
 nt_bt = discord.ui.Button(label="🔆 next", custom_id="next", style=discord.ButtonStyle.green)
 bk_bt = discord.ui.Button(label="🔅 back", custom_id="back", style=discord.ButtonStyle.green)
+wu_bt = discord.ui.Button(label="🌟 Wake her up", custom_id="whu", style=discord.ButtonStyle.red)
 
 st_bt1 = discord.ui.Button(label="❤️", custom_id="st1", style=discord.ButtonStyle.grey)
 st_bt2 = discord.ui.Button(label="❤️", custom_id="st2", style=discord.ButtonStyle.grey)
@@ -42,9 +43,13 @@ async def load_btt():
     iwm_bt.callback = iw_map_atv
     iwc_bt.callback = iwc_atv
 
+    wu_bt.callback = wake_up
+
+# Remove 
 async def irmv_bt_atv(interaction):
     await interaction.message.delete()
 
+# Image
 async def rg_bt_atv(interaction):
     from utils.bot import igen_lists, img_gen
     img_prompts = igen_lists.get(interaction.message.id)
@@ -60,6 +65,23 @@ async def rgs_bt_atv(interaction):
     quality = img_prompts['quality']
     size = img_prompts['size']
     await img_gen(interaction, prompt, quality, size)
+
+# Wakeup
+async def wake_up(uname=None):
+    from utils.bot import bot, ai_status
+    from utils.funcs import mess_id_send
+    ai_status.set('sleeping', False)
+    if uname:
+        my_timezone = pytz.timezone('Asia/Bangkok')
+        vn_time = datetime.datetime.now(my_timezone)
+        h = vn_time.hour
+        h = str(h)
+        if h < 13:
+            h = h + "AM"
+        else:
+            h = h + "PM"
+        mess = f"{uname} just woke you up at {h}"
+        await mess_id_send(bot, ai_status.pr_ch_id, mess, ai_status.chat_log)
 
 # Character
 async def char_atv(interaction):
@@ -280,3 +302,10 @@ async def status_card():
     view.add_item(iw_bt)
     view.add_item(iwm_bt)
     return embed, view
+
+async def rina_notice(answ=None, uname=None):
+    embed=discord.Embed(title="📑 Himeka đang bận", description="Himeka đang bận hoặc kết nối không ổn định, thử ấn nút `reconnect`, đợi 20s rồi gọi lại cô ấy.", color=0xffbf75)
+    if "sleep" in answ:
+        embed=discord.Embed(title="Himeka đang ngủ 💤", description="Đợi tới ngày mai hoặc gọi cô ấy dậy.", color=0xffbf75)
+    embed.set_author(name="Rina - Himeka's tablet", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    return embed
