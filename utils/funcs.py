@@ -161,7 +161,7 @@ async def mess_rep(message, mess, user_name, chat_log):
             print()
         if busy:
             embed = await rina_notice(answ, user_name)
-            if "sleep" in answ:
+            if "[sleep]" in answ:
                 view.add_item(wu_bt)
             await message.reply(embed=embed, view=view)
         else: 
@@ -196,7 +196,7 @@ async def mess_id_send(bot, ch_id, umess, chat_log):
             print(umess)
             print(f"{ain}: {answ}")
             print()
-        if not busy:
+        if not busy and not "[sleep]" in answ:
             await channel.send(answ)
             ai_status.update('total_chat', 1)
         async for message in channel.history(limit=1):
@@ -374,4 +374,5 @@ async def cont_sleep():
     if not ai_status.sleeping:
         await asyncio.sleep(180)
         ai_status.set('sleeping', True)
+        v_leave_nc()
     return

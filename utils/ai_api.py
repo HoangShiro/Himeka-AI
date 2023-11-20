@@ -53,7 +53,7 @@ async def CAI(message):
             ai_status.set('ai_busy', True)
             print("CAI error: ", str(e))
     else:
-        text = "sleep"
+        text = "[sleep]"
     return text, name, busy
 
 # Tasks - Openai
