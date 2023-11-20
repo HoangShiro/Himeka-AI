@@ -153,7 +153,7 @@ async def status_himeka():
                      icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.add_field(name="🪪 IW's card lv: 4", value="🌏 Earth", inline=False)
-    embed.add_field(name="Status", value="Happily in NekoArt Studio", inline=False)
+    embed.add_field(name="Status", value=ai_status.ai_stt, inline=False)
     embed.add_field(name="Mood", value=emood, inline=True)
     embed.add_field(name="Likeable", value="💖💖💖", inline=True)
     embed.add_field(name="💬 Chats", value=ai_status.total_chat, inline=True)
