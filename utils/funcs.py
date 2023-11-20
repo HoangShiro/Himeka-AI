@@ -374,5 +374,5 @@ async def cont_sleep():
     if not ai_status.sleeping:
         await asyncio.sleep(180)
         ai_status.set('sleeping', True)
-        v_leave_nc()
+        await v_leave_nc()
     return
