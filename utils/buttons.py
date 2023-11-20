@@ -69,8 +69,9 @@ async def rgs_bt_atv(interaction):
 # Wakeup
 async def wake_up(uname=None):
     from utils.bot import bot, ai_status
-    from utils.funcs import mess_id_send
+    from utils.funcs import mess_id_send, cont_sleep
     ai_status.set('sleeping', False)
+    await cont_sleep()
     if uname:
         my_timezone = pytz.timezone('Asia/Bangkok')
         vn_time = datetime.datetime.now(my_timezone)

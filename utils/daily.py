@@ -5,7 +5,7 @@ from utils.ai_api import *
 from utils.funcs import *
 
 # Circle task
-@tasks.loop(seconds=60)
+@tasks.loop(seconds=1800)
 async def m_check():
     from utils.bot import bot, ai_status, ai_name
     my_timezone = pytz.timezone('Asia/Bangkok')
@@ -91,8 +91,10 @@ async def m_check():
                                             ),
                                             status=discord.Status.dnd)
     # Reset time
-    if not ai_status.day_time:
-        if vn_time.hour == 1 or vn_time.hour == 5:
+    if vn_time.hour == 1 or vn_time.hour == 5:
+        if not ai_status.sleeping:
+            ai_status.set('sleeping', True)
+        if not ai_status.day_time:
             ai_status.set('day_time', True)
             ai_status.set('non_time', True)
             ai_status.set('atn_time', True)
