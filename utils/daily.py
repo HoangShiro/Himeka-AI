@@ -55,7 +55,7 @@ async def m_check():
 
     # Tới giờ đi ngủ
     if ai_status.night_time:
-        if vn_time.hour > 23:
+        if vn_time.hour == 23:
             ai_status.set('night_time', False)
             note = f"{ai_name}'s tablet: bed time now (23h PM), you should go to sleep."
             answ = await CAI(note)
