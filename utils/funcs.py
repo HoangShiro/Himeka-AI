@@ -214,12 +214,13 @@ async def voice_send(url, ch):
 
 # Voice make
 async def voice_make_tts(mess, answ):
+    from utils.bot import ai_status
     url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
     if mess.guild.voice_client:
         b_ch = mess.guild.voice_client.channel.id
         b_vc = mess.guild.voice_client
         await voice_send(url, b_vc)
-        vals_save('user_files/vals.json', 'pr_vch_id', b_ch)
+        ai_status.set('pr_vch_id', b_ch)
 
 # Soundboard get
 async def sob(sound_list, sound=None):
@@ -248,6 +249,7 @@ async def v_join(message):
 
 # Join voice channel
 async def v_leave(message):
+    from utils.bot import ai_status
     b_ch = None
     if message.guild.voice_client:
         b_ch = message.guild.voice_client.channel
@@ -255,7 +257,7 @@ async def v_leave(message):
     if b_ch:
         await b_vc.disconnect()
         pr_vch_id = None
-        vals_save('user_files/vals.json', 'pr_vch_id', pr_vch_id)
+        ai_status.set('pr_vch_id', pr_vch_id)
 
 # Reconnect to voice channel
 async def voice_rcn():
@@ -275,8 +277,6 @@ async def v_leave_nc():
         vc = discord.utils.get(bot.voice_clients, guild=vch.guild)
         if vc and vc.is_connected():
             await vc.disconnect()
-            pr_vch_id = None
-            vals_save('user_files/vals.json', 'pr_vch_id', pr_vch_id)
 
 # Himeka's tablet
 async def hime_tablet(mess, answ, chat_log, uname=None):
