@@ -44,6 +44,7 @@ class AllStatus:
         self.non_time = False
         self.atn_time = False
         self.night_time = False
+        self.ai_busy = False
         self.sleeping = False
         self.bot_ivd = False
         self.rt_c = 0
@@ -88,6 +89,7 @@ ai_status = AllStatus()
 # AI name
 ai_name = "Himeka"
 ai_last = "Shindou"
+tablet_name = "Rena"
 gui_name = "NekoArt Studio"
 ai_full_name = f"{ai_name} {ai_last}"
 
@@ -250,7 +252,10 @@ async def img_gen(interaction, prompt, quality, size):
     if ai_status.cds_log:
         print(f"[IMG GENERATE] - {user_nick}")
         print()
-    embed = discord.Embed(title=f"{ai_name} đang vẽ cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=0xffbf75)
+    artist = ai_name
+    if ai_status.ai_busy:
+        artist = tablet_name
+    embed = discord.Embed(title=f"{artist} đang vẽ cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=0xffbf75)
     view = View(timeout=None)
     view.add_item(irmv_bt)
     if isinstance(interaction, discord.Message):
