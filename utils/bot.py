@@ -260,7 +260,7 @@ async def img_gen(interaction, prompt, quality, size):
         print(f"[IMG GENERATE] - {user_nick}")
         print()
     artist = ai_name
-    if ai_status.ai_busy:
+    if ai_status.sleeping or ai_status.ai_busy:
         artist = tablet_name
     embed = discord.Embed(title=f"{artist} đang vẽ cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=0xffbf75)
     view = View(timeout=None)
