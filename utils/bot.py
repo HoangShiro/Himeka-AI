@@ -7,6 +7,7 @@ from utils.ai_api import *
 from utils.funcs import *
 from utils.buttons import *
 from utils.daily import *
+from utils.status import *
 
 logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
@@ -40,6 +41,7 @@ class AllStatus:
         self.pr_ch_id = 0
         self.pr_vch_id = 0
         self.last_user = "Shiro"
+        self.ai_stt = "Chilling ✨"
         self.day_time = False
         self.non_time = False
         self.atn_time = False
@@ -126,7 +128,8 @@ async def on_ready():
     asyncio.create_task(h_check())
     h_check.start()
 
-    await bot.change_presence(activity=discord.Game(name="Moeka baka"))
+    # Load status
+    await status_change()
 
     print(f"{ai_name} đã khởi động")
     

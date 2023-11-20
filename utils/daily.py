@@ -3,6 +3,7 @@ from discord.ext import commands, tasks
 from discord.ui import View, button
 from utils.ai_api import *
 from utils.funcs import *
+from utils.status import *
 
 # Circle task
 @tasks.loop(seconds=1800)
@@ -26,17 +27,12 @@ async def h_check():
                     print(f"{ai_name}'s tablet: đã nhắc {ai_name} thức dậy.")
                 if ai_status.chat_log:
                     print(f"{ai_name}: {answ}")
-                await bot.change_presence(activity=discord.Activity(
-                                                type=discord.ActivityType.competing,
-                                                name="Working 🌸"
-                                            ),
-                                            status=discord.Status.online)
 
     # Tới giờ nghỉ trưa
     if ai_status.non_time:
         if vn_time.hour == 12:
             ai_status.set('non_time', False)
-            note = f"{ai_name}'s tablet: Non time now (12h AM), you should go to lunch and take a nap."
+            note = f"{ai_name}'s tablet: Noon time now (12h AM), you should go to lunch and take a nap."
             answ = await CAI(note)
             ready = await check_cai_ready(answ)
             if ready:
@@ -45,11 +41,6 @@ async def h_check():
                     print(f"{ai_name}'s tablet: đã nhắc {ai_name} đi ăn trưa.")
                 if ai_status.chat_log:
                     print(f"{ai_name}: {answ}")
-                await bot.change_presence(activity=discord.Activity(
-                                                type=discord.ActivityType.playing,
-                                                name="Eating 🍱"
-                                            ),
-                                            status=discord.Status.idle)
 
     # Giờ làm việc chiều
     if ai_status.atn_time:
@@ -64,11 +55,6 @@ async def h_check():
                     print(f"{ai_name}'s tablet: đã nhắc {ai_name} tiếp tục công việc buổi chiều.")
                 if ai_status.chat_log:
                     print(f"{ai_name}: {answ}")
-                await bot.change_presence(activity=discord.Activity(
-                                                type=discord.ActivityType.competing,
-                                                name="Working 🌸"
-                                            ),
-                                            status=discord.Status.online)
 
     # Tới giờ đi ngủ
     if ai_status.night_time:
@@ -85,11 +71,6 @@ async def h_check():
                 if ai_status.chat_log:
                     print(f"{ai_name}: {answ}")
 
-                await bot.change_presence(activity=discord.Activity(
-                                                type=discord.ActivityType.watching,
-                                                name="Sleeping... 💤"
-                                            ),
-                                            status=discord.Status.dnd)
     # Reset time
     if vn_time.hour == 1 or vn_time.hour == 5:
         if not ai_status.sleeping:
@@ -101,13 +82,15 @@ async def h_check():
             ai_status.set('night_time', True)
 
 
-@tasks.loop(seconds=60)
+@tasks.loop(seconds=random.randint(120, 180))
 async def m_check():
     from utils.bot import ai_status
+    await status_change()
+
     if ai_status.sleep_cd > 0:
         ai_status.update('sleep_cd', -1)
     elif ai_status.sleep_cd == 0:
         ai_status.set('sleeping', True)
-        await v_leave_nc()
         ai_status.set('sleep_cd', -1)
         ai_status.set('sleep_rd', False)
+        await v_leave_nc()

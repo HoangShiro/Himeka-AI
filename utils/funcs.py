@@ -8,6 +8,7 @@ from translate import Translator
 from langdetect import detect
 from discord.ui import View
 
+from utils.status import *
 from utils.buttons import *
 from utils.ai_api import *
 from user_files.config import *
@@ -166,6 +167,7 @@ async def mess_rep(message, mess, user_name, chat_log):
             await message.reply(embed=embed, view=view)
         else: 
             await message.reply(answ)
+            await stt_inchat(user_name)
         ai_status.update('total_chat', 1)
         asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
         await img_gen_chat(message, mess)
