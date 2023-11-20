@@ -1,6 +1,5 @@
 import discord, datetime, pytz
 from discord.ui import View
-from utils.funcs import mess_id_send
 
 rmv_bt = discord.ui.Button(label="➖", custom_id="remove", style=discord.ButtonStyle.grey)
 irmv_bt = discord.ui.Button(label="➖", custom_id="remove", style=discord.ButtonStyle.grey)
@@ -79,6 +78,7 @@ async def rgs_bt_atv(interaction):
 # Wakeup
 async def wake_up(interaction):
     from utils.bot import bot, ai_status
+    from utils.funcs import mess_id_send
     ai_status.set('sleeping', False)
     ai_status.set('sleep_cd', 3)
     ai_status.set('sleep_rd', True)
