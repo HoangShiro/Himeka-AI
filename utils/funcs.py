@@ -368,11 +368,3 @@ async def check_cai_ready(answ):
             ai_status.set('bot_cls', 0)
         return ready
     
-# Continue sleep
-async def cont_sleep():
-    from utils.bot import ai_status
-    if not ai_status.sleeping:
-        await asyncio.sleep(180)
-        ai_status.set('sleeping', True)
-        await v_leave_nc()
-    return

@@ -45,6 +45,8 @@ class AllStatus:
         self.atn_time = False
         self.night_time = False
         self.ai_busy = False
+        self.sleep_cd = -1
+        self.sleep_rd = False
         self.sleeping = False
         self.bot_ivd = False
         self.rt_c = 0
@@ -121,6 +123,9 @@ async def on_ready():
     asyncio.create_task(m_check())
     m_check.start()
 
+    asyncio.create_task(h_check())
+    h_check.start()
+
     await bot.change_presence(activity=discord.Game(name="Moeka baka"))
 
     print(f"{ai_name} đã khởi động")
@@ -155,6 +160,8 @@ async def on_message(message):
     if message.content:
         if ai_status.bot_ivd:
             ai_status.set('bot_ivd', False)
+        if ai_status.sleep_rd:
+            ai_status.set('sleep_cd', 3)
         user_name = message.author.nick
         if not user_name:
             user_name = message.author.name

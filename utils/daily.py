@@ -6,7 +6,7 @@ from utils.funcs import *
 
 # Circle task
 @tasks.loop(seconds=1800)
-async def m_check():
+async def h_check():
     from utils.bot import bot, ai_status, ai_name
     my_timezone = pytz.timezone('Asia/Bangkok')
     vn_time = datetime.datetime.now(my_timezone)
@@ -99,3 +99,15 @@ async def m_check():
             ai_status.set('non_time', True)
             ai_status.set('atn_time', True)
             ai_status.set('night_time', True)
+
+
+@tasks.loop(seconds=60)
+async def m_check():
+    from utils.bot import ai_status
+    if ai_status.sleep_cd > 0:
+        ai_status.update('sleep_cd', -1)
+    elif ai_status.sleep_cd == 0:
+        ai_status.set('sleeping', True)
+        await v_leave_nc()
+        ai_status.set('sleep_cd', -1)
+        ai_status.set('sleep_rd', False)
