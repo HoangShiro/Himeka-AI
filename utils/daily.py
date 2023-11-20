@@ -68,8 +68,9 @@ async def m_check():
                     print(f"{ai_name}: {answ}")
 
     # Reset time
-    if vn_time.hour == 1:
-        ai_status.set('day_time', True)
-        ai_status.set('non_time', True)
-        ai_status.set('atn_time', True)
-        ai_status.set('night_time', True)
+    if not ai_status.day_time:
+        if vn_time.hour == 1 or vn_time.hour == 5:
+            ai_status.set('day_time', True)
+            ai_status.set('non_time', True)
+            ai_status.set('atn_time', True)
+            ai_status.set('night_time', True)
