@@ -271,14 +271,17 @@ async def v_leave_nc():
 
 # Himeka's tablet
 async def hime_tablet(mess, answ, chat_log, uname=None):
-    from utils.bot import ai_name
+    from utils.bot import ai_name, ai_status
     # Voice
     if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'jo|ju', answ, re.IGNORECASE):
         if mess.author.voice and mess.author.voice.channel:
             await v_join(mess)
         else:
-            umess = f"{ai_name}'s tablet: Can't find {uname} in any voice channel, ask {uname} for that."
-            await mess_send(mess, umess, chat_log)
+            if not ai_status.bot_ivd:
+                umess = f"{ai_name}'s tablet: Can't find {uname} in any voice channel, ask {uname} for that."
+                await mess_send(mess, umess, chat_log)
+                ai_status.set('bot_ivd', True)
+            pass
     if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'leav|out', answ, re.IGNORECASE):
         await v_leave(mess)
     

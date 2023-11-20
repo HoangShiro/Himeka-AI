@@ -44,6 +44,7 @@ class AllStatus:
         self.non_time = False
         self.atn_time = False
         self.night_time = False
+        self.bot_ivd = False
         self.rt_c = 0
         self.bot_cls = 0
 
@@ -149,6 +150,8 @@ async def on_message(message):
     
     # Phản hồi chat
     if message.content:
+        if ai_status.bot_ivd:
+            ai_status.set('bot_ivd', False)
         user_name = message.author.nick
         if not user_name:
             user_name = message.author.name
