@@ -5,6 +5,8 @@ rmv_bt = discord.ui.Button(label="➖", custom_id="remove", style=discord.Button
 irmv_bt = discord.ui.Button(label="➖", custom_id="remove", style=discord.ButtonStyle.grey)
 rc_bt = discord.ui.Button(label="💫 re chat", custom_id="rc", style=discord.ButtonStyle.grey)
 rg_bt = discord.ui.Button(label="💫", custom_id="rg", style=discord.ButtonStyle.blurple)
+rcn_bt = discord.ui.Button(label="💫 Reconnect", custom_id="rcn", style=discord.ButtonStyle.green)
+
 continue_bt = discord.ui.Button(label="✨ continue", custom_id="continue", style=discord.ButtonStyle.grey)
 rgs_bt = discord.ui.Button(label="✨ similar", custom_id="rgs", style=discord.ButtonStyle.green)
 nt_bt = discord.ui.Button(label="🔆 next", custom_id="next", style=discord.ButtonStyle.green)
@@ -44,10 +46,17 @@ async def load_btt():
     iwc_bt.callback = iwc_atv
 
     wu_bt.callback = wake_up
+    rcn_bt.callback = reconnect_atv
 
 # Remove 
 async def irmv_bt_atv(interaction):
     await interaction.message.delete()
+
+# Reconnect
+async def reconnect_atv(interaction):
+    from utils.bot import bot
+    await interaction.message.delete()
+    bot.close()
 
 # Image
 async def rg_bt_atv(interaction):
@@ -87,6 +96,7 @@ async def wake_up(interaction):
             h = h + "PM"
         mess = f"{uname} just woke you up at {h}"
         await mess_id_send(bot, ai_status.pr_ch_id, mess, ai_status.chat_log)
+    await interaction.message.delete()
 
 # Character
 async def char_atv(interaction):
