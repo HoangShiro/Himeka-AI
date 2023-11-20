@@ -372,6 +372,6 @@ async def check_cai_ready(answ):
 async def cont_sleep():
     from utils.bot import ai_status
     if not ai_status.sleeping:
-        asyncio.sleep(180)
+        await asyncio.sleep(180)
         ai_status.set('sleeping', True)
     return
