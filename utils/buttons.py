@@ -1,4 +1,4 @@
-import discord, datetime, pytz
+import discord, datetime, pytz, asyncio
 from discord.ui import View
 
 rmv_bt = discord.ui.Button(label="➖", custom_id="remove", style=discord.ButtonStyle.grey)
@@ -97,7 +97,7 @@ async def wake_up(interaction):
             h = str(h)
             h = h + "PM"
         mess = f"{uname} just woke you up at {h}"
-        await mess_id_send(bot, ai_status.pr_ch_id, mess, ai_status.chat_log)
+        asyncio.create_task(mess_id_send(bot, ai_status.pr_ch_id, mess, ai_status.chat_log))
     await interaction.message.delete()
 
 # Character
