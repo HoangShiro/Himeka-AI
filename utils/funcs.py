@@ -275,6 +275,8 @@ async def v_leave_nc():
         vc = discord.utils.get(bot.voice_clients, guild=vch.guild)
         if vc and vc.is_connected():
             await vc.disconnect()
+            pr_vch_id = None
+            vals_save('user_files/vals.json', 'pr_vch_id', pr_vch_id)
 
 # Himeka's tablet
 async def hime_tablet(mess, answ, chat_log, uname=None):
