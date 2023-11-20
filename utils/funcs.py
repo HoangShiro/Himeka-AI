@@ -161,7 +161,7 @@ async def mess_rep(message, mess, user_name, chat_log):
             print()
         if busy:
             embed = await rina_notice(answ, user_name)
-            if "[sleep]" in answ:
+            if answ == "[sleep]":
                 view.add_item(wu_bt)
             await message.reply(embed=embed, view=view)
         else: 
@@ -196,7 +196,7 @@ async def mess_id_send(bot, ch_id, umess, chat_log):
             print(umess)
             print(f"{ain}: {answ}")
             print()
-        if not busy and not "[sleep]" in answ:
+        if not busy and answ != "[sleep]":
             await channel.send(answ)
             ai_status.update('total_chat', 1)
         async for message in channel.history(limit=1):
@@ -300,14 +300,14 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
 
 
     # TTS
-    vc = None
-    if mess.guild.voice_client:
-        vc = mess.guild.voice_client.channel
-        
-    if mess.author.voice and mess.author.voice.channel:
-        user_voice_channel = mess.author.voice.channel
-        if vc and vc == user_voice_channel:
-            await voice_make_tts(mess, answ)
+    if answ != "[sleep]":
+        vc = None
+        if mess.guild.voice_client:
+            vc = mess.guild.voice_client.channel
+        if mess.author.voice and mess.author.voice.channel:
+            user_voice_channel = mess.author.voice.channel
+            if vc and vc == user_voice_channel:
+                await voice_make_tts(mess, answ)
      
 # Count downt
 async def count_down(user_timers, user):
