@@ -89,10 +89,11 @@ async def wake_up(interaction):
         my_timezone = pytz.timezone('Asia/Bangkok')
         vn_time = datetime.datetime.now(my_timezone)
         h = vn_time.hour
-        h = str(h)
         if h < 13:
+            h = str(h)
             h = h + "AM"
         else:
+            h = str(h)
             h = h + "PM"
         mess = f"{uname} just woke you up at {h}"
         await mess_id_send(bot, ai_status.pr_ch_id, mess, ai_status.chat_log)
