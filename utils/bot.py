@@ -163,8 +163,9 @@ async def on_voice_state_update(member, before, after):
         if ai_status.u_in_vc:
             u_in_vc = ai_status.u_in_vc
         if before.channel and before.channel.id == bot_voice_channel_id:
-            u_in_vc.remove(member.id)
-            ai_status.set('u_in_vc', u_in_vc)
+            if member.id in u_in_vc:
+                u_in_vc.remove(member.id)
+                ai_status.set('u_in_vc', u_in_vc)
         if after.channel and after.channel.id == bot_voice_channel_id:
             u_in_vc.append(member.id)
             ai_status.set('u_in_vc', u_in_vc)
