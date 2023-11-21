@@ -155,7 +155,9 @@ def text_handle(text):
 
 # Reply message
 async def mess_rep(message, mess, user_name, chat_log):
-    #from utils.bot import img_gen_chat, ai_status
+    asyncio.sleep(15)
+    return
+    from utils.bot import img_gen_chat, ai_status
     umess = "{}: {}".format(user_name, message.content)
     async with message.channel.typing():
         view = View(timeout=None)
@@ -175,13 +177,13 @@ async def mess_rep(message, mess, user_name, chat_log):
             await message.reply(embed=embed, view=view)
         else: 
             await message.reply(answ)
-            ##asyncio.create_task(stt_inchat(user_name))
-            #uid = message.author.id
-            #u = UserData(uid)
-            #u.update('u_fame', 1)
-        #ai_status.update('total_chat', 1)
-        #asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
-        #await img_gen_chat(message, mess)
+            asyncio.create_task(stt_inchat(user_name))
+            uid = message.author.id
+            u = UserData(uid)
+            u.update('u_fame', 1)
+        ai_status.update('total_chat', 1)
+        asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
+        await img_gen_chat(message, mess)
 
 # Send message
 async def mess_send(message, umess, chat_log):
