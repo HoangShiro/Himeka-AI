@@ -327,14 +327,16 @@ async def status_user(interaction, dates=None):
 
     u_name = None
     if isinstance(interaction, discord.Message):
-        u_name = interaction.author.nick
+        if interaction.guild:
+            u_name = interaction.author.nick
         uid = interaction.author.id
         u_avatar = interaction.author.avatar
         u_stt = interaction.author.status
         if not u_name:
             u_name = interaction.author.name
     else:
-        u_name = interaction.user.nick
+        if interaction.guild:
+            u_name = interaction.user.nick
         uid = interaction.user.id
         u_avatar = interaction.user.avatar
         u_stt = interaction.user.status
