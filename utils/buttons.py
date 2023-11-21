@@ -353,15 +353,15 @@ async def status_user(interaction, dates=None):
         return emood
     
     emood = await set_emood(ai_status.bot_mood)
-    embed=discord.Embed(title=f"{u.u_name}", description="Khách du lịch thăm quan Libra/IW", color=0x3db5ff)
+    embed=discord.Embed(title=f"{u.u_name} - {u_stt}", description="Khách du lịch thăm quan Libra/IW", color=0x3db5ff)
     embed.set_author(name=f"{u.u_achv}", url=f"{u.u_avatar}",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url=u_avatar)
-    embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="", inline=False)
-    embed.add_field(name=f"✨ {u.u_fame}", value=u_stt, inline=True)
+    embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value=f"🪙 {u.u_blc} Ira", inline=False)
+    embed.add_field(name=f"✨ {u.u_fame}", value="", inline=True)
     embed.add_field(name=f"🕰️ {u.u_joindate}", value=f"{u.u_from}, {u.u_home}", inline=True)
-    embed.add_field(name=f"🪙 {u.u_blc} Ira", value=" ", inline=False)
-    embed.add_field(name=f"Tech LV: 💠💠🔹🔹🔹", value=" ", inline=False)
+    embed.add_field(name=f"\u200b", value=" ", inline=False)
+    embed.add_field(name=f"💠💠🔹🔹🔹", value="", inline=False)
     embed.set_footer(text="IW's Card dùng để truy cập các tiện ích tại IW, cũng như là định danh, ví điện tử của riêng bạn.")
     view = View(timeout=None)
     view.add_item(irmv_bt)

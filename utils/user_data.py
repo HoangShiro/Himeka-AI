@@ -12,7 +12,7 @@ class UserData:
         self.u_joindate = 0
         self.u_fame = 0
         self.u_tech = "🔹"
-        self.u_blc = 0 # Ira
+        self.u_blc = 1000 # Ira
 
     def get(self):
         user_data = self._load_data()
