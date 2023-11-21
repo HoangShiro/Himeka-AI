@@ -186,8 +186,6 @@ async def on_message(message):
             user_name = message.author.name
         mess = message.content
         asyncio.create_task(mess_rep(message, mess, user_name, ai_status.chat_log))
-    
-    return
 
 # Image gen dall e 3 in chat
 async def img_gen_chat(message, result):
