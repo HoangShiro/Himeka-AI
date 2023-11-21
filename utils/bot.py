@@ -111,7 +111,7 @@ async def on_ready():
     global emojis
     # Load vals
     await ai_status.load('user_files/vals.json')
-
+    
     # get emojis
     guild = bot.get_guild(server_id)
     emojis = guild.emojis

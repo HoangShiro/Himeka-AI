@@ -156,6 +156,9 @@ def text_handle(text):
 # Reply message
 async def mess_rep(message, mess, user_name, chat_log):
     from utils.bot import img_gen_chat, ai_status
+    await asyncio.sleep(15)
+    print("TEST OK")
+    return
     umess = "{}: {}".format(user_name, message.content)
     async with message.channel.typing():
         view = View(timeout=None)
