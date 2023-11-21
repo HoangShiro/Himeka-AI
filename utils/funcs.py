@@ -176,9 +176,9 @@ async def mess_rep(message, mess, user_name, chat_log):
         else: 
             await message.reply(answ)
             asyncio.create_task(stt_inchat(user_name))
-            uid = message.author.id
-            u = UserData(uid)
-            u.update('u_fame', 1)
+            #uid = message.author.id
+            #u = UserData(uid)
+            #u.update('u_fame', 1)
         ai_status.update('total_chat', 1)
         asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
         await img_gen_chat(message, mess)
