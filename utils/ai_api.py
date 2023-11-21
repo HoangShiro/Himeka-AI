@@ -91,12 +91,14 @@ async def openai_images(prompt, quality, size):
 async def tts_get(text, speaker, pitch, intonation_scale, speed):
     from utils.funcs import remove_act, romaji_to_katakana, text_translate, vals_load
     translated = text_translate(text, "ja")
+    print("TEST 2: ", translated)
     text_fill = remove_act(translated)
     if not text_fill:
         if not text:
             text = "エラー エラー"
         text_fill = text
     cnv_text = romaji_to_katakana(text_fill)
+    print("TEST 3: ", cnv_text)
     url = f"https://deprecatedapis.tts.quest/v2/voicevox/audio/?key={vv_key}&text={cnv_text}&speaker={speaker}&pitch={pitch}&intonationScale={intonation_scale}&speed={speed}"
     
     """response = requests.get(url)

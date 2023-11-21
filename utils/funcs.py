@@ -170,7 +170,7 @@ async def mess_rep(message, mess, user_name, chat_log):
             await message.reply(embed=embed, view=view)
         else: 
             await message.reply(answ)
-            await stt_inchat(user_name)
+            asyncio.create_task(stt_inchat(user_name))
             uid = message.author.id
             u = UserData(uid)
             u.update('u_fame', 1)
@@ -221,6 +221,7 @@ async def voice_send(url, ch):
 # Voice make
 async def voice_make_tts(mess, answ):
     from utils.bot import ai_status
+    print("TEST 1: ", answ)
     url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
     if mess.guild.voice_client:
         b_ch = mess.guild.voice_client.channel.id
