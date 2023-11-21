@@ -65,7 +65,7 @@ async def atv_change(type, name):
     global now_atv
     now_atv = discord.Activity(type=type,name=name)
     await bot.change_presence(activity=now_atv,status=now_stt)
-    ai_status.set('ai_stt', name)
+    await ai_status.set('ai_stt', name)
     return now_atv
 
 async def stt_change(stt):
@@ -81,4 +81,4 @@ async def stt_inchat(uname):
     name = f"{in_chat} {uname}"
     now_atv = discord.Activity(type=listening,name=name)
     await bot.change_presence(activity=now_atv,status=onl_status)
-    ai_status.set('ai_stt', name)
+    await ai_status.set('ai_stt', name)

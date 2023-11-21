@@ -110,7 +110,7 @@ isize = "1024x1024"
 async def on_ready():
     global emojis
     # Load vals
-    ai_status.load('user_files/vals.json')
+    await ai_status.load('user_files/vals.json')
 
     # get emojis
     guild = bot.get_guild(server_id)
