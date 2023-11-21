@@ -149,10 +149,13 @@ async def on_voice_state_update(member, before, after):
     bot_voice_channel = bot.voice_clients[0].channel if bot.voice_clients else None
     if after.channel == bot_voice_channel and after.channel is not None and before.channel is None:
         if member.name not in user_timers:
-            user_timers[member.name] = 60
+            uid = member.id
+            user_timers[member.name] = 1800
             asyncio.create_task(count_down(user_timers, member.name))
             umess = (f"Your tablet: {member.name} joined voice channel '{bot_voice_channel.name}' with you")
             asyncio.create_task(mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log))
+            u = UserData(uid)
+            u.update('u_fame', 1)
 
 @bot.event
 async def on_message(message):
@@ -251,14 +254,18 @@ async def img_gen(interaction, prompt, quality, size):
     emoji = random.choice(emojis)
 
     user_nick = None
+    uid = None
     if isinstance(interaction, discord.Message):
         user_nick = interaction.author.nick
+        uid = interaction.author.id
         if not user_nick:
             user_nick = interaction.author.name
     else:
         user_nick = interaction.user.nick
+        uid = interaction.user.id
         if not user_nick:
             user_nick = interaction.user.name
+    
     if ai_status.cds_log:
         print(f"[IMG GENERATE] - {user_nick}")
         print()
@@ -345,6 +352,8 @@ async def img_gen(interaction, prompt, quality, size):
             await message.edit(embed=embed, view=view)
             break
     if img:
+        u = UserData(uid)
+        u.update('u_fame', 1)
         if not igen_flw:
             img_dprt = r_prompt
             ai_status.set('img_dprt', img_dprt)

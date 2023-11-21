@@ -41,7 +41,13 @@ class UserData:
         if variable in self.__dict__:
             current_value = getattr(self, variable)
             setattr(self, variable, current_value + value)
-            self.set()  # Save updated data
+            user_data = self._load_data()
+            if str(self.uid) in user_data:
+                user_data[str(self.uid)][variable] = current_value + value
+            else:
+                # Nếu uid không tồn tại, tạo một bản ghi mới
+                user_data[str(self.uid)] = {variable: current_value + value}
+            self._save_data(user_data)
 
     def _load_data(self):
         try:
