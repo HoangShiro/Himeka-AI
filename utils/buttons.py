@@ -79,9 +79,9 @@ async def rgs_bt_atv(interaction):
 async def wake_up(interaction):
     from utils.bot import bot, ai_status
     from utils.funcs import mess_id_send
-    ai_status.set('sleeping', False)
-    ai_status.set('sleep_cd', 2)
-    ai_status.set('sleep_rd', True)
+    await ai_status.set('sleeping', False)
+    await ai_status.set('sleep_cd', 2)
+    await ai_status.set('sleep_rd', True)
     uname = None
     uname = interaction.user.nick
     if not uname:

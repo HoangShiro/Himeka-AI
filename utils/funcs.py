@@ -178,8 +178,8 @@ async def mess_rep(message, mess, user_name, chat_log):
             asyncio.create_task(stt_inchat(user_name))
             uid = message.author.id
             u = UserData(uid)
-            u.update('u_fame', 1)
-        ai_status.update('total_chat', 1)
+            await u.update('u_fame', 1)
+        await ai_status.update('total_chat', 1)
         asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
         await img_gen_chat(message, mess)
 
@@ -195,7 +195,7 @@ async def mess_send(message, umess, chat_log):
             print()
         if not busy:
             await message.channel.send(answ)
-            ai_status.update('total_chat', 1)
+            await ai_status.update('total_chat', 1)
         await hime_tablet(message, answ, chat_log)
 
 # Send message with channel id
@@ -211,7 +211,7 @@ async def mess_id_send(bot, ch_id, umess, chat_log):
             print()
         if not busy and answ != "[sleep]":
             await channel.send(answ)
-            ai_status.update('total_chat', 1)
+            await ai_status.update('total_chat', 1)
         async for message in channel.history(limit=1):
             pass
         await hime_tablet(message, answ, chat_log)
@@ -375,7 +375,7 @@ async def check_cai_ready(answ):
     ready = True
     if "error" in answ:
         if ai_status.bot_cls < 1:
-            ai_status.update('bot_cls', 1)
+            await ai_status.update('bot_cls', 1)
             await bot.close()
         else:
             ready = False
@@ -391,4 +391,4 @@ async def money_with_hime():
     if uids:
         for uid in uids:
             u = UserData(uid)
-            u.update('u_blc', 5)
+            await u.update('u_blc', 5)
