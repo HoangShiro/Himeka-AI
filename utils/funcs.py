@@ -231,7 +231,7 @@ async def voice_make_tts(mess, answ):
         b_ch = mess.guild.voice_client.channel.id
         b_vc = mess.guild.voice_client
         await voice_send(url, b_vc)
-        ai_status.set('pr_vch_id', b_ch)
+        await ai_status.set('pr_vch_id', b_ch)
 
 # Soundboard get
 async def sob(sound_list, sound=None):
@@ -268,7 +268,7 @@ async def v_leave(message):
     if b_ch:
         await b_vc.disconnect()
         pr_vch_id = None
-        ai_status.set('pr_vch_id', pr_vch_id)
+        await ai_status.set('pr_vch_id', pr_vch_id)
 
 # Reconnect to voice channel
 async def voice_rcn():
@@ -300,7 +300,7 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
             if not ai_status.bot_ivd:
                 umess = f"{ai_name}'s tablet: Can't find {uname} in any voice channel, ask {uname} for that."
                 await mess_send(mess, umess, chat_log)
-                ai_status.set('bot_ivd', True)
+                await ai_status.set('bot_ivd', True)
             pass
     if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'leav|out', answ, re.IGNORECASE):
         await v_leave(mess)
@@ -382,7 +382,7 @@ async def check_cai_ready(answ):
         return ready
     else:
         if ai_status.bot_cls != 0:
-            ai_status.set('bot_cls', 0)
+            await ai_status.set('bot_cls', 0)
         return ready
 
 async def money_with_hime():
