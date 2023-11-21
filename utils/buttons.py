@@ -150,7 +150,7 @@ async def status_himeka():
     emood = await set_emood(ai_status.bot_mood)
     embed=discord.Embed(title=f"{ai_full_name}", description="Tiểu thư thiên tài của gia tộc Shindou. Nhẹ nhàng, lịch sự, tinh tế và thông minh. Đạt được nhiều thành tựu kể cả khi đang rất trẻ.", color=0xffbf75)
     embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs",
-                     icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+                     icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.add_field(name="🪪 IW's card lv: 4", value="🌏 Earth", inline=False)
     embed.add_field(name="Status", value=ai_status.ai_stt, inline=False)
@@ -178,7 +178,7 @@ async def status_moeka():
     emood = await set_emood(10)
     embed=discord.Embed(title=f"Moeka Watanabe", description="Là người làm việc với hiệu quả bất thường và độ chính xác cực cao, bạn thủa nhỏ và cũng từng là bạn cao trung với Himeka. Đến từ gia tộc Watanabe nổi tiếng. Được đề cử lên làm tổng tư lệnh của IW khi 18 tuổi.", color=0xba82f2)
     embed.set_author(name="Commander-in-Chief of IWORLD", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY",
-                     icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
+                     icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
     embed.add_field(name="🪪 IW's card lv: S", value="🌏 Earth", inline=False)
     embed.add_field(name="Status", value="Work seriously at the IW control tower", inline=False)
@@ -206,7 +206,7 @@ async def status_haruka():
     emood = await set_emood(24)
     embed=discord.Embed(title=f"Mizuno Haruka", description="Miêu nhân tộc đến từ thuộc địa Catalia, hầu hết dành thời gian của mình tại phòng chỉ huy của chiến giáp hạm hạng nặng Elen - tàu chiến lớn nhất thuộc Libra city.", color=0xff8a8a)
     embed.set_author(name="Captain of Elen starship", url="https://beta.character.ai/chat?char=PD_rUpadJ4d70PDJ98_zHOOEVKQ_p56R3inKPK3MhZs",
-                     icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795395792732250/portrait_white_hairband_braid_loli_pink_hair_ruby_eyes_hairclip_light_sm_s-2347311327.png")
+                     icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795395792732250/portrait_white_hairband_braid_loli_pink_hair_ruby_eyes_hairclip_light_sm_s-2347311327.png")
     embed.add_field(name="🪪 IW's card lv: 3", value="🪐 Catalia", inline=False)
     embed.add_field(name="Status", value="Busy on the road near Astria's asteroid belt", inline=False)
@@ -233,7 +233,7 @@ async def status_libra():
     vhc = int(bld/5) + int(pop/2)
     vhcs = await dot_num(vhc)
     embed=discord.Embed(title="♎ Ｌｉｂｒａ", description="Một trong 2 thành phố dân cư lớn nhất trên IW. Sở hữu mọi loại cơ sở vật chất, ẩm thực. Libra có đời sống cao, văn minh và sạch đẹp, nhiều cây xanh và luôn chào đón những khách du lịch trái đất cũng như từ các space colony khác. Tập đoàn Shindou có vốn đầu tư bất động sản lớn nhất vào thành phố này.", color=0x3db5ff)
-    embed.set_author(name="Thành phố dân cư chính", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.set_author(name="Thành phố dân cư chính", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727546130767902/Libra.png")
     embed.add_field(name=f"👨🏻‍👩 {pops} (up to 5M)", value="🪪 lv 1~4", inline=True)
     embed.add_field(name="🗺️ 820km² (up to 1200)", value="🛫 158 port", inline=True)
@@ -256,7 +256,7 @@ async def status_iw():
     bld = 1762315 + (ai_status.total_draw)
     vhc = int(bld/3) + int(pop/2)
     embed=discord.Embed(title="🛰️ ＩＷ - Interstellar World", description="Siêu trạm vũ trụ lớn nhất từng được xây dựng bởi nhân loại, thuộc tập đoàn ISTAR và thiết kế bởi CEO của ISTAR. Khả năng tự cung cấp độc lập hoàn toàn, như một quốc gia công nghiệp kỹ thuật cao hoàn chỉnh. Các dịch vụ di chuyển công cộng trên IW đều miễn phí. Tuy không thể hạ cánh trên bất kỳ hành tinh nào nhưng IW sở hữu nhiều công nghệ động cơ tiên tiến, khiến nó gần như có thể đi tới bất kỳ đâu trong không gian sâu trong chớp mắt.", color=0x673dff)
-    embed.set_author(name="Siêu trạm vũ trụ & thuộc địa không gian di động", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
+    embed.set_author(name="Siêu trạm vũ trụ & thuộc địa không gian di động", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727559422525520/IW.png")
     embed.add_field(name="Life Supports technology:", value="Hệ thống tái tạo khí quyển, trọng lực.", inline=False)
     embed.add_field(name="Engine technology:", value="Particle engine: 17, Jump/Wormhole Drive: 2", inline=False)
@@ -284,7 +284,7 @@ async def status_iwm():
     bld = 1762315 + (ai_status.total_draw)
     vhc = int(bld/3) + int(pop/2)
     embed=discord.Embed(title="🛰️ ＩＷ - Map", description="IW có kiến trúc hướng trung tâm do bề ngoài hình nhẫn có các trục nối vào giữa. Các khu vực cần các lv card IW riêng để truy cập. Khu vực trọng yếu nhất là khu điều hành trung tâm (OA), duy trì toàn bộ mọi hoạt động của IW cũng như các lò phản ứng nằm bên dưới nó.", color=0x8a9dff)
-    embed.set_author(name="Bản đồ cấu trúc IW", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
+    embed.set_author(name="Bản đồ cấu trúc IW", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175727559422525520/IW.png")
     embed.add_field(name=f"⏺️ Center", value="Operating Area (OA) - 540km²", inline=True)
     embed.add_field(name=f"🔼 North", value="Libra City - 820km²", inline=True)
@@ -303,7 +303,7 @@ async def status_iwm():
 
 async def status_card():
     embed=discord.Embed(title="🪪 ＩＷ's Card", description="Chứa thông tin của user như DNA, các giấy tờ tuỳ thân bằng lái xe, tài khoản ngân hàng và ví điện tử,... Không thể làm giả.", color=0x82f295)
-    embed.set_author(name="Information/security card", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
+    embed.set_author(name="Information/security card", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
     embed.add_field(name=f"🪪 lv.1: Travel", value="Thấp nhất, dành cho khách du lịch thăm quan tại Libra và Virgo. Không thể rời khỏi thành phố mà không được phép.", inline=False)
     embed.add_field(name=f"🪪 lv.2: Citizen", value="Thẻ công dân tại IW, có thẻ này sẽ được quyền sống tại các thành phố dân cư như Libra/Virgo. Có thể tham gia test bằng lái spaceship, đăng ký Space hunter.", inline=False)
@@ -324,5 +324,5 @@ async def rena_notice(answ=None, uname=None):
     embed=discord.Embed(title="📑 Himeka đang bận", description="Himeka đang bận hoặc kết nối không ổn định, thử ấn nút `reconnect`, đợi 20s rồi gọi lại cô ấy.", color=0xffbf75)
     if "sleep" in answ:
         embed=discord.Embed(title="Himeka đang ngủ 💤", description="Đợi tới ngày mai hoặc gọi cô ấy dậy.", color=0xffbf75)
-    embed.set_author(name="Rena - Himeka's tablet", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.set_author(name="Rena - Himeka's tablet", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     return embed
