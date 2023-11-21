@@ -221,9 +221,8 @@ async def voice_send(url, ch):
 # Voice make
 async def voice_make_tts(mess, answ):
     from utils.bot import ai_status
-    print("TEST 1: ", answ)
     url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
-    if mess.guild.voice_client:
+    if mess.guild.voice_client and not url == ":er:":
         b_ch = mess.guild.voice_client.channel.id
         b_vc = mess.guild.voice_client
         await voice_send(url, b_vc)
