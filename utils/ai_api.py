@@ -55,6 +55,8 @@ async def CAI(message):
             await ai_status.set('ai_busy', True)
             print("CAI error: ", str(e))
     else:
+        await asyncio.sleep(15)
+        print("TEST OK")
         text = "[sleep]"
     return text, name, busy
 
