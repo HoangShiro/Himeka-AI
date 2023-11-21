@@ -350,10 +350,10 @@ async def status_user(interaction, dates=None):
     elif u_stt == "idle":
         u_stt = "🌙 idle"
     u = UserData(uid)
-    u.get()
-    u.set('u_name', u_name)
-    if dates and u.u_joindate == 0:
-        u.set('u_joindate', dates)
+    await u.get()
+    await u.set('u_name', u_name)
+    if dates and await u.u_joindate == 0:
+        await u.set('u_joindate', dates)
     
     async def set_emood(bot_mood):
         bot_mood = max(1, min(bot_mood, 99))
@@ -362,13 +362,13 @@ async def status_user(interaction, dates=None):
         return emood
     
     emood = await set_emood(await ai_status.bot_mood)
-    embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description="Khách du lịch thăm quan Libra/IW", color=0x3db5ff)
-    embed.set_author(name=f"{u.u_achv}", url=u_avatar,
+    embed=discord.Embed(title=f"{await u.u_name} ➖ {u_stt}", description="Khách du lịch thăm quan Libra/IW", color=0x3db5ff)
+    embed.set_author(name=f"{await u.u_achv}", url=u_avatar,
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url=u_avatar)
-    embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="\u200b", inline=False)
-    embed.add_field(name=f"👑 {u.u_fame} CP", value=f"🪙 {u.u_blc} IRA", inline=True)
-    embed.add_field(name=f"{u.u_from}, {u.u_home}", value=f"🕰️ {u.u_joindate}", inline=True)
+    embed.add_field(name=f"🪪 IW's card lv: {await u.u_lv}", value="\u200b", inline=False)
+    embed.add_field(name=f"👑 {await u.u_fame} CP", value=f"🪙 {await u.u_blc} IRA", inline=True)
+    embed.add_field(name=f"{await u.u_from}, {await u.u_home}", value=f"🕰️ {await u.u_joindate}", inline=True)
     embed.add_field(name=f"\u200b", value=" ", inline=False)
     embed.add_field(name=f"💠💠🔹🔹🔹", value="", inline=False)
     embed.set_footer(text="IW's Card dùng để truy cập các tiện ích tại IW, cũng như là định danh, ví điện tử của riêng bạn.")

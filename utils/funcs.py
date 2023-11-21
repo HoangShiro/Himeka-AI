@@ -178,7 +178,7 @@ async def mess_rep(message, mess, user_name, chat_log):
             asyncio.create_task(stt_inchat(user_name))
             uid = message.author.id
             u = UserData(uid)
-            u.update('u_fame', 1)
+            await u.update('u_fame', 1)
         await ai_status.update('total_chat', 1)
         asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
         await img_gen_chat(message, mess)
@@ -391,4 +391,4 @@ async def money_with_hime():
     if uids:
         for uid in uids:
             u = UserData(uid)
-            u.update('u_blc', 5)
+            await u.update('u_blc', 5)

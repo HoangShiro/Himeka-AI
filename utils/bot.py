@@ -157,7 +157,7 @@ async def on_voice_state_update(member, before, after):
             umess = (f"Your tablet: {member.name} joined voice channel '{bot_voice_channel.name}' with you")
             asyncio.create_task(mess_id_send(bot, await ai_status.pr_ch_id, umess, await ai_status.chat_log))
             u = UserData(uid)
-            u.update('u_fame', 1)
+            await u.update('u_fame', 1)
     if before.channel != after.channel:
         u_in_vc = []
         if await ai_status.u_in_vc:
@@ -364,7 +364,7 @@ async def img_gen(interaction, prompt, quality, size):
             break
     if img:
         u = UserData(uid)
-        u.update('u_fame', 1)
+        await u.update('u_fame', 1)
         if not igen_flw:
             img_dprt = r_prompt
             await ai_status.set('img_dprt', img_dprt)
