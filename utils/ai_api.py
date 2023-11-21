@@ -6,9 +6,6 @@ from utils.prompting import *
 from user_files.openai_key import *
 from user_files.config import *
 
-CAc = PyAsyncCAI(cai_key)
-CAcr = c_token
-
 alt_trans = False
 
 # Roll key
@@ -27,6 +24,8 @@ oa_key = KeyM()
 # Chat - CAI
 async def CAI(message):
     from utils.bot import ai_name, ai_status
+    CAc = PyAsyncCAI(cai_key)
+    CAcr = c_token
     name = "Rena"
     busy = True
     if not ai_status.sleeping:
@@ -50,13 +49,13 @@ async def CAI(message):
 
             busy = False
             await ai_status.set('ai_busy', False)
+            await asyncio.sleep(15)
+            print("TEST OK")
         except Exception as e:
             text = "error"
             await ai_status.set('ai_busy', True)
             print("CAI error: ", str(e))
     else:
-        await asyncio.sleep(15)
-        print("TEST OK")
         text = "[sleep]"
     return text, name, busy
 
