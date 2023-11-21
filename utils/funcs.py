@@ -161,9 +161,11 @@ async def mess_rep(message, mess, user_name, chat_log):
             print(f"{ain}: {answ}")
             print()
         if busy:
-            embed = await rina_notice(answ, user_name)
+            embed = await rena_notice(answ, user_name)
             if answ == "[sleep]":
                 view.add_item(wu_bt)
+            else:
+                view.add_item(rcn_bt)
             await message.reply(embed=embed, view=view)
         else: 
             await message.reply(answ)

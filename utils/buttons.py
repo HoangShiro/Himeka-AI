@@ -320,9 +320,9 @@ async def status_card():
     view.add_item(iwm_bt)
     return embed, view
 
-async def rina_notice(answ=None, uname=None):
+async def rena_notice(answ=None, uname=None):
     embed=discord.Embed(title="📑 Himeka đang bận", description="Himeka đang bận hoặc kết nối không ổn định, thử ấn nút `reconnect`, đợi 20s rồi gọi lại cô ấy.", color=0xffbf75)
     if "sleep" in answ:
         embed=discord.Embed(title="Himeka đang ngủ 💤", description="Đợi tới ngày mai hoặc gọi cô ấy dậy.", color=0xffbf75)
-    embed.set_author(name="Rina - Himeka's tablet", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
+    embed.set_author(name="Rena - Himeka's tablet", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     return embed

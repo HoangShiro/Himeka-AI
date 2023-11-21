@@ -151,7 +151,7 @@ async def on_voice_state_update(member, before, after):
         if member.name not in user_timers:
             user_timers[member.name] = 60
             asyncio.create_task(count_down(user_timers, member.name))
-            umess = (f"Your tablet: {member.name} joined voice channel {bot_voice_channel.name} with you")
+            umess = (f"Your tablet: {member.name} joined voice channel '{bot_voice_channel.name}' with you")
             asyncio.create_task(mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log))
 
 @bot.event

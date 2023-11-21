@@ -20,6 +20,7 @@ streaming = discord.ActivityType.streaming
 listening = discord.ActivityType.listening
 custom = discord.ActivityType.custom
 competing = discord.ActivityType.competing
+unknown = discord.ActivityType.unknown
 
 now_atv = discord.Activity(type=watching,name=in_idle)
 now_stt = idle_status

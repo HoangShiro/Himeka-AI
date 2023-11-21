@@ -8,7 +8,7 @@ from utils.status import *
 # Circle task
 @tasks.loop(seconds=1800)
 async def h_check():
-    from utils.bot import bot, ai_status, ai_name
+    from utils.bot import ai_status, ai_name
     my_timezone = pytz.timezone('Asia/Bangkok')
     vn_time = datetime.datetime.now(my_timezone)
 
@@ -80,7 +80,6 @@ async def h_check():
             ai_status.set('non_time', True)
             ai_status.set('atn_time', True)
             ai_status.set('night_time', True)
-
 
 @tasks.loop(seconds=random.randint(120, 180))
 async def m_check():
