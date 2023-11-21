@@ -342,7 +342,6 @@ async def status_user(interaction, dates=None):
     
     u = UserData(uid)
     u.set('u_name', u_name)
-    u.set('u_avatar', u_avatar)
     if dates and u.u_joindate == 0:
         u.set('u_joindate', dates)
     
@@ -354,7 +353,7 @@ async def status_user(interaction, dates=None):
     
     emood = await set_emood(ai_status.bot_mood)
     embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description="Khách du lịch thăm quan Libra/IW", color=0x3db5ff)
-    embed.set_author(name=f"{u.u_achv}", url=f"{u.u_avatar}",
+    embed.set_author(name=f"{u.u_achv}", url=u_avatar,
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url=u_avatar)
     embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="\u200b", inline=False)

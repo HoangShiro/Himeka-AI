@@ -4,7 +4,7 @@ class UserData:
     def __init__(self, uid):
         self.uid = uid
         self.u_name = "IW Citizen"
-        self.u_avatar = "https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png"
+        #self.u_avatar = "https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png"
         self.u_achv = "Newcomer"
         self.u_lv = 1
         self.u_from = "🌏 Earth"
