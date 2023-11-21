@@ -56,7 +56,7 @@ async def irmv_bt_atv(interaction):
 async def reconnect_atv(interaction):
     from utils.bot import bot
     await interaction.message.delete()
-    bot.close()
+    await bot.close()
 
 # Image
 async def rg_bt_atv(interaction):

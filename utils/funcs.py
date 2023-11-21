@@ -365,7 +365,7 @@ async def check_cai_ready(answ):
     if "error" in answ:
         if ai_status.bot_cls < 1:
             ai_status.update('bot_cls', 1)
-            bot.close()
+            await bot.close()
         else:
             ready = False
         return ready
