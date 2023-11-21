@@ -24,7 +24,10 @@ class UserData:
     def set(self, variable, new_value):
         if variable in self.__dict__:
             setattr(self, variable, new_value)
-            self._save_data()
+            user_data = self._load_data()
+            if str(self.uid) in user_data:
+                user_data[str(self.uid)][variable] = new_value
+                self._save_data(user_data)
 
     def update(self, variable, value):
         self.get()  # Load existing data
