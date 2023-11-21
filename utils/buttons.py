@@ -359,7 +359,7 @@ async def status_user(interaction, dates=None):
     embed.set_thumbnail(url=u_avatar)
     embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="\u200b", inline=False)
     embed.add_field(name=f"✨ {u.u_fame}", value=f"🪙 {u.u_blc} Ira", inline=True)
-    embed.add_field(name=f"🕰️ {u.u_joindate}", value=f"{u.u_from}, {u.u_home}", inline=True)
+    embed.add_field(name=f"{u.u_from}, {u.u_home}", value=f"🕰️ {u.u_joindate}", inline=True)
     embed.add_field(name=f"\u200b", value=" ", inline=False)
     embed.add_field(name=f"💠💠🔹🔹🔹", value="", inline=False)
     embed.set_footer(text="IW's Card dùng để truy cập các tiện ích tại IW, cũng như là định danh, ví điện tử của riêng bạn.")
