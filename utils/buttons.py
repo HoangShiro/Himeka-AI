@@ -379,6 +379,6 @@ async def status_user(interaction, dates=None):
 async def rena_notice(answ=None, uname=None):
     embed=discord.Embed(title="📑 Himeka đang bận", description="Himeka đang bận hoặc kết nối không ổn định, thử ấn nút `reconnect`, đợi 20s rồi gọi lại cô ấy.", color=0xffbf75)
     if "sleep" in answ:
-        embed=discord.Embed(title="Himeka đang ngủ 💤", description="Đợi tới ngày mai hoặc gọi cô ấy dậy.", color=0xffbf75)
+        embed=discord.Embed(title="Himeka đang ngủ 💤", description="Đợi tới sáng hoặc gọi cô ấy dậy.", color=0xffbf75)
     embed.set_author(name="Rena - Himeka's tablet", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     return embed
