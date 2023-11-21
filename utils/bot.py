@@ -149,7 +149,8 @@ async def on_voice_state_update(member, before, after):
         return
     bot_voice_channel = bot.voice_clients[0].channel if bot.voice_clients else None
     if after.channel == bot_voice_channel and after.channel is not None and before.channel is None:
-        id_list = ai_status.u_in_vc.append(member.id)
+        id_list = ai_status.u_in_vc
+        id_list = id_list.append(member.id)
         ai_status.set('u_in_vc', id_list)
         if member.name not in user_timers:
             uid = member.id
