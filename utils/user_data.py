@@ -20,6 +20,10 @@ class UserData:
             user = user_data[str(self.uid)]
             for key, value in vars(self).items():
                 setattr(self, key, user.get(key, value))
+        else:
+            # Nếu uid không có trong dữ liệu, lưu giá trị mặc định vào file
+            user_data[str(self.uid)] = {key: value for key, value in vars(self).items()}
+            self._save_data(user_data)
 
     def set(self, variable, new_value):
         if variable in self.__dict__:
