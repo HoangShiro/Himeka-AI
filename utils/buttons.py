@@ -357,10 +357,10 @@ async def status_user(interaction, dates=None):
     embed.set_author(name=f"{u.u_achv}", url=f"{u.u_avatar}",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url=u_avatar)
-    embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value=f"{u.u_from}, {u.u_home}", inline=False)
+    embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="", inline=False)
     embed.add_field(name=f"✨ {u.u_fame}", value=u_stt, inline=True)
-    embed.add_field(name=f"🕰️ {u.u_joindate}", value=emood, inline=True)
-    embed.add_field(name=f"🪙 {u.u_blc}", value=" ", inline=False)
+    embed.add_field(name=f"🕰️ {u.u_joindate}", value=f"{u.u_from}, {u.u_home}", inline=True)
+    embed.add_field(name=f"🪙 {u.u_blc} Ira", value=" ", inline=False)
     embed.add_field(name=f"Tech LV: 💠💠🔹🔹🔹", value=" ", inline=False)
     embed.set_footer(text="IW's Card dùng để truy cập các tiện ích tại IW, cũng như là định danh, ví điện tử của riêng bạn.")
     view = View(timeout=None)
