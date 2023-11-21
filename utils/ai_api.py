@@ -49,7 +49,7 @@ async def CAI(message):
             text = data['replies'][0]['text']
 
             busy = False
-            #await ai_status.set('ai_busy', False)
+            await ai_status.set('ai_busy', False)
         except Exception as e:
             text = "error"
             await ai_status.set('ai_busy', True)
