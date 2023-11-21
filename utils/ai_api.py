@@ -29,7 +29,7 @@ async def CAI(message):
     from utils.bot import ai_name, ai_status
     name = "Rena"
     busy = True
-    if not await ai_status.sleeping:
+    if not ai_status.sleeping:
         try:
             chat = await CAc.chat.get_chat(CAcr)
             participants = chat['participants']
@@ -49,10 +49,10 @@ async def CAI(message):
             text = data['replies'][0]['text']
 
             busy = False
-            await ai_status.set('ai_busy', False)
+            ai_status.set('ai_busy', False)
         except Exception as e:
             text = "error"
-            await ai_status.set('ai_busy', True)
+            ai_status.set('ai_busy', True)
             print("CAI error: ", str(e))
     else:
         text = "[sleep]"

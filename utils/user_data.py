@@ -1,7 +1,7 @@
 import json
 
 class UserData:
-    async def __init__(self, uid):
+    def __init__(self, uid):
         self.uid = uid
         self.u_name = "IW Citizen"
         #self.u_avatar = "https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png"
@@ -62,3 +62,4 @@ class UserData:
     async def _save_data(self, data):
         with open('user_files/user_data.json', 'w', encoding="utf-8") as file:
             json.dump(data, file, indent=4)
+

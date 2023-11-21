@@ -178,8 +178,8 @@ async def mess_rep(message, mess, user_name, chat_log):
             asyncio.create_task(stt_inchat(user_name))
             uid = message.author.id
             u = UserData(uid)
-            await u.update('u_fame', 1)
-        await ai_status.update('total_chat', 1)
+            u.update('u_fame', 1)
+        ai_status.update('total_chat', 1)
         asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
         await img_gen_chat(message, mess)
 
@@ -195,7 +195,7 @@ async def mess_send(message, umess, chat_log):
             print()
         if not busy:
             await message.channel.send(answ)
-            await ai_status.update('total_chat', 1)
+            ai_status.update('total_chat', 1)
         await hime_tablet(message, answ, chat_log)
 
 # Send message with channel id
@@ -211,7 +211,7 @@ async def mess_id_send(bot, ch_id, umess, chat_log):
             print()
         if not busy and answ != "[sleep]":
             await channel.send(answ)
-            await ai_status.update('total_chat', 1)
+            ai_status.update('total_chat', 1)
         async for message in channel.history(limit=1):
             pass
         await hime_tablet(message, answ, chat_log)
@@ -231,7 +231,7 @@ async def voice_make_tts(mess, answ):
         b_ch = mess.guild.voice_client.channel.id
         b_vc = mess.guild.voice_client
         await voice_send(url, b_vc)
-        await ai_status.set('pr_vch_id', b_ch)
+        ai_status.set('pr_vch_id', b_ch)
 
 # Soundboard get
 async def sob(sound_list, sound=None):
@@ -268,12 +268,12 @@ async def v_leave(message):
     if b_ch:
         await b_vc.disconnect()
         pr_vch_id = None
-        await ai_status.set('pr_vch_id', pr_vch_id)
+        ai_status.set('pr_vch_id', pr_vch_id)
 
 # Reconnect to voice channel
 async def voice_rcn():
     from utils.bot import bot, ai_status
-    pr_v = await ai_status.pr_vch_id
+    pr_v = ai_status.pr_vch_id
     if pr_v:
         vc = await bot.get_channel(pr_v).connect()
         sound = await sob('greeting')
@@ -282,7 +282,7 @@ async def voice_rcn():
 # Voice leave without chat
 async def v_leave_nc():
     from utils.bot import bot, ai_status
-    ch_id = await ai_status.pr_vch_id
+    ch_id = ai_status.pr_vch_id
     if ch_id:
         vch = bot.get_channel(ch_id)
         vc = discord.utils.get(bot.voice_clients, guild=vch.guild)
@@ -297,10 +297,10 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
         if mess.author.voice and mess.author.voice.channel:
             await v_join(mess)
         else:
-            if not await ai_status.bot_ivd:
+            if not ai_status.bot_ivd:
                 umess = f"{ai_name}'s tablet: Can't find {uname} in any voice channel, ask {uname} for that."
                 await mess_send(mess, umess, chat_log)
-                await ai_status.set('bot_ivd', True)
+                ai_status.set('bot_ivd', True)
             pass
     if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'leav|out', answ, re.IGNORECASE):
         await v_leave(mess)
@@ -374,21 +374,21 @@ async def check_cai_ready(answ):
     from utils.bot import bot, ai_status
     ready = True
     if "error" in answ:
-        if await ai_status.bot_cls < 1:
-            await ai_status.update('bot_cls', 1)
+        if ai_status.bot_cls < 1:
+            ai_status.update('bot_cls', 1)
             await bot.close()
         else:
             ready = False
         return ready
     else:
-        if await ai_status.bot_cls != 0:
-            await ai_status.set('bot_cls', 0)
+        if ai_status.bot_cls != 0:
+            ai_status.set('bot_cls', 0)
         return ready
 
 async def money_with_hime():
     from utils.bot import ai_status
-    uids = await ai_status.u_in_vc
+    uids = ai_status.u_in_vc
     if uids:
         for uid in uids:
             u = UserData(uid)
-            await u.update('u_blc', 5)
+            u.update('u_blc', 5)
