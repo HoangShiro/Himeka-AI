@@ -23,7 +23,7 @@ logger.setLevel(logging.WARNING)
 emojis = []
 
 class AllStatus:
-    def __init__(self):
+    async def __init__(self):
         # Status
         self.total_chat = 0
         self.roll_back = 0
@@ -55,27 +55,27 @@ class AllStatus:
         self.rt_c = 0
         self.bot_cls = 0
 
-    def update(self, val_name, value):
+    async def update(self, val_name, value):
         if hasattr(self, val_name):
             current_value = getattr(self, val_name)
             setattr(self, val_name, current_value + value)
-            vals_save("user_files/vals.json", val_name, current_value + value)
+            await vals_save("user_files/vals.json", val_name, current_value + value)
         else:
             print(f"Error: Variable '{val_name}' not found.")
 
-    def set(self, val_name, value):
+    async def set(self, val_name, value):
         if hasattr(self, val_name):
             setattr(self, val_name, value)
-            vals_save("user_files/vals.json", val_name, value)
+            await vals_save("user_files/vals.json", val_name, value)
         else:
             print(f"Error: Variable '{val_name}' not found.")
 
-    def get(self, val_name):
+    async def get(self, val_name):
         if hasattr(self, val_name):
             value = getattr(self, val_name)
         return value
     
-    def load(self, filename):
+    async def load(self, filename):
         try:
             with open(filename, 'r') as file:
                 data = json.load(file)
@@ -85,7 +85,7 @@ class AllStatus:
         except (FileNotFoundError, json.JSONDecodeError):
             print(f"Error loading data from {filename}")
 
-    def show(self):
+    async def show(self):
         for attr, value in vars(self).items():
             print(f"[vals.json] - {attr}: {value}")
 
@@ -110,7 +110,7 @@ isize = "1024x1024"
 async def on_ready():
     global emojis
     # Load vals
-    ai_status.load('user_files/vals.json')
+    await ai_status.load('user_files/vals.json')
 
     # get emojis
     guild = bot.get_guild(server_id)
@@ -138,10 +138,10 @@ async def on_ready():
     await voice_rcn()
 
     # Continue draw
-    if ai_status.iregen:
-        umess = f"Your tablet: You are continuing to draw for {ai_status.last_user}"
-        message = await mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log)
-        asyncio.create_task(img_gen(message, ai_status.img_prompt, iquality, isize))
+    if await ai_status.iregen:
+        umess = f"Your tablet: You are continuing to draw for {await ai_status.last_user}"
+        message = await mess_id_send(bot, await ai_status.pr_ch_id, umess, await ai_status.chat_log)
+        asyncio.create_task(img_gen(message, await ai_status.img_prompt, iquality, isize))
 
 @bot.event
 async def on_voice_state_update(member, before, after):
@@ -155,20 +155,20 @@ async def on_voice_state_update(member, before, after):
             user_timers[member.name] = 1800
             asyncio.create_task(count_down(user_timers, member.name))
             umess = (f"Your tablet: {member.name} joined voice channel '{bot_voice_channel.name}' with you")
-            asyncio.create_task(mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log))
+            asyncio.create_task(mess_id_send(bot, await ai_status.pr_ch_id, umess, await ai_status.chat_log))
             u = UserData(uid)
             u.update('u_fame', 1)
     if before.channel != after.channel:
         u_in_vc = []
-        if ai_status.u_in_vc:
-            u_in_vc = ai_status.u_in_vc
+        if await ai_status.u_in_vc:
+            u_in_vc = await ai_status.u_in_vc
         if before.channel and before.channel.id == bot_voice_channel_id:
             if member.id in u_in_vc:
                 u_in_vc.remove(member.id)
-                ai_status.set('u_in_vc', u_in_vc)
+                await ai_status.set('u_in_vc', u_in_vc)
         if after.channel and after.channel.id == bot_voice_channel_id:
             u_in_vc.append(member.id)
-            ai_status.set('u_in_vc', u_in_vc)
+            await ai_status.set('u_in_vc', u_in_vc)
 
 @bot.event
 async def on_message(message):
@@ -177,21 +177,21 @@ async def on_message(message):
     
     # Phản hồi chat
     if message.content:
-        if ai_status.bot_ivd:
-            ai_status.set('bot_ivd', False)
-        if ai_status.sleep_rd:
-            ai_status.set('sleep_cd', 3)
+        if await ai_status.bot_ivd:
+            await ai_status.set('bot_ivd', False)
+        if await ai_status.sleep_rd:
+            await ai_status.set('sleep_cd', 3)
         user_name = message.author.nick
         if not user_name:
             user_name = message.author.name
         mess = message.content
-        asyncio.create_task(mess_rep(message, mess, user_name, ai_status.chat_log))
+        asyncio.create_task(mess_rep(message, mess, user_name, await ai_status.chat_log))
 
 # Image gen dall e 3 in chat
 async def img_gen_chat(message, result):
     global iquality, isize
-    igen_flw = ai_status.igen_flw
-    img_prompt = ai_status.img_prompt
+    igen_flw = await ai_status.igen_flw
+    img_prompt = await ai_status.img_prompt
     async def igen_choice(text):
         quality = None
         size = None
@@ -215,7 +215,7 @@ async def img_gen_chat(message, result):
             translated = text_translate(result, lang)
             prompt = extract_nouns(translated)
             img_prompt = prompt
-            ai_status.set('img_prompt', prompt)
+            await ai_status.set('img_prompt', prompt)
             await img_gen(message, prompt, quality, size)
             return
         elif re.search(r'gen|create|tạo|vẽ|draw|chụp|made', result, re.IGNORECASE) and re.search(r'art|img|pic|ảnh|hình|tấm', result, re.IGNORECASE) and re.search(r'lại|nữa|again|more', result, re.IGNORECASE):
@@ -248,19 +248,19 @@ async def img_gen_chat(message, result):
             lang = "en"
             translated = text_translate(result, lang)
             prompt = extract_nouns(translated)
-            ai_status.set('img_prompt', prompt)
+            await ai_status.set('img_prompt', prompt)
             await img_gen(message, prompt, quality, size)
             return
         else:
             igen_flw = False
-            ai_status.set('igen_flw', igen_flw)
+            await ai_status.set('igen_flw', igen_flw)
                     
 # Image gen dall e 3
 async def img_gen(interaction, prompt, quality, size):
     global igen_lists
-    igen_flw = ai_status.igen_flw
-    img_dprt = ai_status.img_dprt
-    iregen = ai_status.iregen
+    igen_flw = await ai_status.igen_flw
+    img_dprt = await ai_status.img_dprt
+    iregen = await ai_status.iregen
 
     emoji = random.choice(emojis)
 
@@ -277,11 +277,11 @@ async def img_gen(interaction, prompt, quality, size):
         if not user_nick:
             user_nick = interaction.user.name
     
-    if ai_status.cds_log:
+    if await ai_status.cds_log:
         print(f"[IMG GENERATE] - {user_nick}")
         print()
     artist = ai_name
-    if ai_status.sleeping or ai_status.ai_busy:
+    if await ai_status.sleeping or await ai_status.ai_busy:
         artist = tablet_name
     embed = discord.Embed(title=f"{artist} đang vẽ cho {user_nick}... {emoji}", description=f"🏷️ {prompt}", color=0xffbf75)
     view = View(timeout=None)
@@ -328,8 +328,8 @@ async def img_gen(interaction, prompt, quality, size):
             if "Connection error" in error_code:
                 error_code = "Lỗi kết nối... (ˉ﹃ˉ)"
                 errar = "Your tablet: Software error while drawing, try restarting your drawing app."
-                ai_status.update('bot_cls', 1)
-                if ai_status.bot_cls == 2:
+                await ai_status.update('bot_cls', 1)
+                if await ai_status.bot_cls == 2:
                     error_code = f"{ai_name} khởi động lại tablet xíu nha... (✿◠‿◠)"
                     error_message = "Sẽ quay lại liền nè~!"
                     errar = f"Your tablet: *Error error* Please ask {user_nick} to wait while restart your tablet."
@@ -367,7 +367,7 @@ async def img_gen(interaction, prompt, quality, size):
         u.update('u_fame', 1)
         if not igen_flw:
             img_dprt = r_prompt
-            ai_status.set('img_dprt', img_dprt)
+            await ai_status.set('img_dprt', img_dprt)
         await dl_img(img, img_id)
         file_path = f'user_files/gen_imgs/{img_id}.png'
         r,g,b = await img_get_color(file_path)
@@ -378,30 +378,30 @@ async def img_gen(interaction, prompt, quality, size):
         await message.edit(embed=embed, view=view, files=[image_file])
     if img or eimg:
         igen_flw = True
-        ai_status.set('igen_flw', igen_flw)
+        await ai_status.set('igen_flw', igen_flw)
     if eimg:
-        await mess_send(message, errar, ai_status.chat_log)
-    ai_status.update('bot_mood', 1)
-    ai_status.update('total_draw', 1)
+        await mess_send(message, errar, await ai_status.chat_log)
+    await ai_status.update('bot_mood', 1)
+    await ai_status.update('total_draw', 1)
     if error_code:
         if "nối" in error_code or "hem" in error_code or "vậy" in error_code:
-            await img_gen(message, ai_status.img_prompt, iquality, isize)
-    if ai_status.bot_cls == 2:
+            await img_gen(message, await ai_status.img_prompt, iquality, isize)
+    if await ai_status.bot_cls == 2:
         iregen = True
         pr_ch_id = message.channel.id
         last_user = user_nick
-        ai_status.set('iregen', iregen)
-        ai_status.set('pr_ch_id', pr_ch_id)
-        ai_status.set('last_user', last_user)
-        ai_status.set('bot_cls', 0)
+        await ai_status.set('iregen', iregen)
+        await ai_status.set('pr_ch_id', pr_ch_id)
+        await ai_status.set('last_user', last_user)
+        await ai_status.set('bot_cls', 0)
         await bot.close()
     iregen = False
-    ai_status.set('iregen', iregen)
+    await ai_status.set('iregen', iregen)
     return
 
 # Correct prompt and gen art again
 async def img_regen(message, quality, size, rq):
-    case = f"3[{ai_status.img_dprt}][{rq}]"
+    case = f"3[{await ai_status.img_dprt}][{rq}]"
     try:
         prompt = await openai_task(case)
     except Exception as e:
@@ -417,7 +417,7 @@ async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bo
         return await interaction.response.send_message(f"{ai_name}'s tablet: {ai_name} chỉ có thể vẽ cho bạn trong {gui_name}.", ephemeral=True)
     global ihq, iportrait, iscene
     if not prompt:
-        prompt = ai_status.img_prompt
+        prompt = await ai_status.img_prompt
     ihq = hq
     iportrait = portrait
     iscene = scene
@@ -429,7 +429,7 @@ async def image_gen(interaction: discord.Interaction, prompt: str = None, hq: bo
         size = "1024x1792"
     if scene:
         size = "1792x1024"
-    ai_status.set('img_prompt', prompt)
+    await ai_status.set('img_prompt', prompt)
     await img_gen(interaction, prompt, quality, size)
 
 @bot.slash_command(name="reconnect", description=f"Kết nối lại với {ai_name}.")
@@ -437,7 +437,7 @@ async def renew(interaction: discord.Interaction):
     if interaction.guild is None:
         return await interaction.response.send_message(f"{ai_name}'s tablet: bạn đang ở ngoài {gui_name}.", ephemeral=True)
     await interaction.response.send_message(f"{ai_name}'s tablet: *đang thiết lập lại kết nối giữa {gui_name} với {ai_name}*", ephemeral=True)
-    ai_status.update('total_rcn', 1)
+    await ai_status.update('total_rcn', 1)
     await bot.close()
 
 @bot.slash_command(name="timeleap", description=f"Gặp {ai_name} ở timeline khác.")
@@ -445,16 +445,16 @@ async def newchat(interaction: discord.Interaction):
     if interaction.guild is None:
         return await interaction.response.send_message(f"{ai_name}'s tablet: {ai_name} chưa từng tiếp xúc với bạn ở đây.", ephemeral=True)
     iuser = interaction.user.name
-    if ai_status.rt_c == 0:
+    if await ai_status.rt_c == 0:
         await interaction.response.send_message(f"{ai_name}'s tablet: Hành động này không thể undo, {iuser} chắc chứ?", ephemeral=True)
-        ai_status.update('rt_c', 1)
+        await ai_status.update('rt_c', 1)
     else:
         await interaction.response.send_message(f"*Đã quay ngược thời gian lúc {ai_name} mới tham gia NekoArt Studio... 🕒*")
         await CAc.chat.new_chat(c_token)
-        ai_status.set('bot_mood', 50)
-        ai_status.update('roll_back', 1)
-        ai_status.set('rt_c', 0)
-        if ai_status.cds_log:
+        await ai_status.set('bot_mood', 50)
+        await ai_status.update('roll_back', 1)
+        await ai_status.set('rt_c', 0)
+        if await ai_status.cds_log:
             print(f"[NEW CHAT] - {iuser}")
             print()
 
@@ -478,12 +478,12 @@ async def u_status_show(interaction: discord.Interaction):
 async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False, get: str = None):
     if interaction.user.id == dev_id:
         if get:
-            val = ai_status.get(get)
+            val = await ai_status.get(get)
             await interaction.response.send_message(f"{val}", ephemeral=True)
         else:
-            ai_status.set('chat_log', chat)
-            ai_status.set('cds_log', command)
-            ai_status.set('st_log', status)
+            await ai_status.set('chat_log', chat)
+            await ai_status.set('cds_log', command)
+            await ai_status.set('st_log', status)
             await interaction.response.send_message(f"`Chat log: {chat}, Command log: {command}, Status log: {status}.`", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể xem nhật ký của cô ấy.`", ephemeral=True)

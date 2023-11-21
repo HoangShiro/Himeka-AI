@@ -79,9 +79,9 @@ async def rgs_bt_atv(interaction):
 async def wake_up(interaction):
     from utils.bot import bot, ai_status
     from utils.funcs import mess_id_send
-    ai_status.set('sleeping', False)
-    ai_status.set('sleep_cd', 2)
-    ai_status.set('sleep_rd', True)
+    await ai_status.set('sleeping', False)
+    await ai_status.set('sleep_cd', 2)
+    await ai_status.set('sleep_rd', True)
     uname = None
     uname = interaction.user.nick
     if not uname:
@@ -97,7 +97,7 @@ async def wake_up(interaction):
             h = str(h)
             h = h + "PM"
         mess = f"{uname} just woke you up at {h}"
-        asyncio.create_task(mess_id_send(bot, ai_status.pr_ch_id, mess, ai_status.chat_log))
+        asyncio.create_task(mess_id_send(bot, await ai_status.pr_ch_id, mess, await ai_status.chat_log))
     await interaction.message.delete()
 
 # Character
@@ -147,19 +147,19 @@ async def status_himeka():
         emood = "✨" * emood_count
         return emood
     
-    emood = await set_emood(ai_status.bot_mood)
+    emood = await set_emood(await ai_status.bot_mood)
     embed=discord.Embed(title=f"{ai_full_name}", description="Tiểu thư thiên tài của gia tộc Shindou. Nhẹ nhàng, lịch sự, tinh tế và thông minh. Đạt được nhiều thành tựu kể cả khi đang rất trẻ.", color=0xffbf75)
     embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
     embed.add_field(name="🪪 IW's card lv: 4", value="🌏 Earth", inline=False)
-    embed.add_field(name="Status", value=ai_status.ai_stt, inline=False)
+    embed.add_field(name="Status", value=await ai_status.ai_stt, inline=False)
     embed.add_field(name="Mood", value=emood, inline=True)
     embed.add_field(name="Likeable", value="💖💖💖", inline=True)
-    embed.add_field(name="💬 Chats", value=ai_status.total_chat, inline=True)
-    embed.add_field(name="🎨 Drew", value=ai_status.total_draw, inline=True)
-    embed.add_field(name="🔄️ Connected", value=ai_status.total_rcn, inline=True)
-    embed.add_field(name="🕒 Time leap", value=ai_status.roll_back, inline=True)
+    embed.add_field(name="💬 Chats", value=await ai_status.total_chat, inline=True)
+    embed.add_field(name="🎨 Drew", value=await ai_status.total_draw, inline=True)
+    embed.add_field(name="🔄️ Connected", value=await ai_status.total_rcn, inline=True)
+    embed.add_field(name="🕒 Time leap", value=await ai_status.roll_back, inline=True)
     view = View(timeout=None)
     view.add_item(irmv_bt)
     view.add_item(map_bt)
@@ -226,9 +226,9 @@ async def status_haruka():
 async def status_libra():
     from utils.funcs import dot_num
     from utils.bot import ai_status
-    pop = 1263865 + (ai_status.total_chat*2)
+    pop = 1263865 + (await ai_status.total_chat*2)
     pops = await dot_num(pop)
-    bld = 1762315 + (ai_status.total_draw)
+    bld = 1762315 + (await ai_status.total_draw)
     blds = await dot_num(bld)
     vhc = int(bld/5) + int(pop/2)
     vhcs = await dot_num(vhc)
@@ -251,9 +251,9 @@ async def status_libra():
 async def status_iw():
     from utils.funcs import dot_num
     from utils.bot import ai_status
-    pop = 6638256 + (ai_status.total_chat*10)
+    pop = 6638256 + (await ai_status.total_chat*10)
     pops = await dot_num(pop)
-    bld = 1762315 + (ai_status.total_draw)
+    bld = 1762315 + (await ai_status.total_draw)
     vhc = int(bld/3) + int(pop/2)
     embed=discord.Embed(title="🛰️ ＩＷ - Interstellar World", description="Siêu trạm vũ trụ lớn nhất từng được xây dựng bởi nhân loại, thuộc tập đoàn ISTAR và thiết kế bởi CEO của ISTAR. Khả năng tự cung cấp độc lập hoàn toàn, như một quốc gia công nghiệp kỹ thuật cao hoàn chỉnh. Các dịch vụ di chuyển công cộng trên IW đều miễn phí. Tuy không thể hạ cánh trên bất kỳ hành tinh nào nhưng IW sở hữu nhiều công nghệ động cơ tiên tiến, khiến nó gần như có thể đi tới bất kỳ đâu trong không gian sâu trong chớp mắt.", color=0x673dff)
     embed.set_author(name="Siêu trạm vũ trụ & thuộc địa không gian di động", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
@@ -279,9 +279,9 @@ async def status_iw():
 async def status_iwm():
     from utils.funcs import dot_num
     from utils.bot import ai_status
-    pop = 6638256 + (ai_status.total_chat*10)
+    pop = 6638256 + (await ai_status.total_chat*10)
     pops = await dot_num(pop)
-    bld = 1762315 + (ai_status.total_draw)
+    bld = 1762315 + (await ai_status.total_draw)
     vhc = int(bld/3) + int(pop/2)
     embed=discord.Embed(title="🛰️ ＩＷ - Map", description="IW có kiến trúc hướng trung tâm do bề ngoài hình nhẫn có các trục nối vào giữa. Các khu vực cần các lv card IW riêng để truy cập. Khu vực trọng yếu nhất là khu điều hành trung tâm (OA), duy trì toàn bộ mọi hoạt động của IW cũng như các lò phản ứng nằm bên dưới nó.", color=0x8a9dff)
     embed.set_author(name="Bản đồ cấu trúc IW", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
@@ -361,7 +361,7 @@ async def status_user(interaction, dates=None):
         emood = "💠" * emood_count
         return emood
     
-    emood = await set_emood(ai_status.bot_mood)
+    emood = await set_emood(await ai_status.bot_mood)
     embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description="Khách du lịch thăm quan Libra/IW", color=0x3db5ff)
     embed.set_author(name=f"{u.u_achv}", url=u_avatar,
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")

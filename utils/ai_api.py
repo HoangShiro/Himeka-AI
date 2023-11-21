@@ -29,7 +29,7 @@ async def CAI(message):
     from utils.bot import ai_name, ai_status
     name = "Rena"
     busy = True
-    if not ai_status.sleeping:
+    if not await ai_status.sleeping:
         try:
             chat = await CAc.chat.get_chat(CAcr)
             participants = chat['participants']
@@ -49,10 +49,10 @@ async def CAI(message):
             text = data['replies'][0]['text']
 
             busy = False
-            ai_status.set('ai_busy', False)
+            await ai_status.set('ai_busy', False)
         except Exception as e:
             text = "error"
-            ai_status.set('ai_busy', True)
+            await ai_status.set('ai_busy', True)
             print("CAI error: ", str(e))
     else:
         text = "[sleep]"
@@ -110,7 +110,7 @@ async def tts_get(text, speaker, pitch, intonation_scale, speed):
     url = f"https://deprecatedapis.tts.quest/v2/voicevox/audio/?key={vv_key}&text={cnv_text}&speaker={speaker}&pitch={pitch}&intonationScale={intonation_scale}&speed={speed}"
     
     """response = requests.get(url)
-    st_log = vals_load('user_files/vals.json', 'st_log')
+    st_log = await vals_load('user_files/vals.json', 'st_log')
 
     if response.status_code == 200:
         with open('user_files/ai_voice_msg.ogg', 'wb') as f:
