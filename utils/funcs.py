@@ -175,7 +175,7 @@ async def mess_rep(message, mess, user_name, chat_log):
             await message.reply(embed=embed, view=view)
         else: 
             await message.reply(answ)
-            #asyncio.create_task(stt_inchat(user_name))
+            ##asyncio.create_task(stt_inchat(user_name))
             #uid = message.author.id
             #u = UserData(uid)
             #u.update('u_fame', 1)
