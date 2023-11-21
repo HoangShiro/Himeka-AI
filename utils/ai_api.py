@@ -33,8 +33,6 @@ async def CAI(message):
             chat = await CAc.chat.get_chat(CAcr)
             participants = chat['participants']
 
-            # In the list of "participants",
-            # a character can be at zero or in the first place
             if not participants[0]['is_human']:
                 tgt = participants[0]['user']['username']
             else:
@@ -49,8 +47,6 @@ async def CAI(message):
 
             busy = False
             await ai_status.set('ai_busy', False)
-            await asyncio.sleep(15)
-            print("TEST OK")
         except Exception as e:
             text = "error"
             await ai_status.set('ai_busy', True)
