@@ -343,7 +343,7 @@ async def status_user(interaction, dates=None):
     u = UserData(uid)
     u.set('u_name', u_name)
     u.set('u_avatar', u_avatar)
-    if dates:
+    if dates and u.u_joindate == 0:
         u.set('u_joindate', dates)
     
     async def set_emood(bot_mood):
