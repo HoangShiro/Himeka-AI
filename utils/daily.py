@@ -88,7 +88,8 @@ async def m_check():
     await status_change()
 
     # Add money
-    await money_with_hime()
+    if not ai_status.sleeping:
+        await money_with_hime()
 
     if ai_status.sleep_cd > 0:
         ai_status.update('sleep_cd', -1)
