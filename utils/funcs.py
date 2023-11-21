@@ -5,6 +5,7 @@ import numpy as np
 from discord import FFmpegPCMAudio
 from nltk import word_tokenize, pos_tag
 from translate import Translator
+from mtranslate import translate
 from langdetect import detect
 from discord.ui import View
 
@@ -99,6 +100,10 @@ def text_translate(text, target_lang):
 def lang_detect(text):
     source_lang = detect(text)
     return source_lang
+
+def text_translate2(text, to_language='ja'):
+    translated_text = translate(text, to_language)
+    return translated_text
 
 # Romaji -> Katakana
 def romaji_to_katakana(romaji_text):

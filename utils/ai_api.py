@@ -9,6 +9,8 @@ from user_files.config import *
 CAc = PyAsyncCAI(cai_key)
 CAcr = c_token
 
+alt_trans = False
+
 # Roll key
 class KeyM:
     def __init__(self):
@@ -89,11 +91,16 @@ async def openai_images(prompt, quality, size):
 
 # TTS - VoiceVox
 async def tts_get(text, speaker, pitch, intonation_scale, speed):
-    from utils.funcs import remove_act, romaji_to_katakana, text_translate, vals_load
-    translated = text_translate(text, "ja")
-    if "MYMEMORY WARNING:" in translated:
-        url = ":er:"
-        return url
+    from utils.funcs import remove_act, romaji_to_katakana, text_translate, text_translate2, vals_load
+    global alt_trans
+    translated = None
+    if not alt_trans:
+        translated = text_translate(text, "ja")
+        if "MYMEMORY WARNING:" in translated:
+            translated = text_translate2(text, "ja")
+            alt_trans = True
+    else:
+        translated = text_translate2(text, "ja")
     text_fill = remove_act(translated)
     if not text_fill:
         if not text:
