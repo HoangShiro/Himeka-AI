@@ -324,11 +324,23 @@ async def status_user(interaction, dates=None):
     from utils.bot import ai_status
     from utils.user_data import UserData
 
+
     u_name = None
-    u_name = interaction.user.nick
-    uid = interaction.user.id
-    u_avatar = interaction.user.avatar
-    u_stt = interaction.user.status
+    if isinstance(interaction, discord.Message):
+        u_name = interaction.author.nick
+        uid = interaction.author.id
+        u_avatar = interaction.author.avatar
+        u_stt = interaction.author.status
+        if not u_name:
+            u_name = interaction.author.name
+    else:
+        u_name = interaction.user.nick
+        uid = interaction.user.id
+        u_avatar = interaction.user.avatar
+        u_stt = interaction.user.status
+        if not u_name:
+            u_name = interaction.user.name
+
     if u_stt == "online":
         u_stt = "🟢 online"
     elif u_stt == "offline":
@@ -337,9 +349,6 @@ async def status_user(interaction, dates=None):
         u_stt = "🔴 dnd"
     elif u_stt == "idle":
         u_stt = "🌙 idle"
-    if not u_name:
-        u_name = interaction.user.name
-    
     u = UserData(uid)
     u.get()
     u.set('u_name', u_name)
