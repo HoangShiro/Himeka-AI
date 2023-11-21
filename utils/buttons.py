@@ -341,6 +341,7 @@ async def status_user(interaction, dates=None):
         u_name = interaction.user.name
     
     u = UserData(uid)
+    u.get()
     u.set('u_name', u_name)
     if dates and u.u_joindate == 0:
         u.set('u_joindate', dates)
