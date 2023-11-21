@@ -447,7 +447,7 @@ async def status_show(interaction: discord.Interaction):
 async def u_status_show(interaction: discord.Interaction):
     my_timezone = pytz.timezone('Asia/Bangkok')
     vn_time = datetime.datetime.now(my_timezone)
-    date = vn_time.day
+    date = vn_time.date()
     hour = vn_time.hour
     m = vn_time.minute
     dates = f"{date} {hour}:{m}"
