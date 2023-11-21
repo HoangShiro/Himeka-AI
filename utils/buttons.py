@@ -320,6 +320,53 @@ async def status_card():
     view.add_item(iwm_bt)
     return embed, view
 
+async def status_user(interaction, dates=None):
+    from utils.bot import ai_status
+    from utils.user_data import UserData
+
+    u_name = None
+    u_name = interaction.user.nick
+    uid = interaction.user.id
+    u_avatar = interaction.user.avatar
+    u_stt = interaction.user.status
+    if u_stt == "online":
+        u_stt = "🟢 online"
+    elif u_stt == "offline":
+        u_stt = "⚫ offline"
+    elif u_stt == "dnd":
+        u_stt = "🔴 dnd"
+    elif u_stt == "idle":
+        u_stt = "🌙 idle"
+    if not u_name:
+        u_name = interaction.user.name
+    
+    u = UserData(uid)
+    u.set('u_name', u_name)
+    u.set('u_avatar', u_avatar)
+    if dates:
+        u.set('u_joindate', dates)
+    
+    async def set_emood(bot_mood):
+        bot_mood = max(1, min(bot_mood, 99))
+        emood_count = (bot_mood+1) // 2
+        emood = "💠" * emood_count
+        return emood
+    
+    emood = await set_emood(ai_status.bot_mood)
+    embed=discord.Embed(title=f"{u.u_name}", description="Khách du lịch thăm quan Libra/IW", color=0x3db5ff)
+    embed.set_author(name=f"{u.u_achv}", url=f"{u.u_avatar}",
+                     icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
+    embed.set_thumbnail(url=u_avatar)
+    embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value=f"{u.u_from}, {u.u_home}", inline=False)
+    embed.add_field(name=f"✨ {u.u_fame}", value=u_stt, inline=True)
+    embed.add_field(name=f"🕰️ {u.u_joindate}", value=emood, inline=True)
+    embed.add_field(name=f"🪙 {u.u_blc}", value=" ", inline=False)
+    embed.add_field(name=f"Tech LV: 💠💠🔹🔹🔹", value=" ", inline=False)
+    embed.set_footer(text="IW's Card dùng để truy cập các tiện ích tại IW, cũng như là định danh, ví điện tử của riêng bạn.")
+    view = View(timeout=None)
+    view.add_item(irmv_bt)
+    return embed, view
+
 async def rena_notice(answ=None, uname=None):
     embed=discord.Embed(title="📑 Himeka đang bận", description="Himeka đang bận hoặc kết nối không ổn định, thử ấn nút `reconnect`, đợi 20s rồi gọi lại cô ấy.", color=0xffbf75)
     if "sleep" in answ:

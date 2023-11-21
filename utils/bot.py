@@ -443,6 +443,17 @@ async def status_show(interaction: discord.Interaction):
     embed, view = await status_himeka()
     await interaction.response.send_message(embed=embed, view=view)
 
+@bot.slash_command(name="uinfo", description=f"Thông tin cá nhân của bạn.")
+async def u_status_show(interaction: discord.Interaction):
+    my_timezone = pytz.timezone('Asia/Bangkok')
+    vn_time = datetime.datetime.now(my_timezone)
+    date = vn_time.date
+    hour = vn_time.hour
+    m = vn_time.minute
+    dates = f"{date} {hour}:{m}"
+    embed, view = await status_user(interaction, dates)
+    await interaction.response.send_message(embed=embed, view=view)
+
 @bot.slash_command(name="clogs", description=f"Nhật ký của {ai_name}")
 async def cslog(interaction: discord.Interaction, chat: bool = False, command: bool = True, status: bool = False, get: str = None):
     if interaction.user.id == dev_id:
