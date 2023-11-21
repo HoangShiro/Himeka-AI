@@ -379,4 +379,11 @@ async def check_cai_ready(answ):
         if ai_status.bot_cls != 0:
             ai_status.set('bot_cls', 0)
         return ready
-    
+
+async def money_with_hime():
+    from utils.bot import ai_status
+    uids = ai_status.u_in_vc
+    if uids:
+        for uid in uids:
+            u = UserData(uid)
+            u.update('u_blc', 5)

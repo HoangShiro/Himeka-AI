@@ -367,7 +367,7 @@ async def status_user(interaction, dates=None):
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url=u_avatar)
     embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="\u200b", inline=False)
-    embed.add_field(name=f"👑 {u.u_fame}", value=f"🪙 {u.u_blc} Ira", inline=True)
+    embed.add_field(name=f"👑 {u.u_fame} CP", value=f"🪙 {u.u_blc} IRA", inline=True)
     embed.add_field(name=f"{u.u_from}, {u.u_home}", value=f"🕰️ {u.u_joindate}", inline=True)
     embed.add_field(name=f"\u200b", value=" ", inline=False)
     embed.add_field(name=f"💠💠🔹🔹🔹", value="", inline=False)

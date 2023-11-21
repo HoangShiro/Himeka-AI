@@ -5,6 +5,7 @@ from utils.ai_api import *
 from utils.funcs import *
 from utils.status import *
 
+
 # Circle task
 @tasks.loop(seconds=1800)
 async def h_check():
@@ -85,6 +86,9 @@ async def h_check():
 async def m_check():
     from utils.bot import ai_status
     await status_change()
+
+    # Add money
+    await money_with_hime()
 
     if ai_status.sleep_cd > 0:
         ai_status.update('sleep_cd', -1)
