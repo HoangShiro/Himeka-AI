@@ -30,12 +30,12 @@ async def status_change():
     h = vn_time.hour
 
     # Midnight
-    if 0 <= h <= 7:
+    if 0 <= h <= 6:
         await atv_change(watching, in_sleep)
         await stt_change(invisible)
 
     # Morning
-    elif 8 <= h <= 11:
+    elif 7 <= h <= 11:
         await atv_change(competing, in_work)
         await stt_change(dnd_status)
     

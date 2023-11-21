@@ -14,15 +14,15 @@ async def h_check():
 
     # Nhắc tới giờ làm việc
     if ai_status.day_time:
-        if vn_time.hour == 8:
+        if vn_time.hour == 7:
+            if ai_status.sleeping:
+                ai_status.set('sleeping', False)
             ai_status.set('day_time', False)
             note = f"{ai_name}'s tablet: 8h AM now, you should wake up prepare for work."
             answ = await CAI(note)
             ready = await check_cai_ready(answ)
             if ready:
                 await voice_rcn()
-                if ai_status.sleeping:
-                    ai_status.set('sleeping', False)
                 if ai_status.st_log:
                     print(f"{ai_name}'s tablet: đã nhắc {ai_name} thức dậy.")
                 if ai_status.chat_log:
