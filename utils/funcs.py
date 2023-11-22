@@ -157,7 +157,8 @@ def text_handle(text):
 # Reply message
 async def mess_rep(message, mess, user_name, chat_log):
     from utils.bot import img_gen_chat, ai_status
-    umess = "{}: {}".format(user_name, message.content)
+    mess = await user_card_check(message, mess, user_name, chat_log)
+    umess = "{}: {}".format(user_name, mess)
     async with message.channel.typing():
         view = View(timeout=None)
         view.add_item(irmv_bt)
@@ -291,15 +292,27 @@ async def v_leave_nc():
             await vc.disconnect()
 
 async def user_card_check(message, mess, user_name, chat_log):
-    if re.search(rf'show|is|what|can', mess, re.IGNORECASE) and re.search(rf'my|tôi|mình', mess, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ|info|money|cp|ira|date', mess, re.IGNORECASE):
+    if re.search(rf'show|is|what|can|when', mess, re.IGNORECASE) and re.search(rf'my|tôi|mình', mess, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ|info|money|cp|ira|date|tech', mess, re.IGNORECASE):
         uid = message.author.id
         u = UserData(uid)
         await u.get()
         u_lv = u.u_lv
-        uf = u.u_fame
-        ub = u.u_blc
-        ufr = u.u_from
-        uh = u.u_home
+        ufame = u.u_fame
+        ublc = u.u_blc
+        ufrom = u.u_from
+        if not ufrom:
+            ufrom = "unregistered"
+        uhome = u.u_home
+        if not uhome:
+            uhome = "unregistered"
+        utech = "not displayed"
+        ujoin = u.u_joindate
+        tabans = f"\n[Himeka's tablet]: {user_name} real info is 'IW lv card - {u_lv}', 'CP - {ufame}', 'Balace - {ublc}', 'From - {ufrom}', 'Home - {uhome}', 'Tech list - {utech}', 'join/register date - {ujoin}'"
+        if chat_log:
+            print(tabans)
+        fina_mess = f"{mess} \n {tabans}"
+        return fina_mess
+
 # Himeka's tablet
 async def hime_tablet(mess, answ, chat_log, uname=None):
     from utils.bot import ai_name, ai_status
