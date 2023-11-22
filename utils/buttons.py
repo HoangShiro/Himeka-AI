@@ -52,9 +52,10 @@ async def load_btt():
 
     wu_bt.callback = wake_up
     rcn_bt.callback = reconnect_atv
-    usc_bt.callback = status_user
-    uet_bt.callback = status_tech
-    uwh_bt.callback = status_warehouse
+
+    usc_bt.callback = usc_atv
+    uet_bt.callback = uet_atv
+    uwh_bt.callback = uwh_atv
 
 # Remove 
 async def irmv_bt_atv(interaction):
@@ -144,6 +145,17 @@ async def iw_map_atv(interaction):
 
 async def iwc_atv(interaction):
     embed, view = await status_card()
+    await interaction.response.edit_message(embed=embed, view=view)
+
+# User tab change
+async def usc_atv(interaction):
+    embed, view = await status_user(interaction)
+    await interaction.response.edit_message(embed=embed, view=view)
+async def uet_atv(interaction):
+    embed, view = await status_tech(interaction)
+    await interaction.response.edit_message(embed=embed, view=view)
+async def uwh_atv(interaction):
+    embed, view = await status_warehouse(interaction)
     await interaction.response.edit_message(embed=embed, view=view)
 
 # Status
