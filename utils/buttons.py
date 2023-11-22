@@ -29,6 +29,10 @@ iw_bt = discord.ui.Button(label="🛰️ IW", custom_id="iw", style=discord.Butt
 iwm_bt = discord.ui.Button(label="🗺️ IW Map", custom_id="iwm", style=discord.ButtonStyle.green)
 iwc_bt = discord.ui.Button(label="🪪 IW Card", custom_id="iwc", style=discord.ButtonStyle.green)
 
+usc_bt = discord.ui.Button(label="🪪", custom_id="usc", style=discord.ButtonStyle.blurple)
+uet_bt = discord.ui.Button(label="📟", custom_id="uet", style=discord.ButtonStyle.blurple)
+uwh_bt = discord.ui.Button(label="📱", custom_id="uwh", style=discord.ButtonStyle.blurple)
+
 # Button call
 async def load_btt():
     irmv_bt.callback = irmv_bt_atv
@@ -48,6 +52,9 @@ async def load_btt():
 
     wu_bt.callback = wake_up
     rcn_bt.callback = reconnect_atv
+    usc_bt.callback = status_user
+    uet_bt.callback = status_tech
+    uwh_bt.callback = status_warehouse
 
 # Remove 
 async def irmv_bt_atv(interaction):
@@ -396,6 +403,85 @@ async def status_user(interaction, dates=None):
     embed.set_footer(text="IW's Card dùng để truy cập các tiện ích tại IW, cũng như là định danh, ví điện tử của riêng bạn.")
     view = View(timeout=None)
     view.add_item(irmv_bt)
+    view.add_item(uet_bt)
+    view.add_item(uwh_bt)
+    return embed, view
+
+async def status_tech(interaction):
+    u_name = None
+    if isinstance(interaction, discord.Message):
+        if interaction.guild:
+            u_name = interaction.author.nick
+        uid = interaction.author.id
+        u_avatar = interaction.author.avatar
+        if not u_name:
+            u_name = interaction.author.name
+    else:
+        if interaction.guild:
+            u_name = interaction.user.nick
+        uid = interaction.user.id
+        u_avatar = interaction.user.avatar
+        if not u_name:
+            u_name = interaction.user.name
+
+    u = UserData(uid)
+    await u.get()
+    await u.set('u_name', u_name)
+
+    embed=discord.Embed(title="Equipment technology", description="Các thiết bị hiện tại của bạn.", color=0x9ea1ff)
+    embed.set_author(name=u_name, icon_url=u_avatar)
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
+    embed.add_field(name="1 - Empty 🟦", value="", inline=True)
+    embed.add_field(name="2 - Empty 🟦", value="", inline=True)
+    embed.add_field(name="3 - Empty 🟦", value="", inline=True)
+    embed.add_field(name="4 - Empty 🟦", value="", inline=True)
+    embed.add_field(name="5 - Empty 🟦", value="", inline=True)
+    embed.add_field(name="6 - Empty 🟦", value="", inline=True)
+    embed.set_footer(text="Các thiết bị sẽ cải thiện đáng kể chỉ số của bạn, có thể mở rộng slot trong Tech Store.")
+    view = View(timeout=None)
+    view.add_item(irmv_bt)
+    view.add_item(usc_bt)
+    view.add_item(uwh_bt)
+    return embed, view
+
+async def status_warehouse(interaction):
+    u_name = None
+    if isinstance(interaction, discord.Message):
+        if interaction.guild:
+            u_name = interaction.author.nick
+        uid = interaction.author.id
+        u_avatar = interaction.author.avatar
+        if not u_name:
+            u_name = interaction.author.name
+    else:
+        if interaction.guild:
+            u_name = interaction.user.nick
+        uid = interaction.user.id
+        u_avatar = interaction.user.avatar
+        if not u_name:
+            u_name = interaction.user.name
+
+    u = UserData(uid)
+    await u.get()
+    await u.set('u_name', u_name)
+
+    embed=discord.Embed(title="Warehouse", description="Kho chứa item", color=0x9ea1ff)
+    embed.set_author(name=u_name, icon_url=u_avatar)
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
+    embed.add_field(name="1 🟩", value="", inline=True)
+    embed.add_field(name="2 🟩", value="", inline=True)
+    embed.add_field(name="3 🟩", value="", inline=True)
+    embed.add_field(name="4 🟩", value="", inline=True)
+    embed.add_field(name="5 🟩", value="", inline=True)
+    embed.add_field(name="6 🟩", value="", inline=True)
+    embed.add_field(name="7 🟩", value="", inline=True)
+    embed.add_field(name="8 🟩", value="", inline=True)
+    embed.add_field(name="9 🟩", value="", inline=True)
+    embed.set_footer(text="Sức chứa tuỳ vào spacecraft bạn đang sở hữu, có thể mở rộng sức chứa tối đa.")
+    view = View(timeout=None)
+    view.add_item(irmv_bt)
+    view.add_item(usc_bt)
+    view.add_item(uet_bt)
     return embed, view
 
 async def rena_notice(answ=None, uname=None):
