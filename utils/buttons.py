@@ -355,9 +355,9 @@ async def status_user(interaction, dates=None):
 
 
     u = UserData(uid)
-    fr = UFrom
-    ho = UHome
-    lo = ULore
+    fr = UFrom()
+    ho = UHome()
+    lo = ULore()
     await u.get()
     await u.set('u_name', u_name)
     if dates and u.u_joindate == 0:
@@ -381,7 +381,7 @@ async def status_user(interaction, dates=None):
     else:
         uhome = await ho.get(uhome)
     ulv = u.u_lv
-    lore = await lo.get(0, ulv)
+    lore = await lo.get(ulv)
     emood = await set_emood(ai_status.bot_mood)
     embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description=f"{lore}", color=0x3db5ff)
     embed.set_author(name=f"{u.u_achv}", url=u_avatar,
