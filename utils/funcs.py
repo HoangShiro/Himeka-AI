@@ -293,7 +293,7 @@ async def v_leave_nc():
 
 async def user_card_check(message, mess, user_name, chat_log):
     fina_mess = None
-    if re.search(r'show|is|what|can|when|check', mess, re.IGNORECASE) and re.search(r'my|tôi|mình', mess, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|coin|cp|ira|date|tech', mess, re.IGNORECASE):
+    if re.search(r'show|is|what|can|when|check|are', mess, re.IGNORECASE) and re.search(r'my|tôi|mình|tớ', mess, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value', mess, re.IGNORECASE):
         uid = message.author.id
         u = UserData(uid)
         await u.get()
