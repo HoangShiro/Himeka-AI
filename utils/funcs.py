@@ -156,7 +156,7 @@ def text_handle(text):
 
 # Reply message
 async def mess_rep(message, mess, user_name, chat_log):
-    from utils.bot import img_gen_chat, ai_status
+    from utils.bot import img_gen_chat, ai_status, bot
     fmess = await user_card_check(message, mess, user_name, chat_log)
     umess = "{}: {}".format(user_name, fmess)
     async with message.channel.typing():
@@ -178,9 +178,15 @@ async def mess_rep(message, mess, user_name, chat_log):
         else: 
             await message.reply(answ)
             asyncio.create_task(stt_inchat(user_name))
+
             uid = message.author.id
             u = UserData(uid)
             await u.update('u_fame', 1)
+
+            botid = bot.user.id
+            b = UserData(botid)
+            await b.update('u_fame', 2)
+
         await ai_status.update('total_chat', 1)
         asyncio.create_task(hime_tablet(message, answ, chat_log, user_name))
         await img_gen_chat(message, mess)

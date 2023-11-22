@@ -365,6 +365,9 @@ async def img_gen(interaction, prompt, quality, size):
             await message.edit(embed=embed, view=view)
             break
     if img:
+        botid = bot.user.id
+        b = UserData(botid)
+        await b.update('u_fame', 5)
         u = UserData(uid)
         await u.update('u_fame', 1)
         if not igen_flw:
