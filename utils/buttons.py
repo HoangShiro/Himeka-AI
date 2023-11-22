@@ -357,6 +357,7 @@ async def status_user(interaction, dates=None):
     u = UserData(uid)
     fr = UFrom
     ho = UHome
+    lo = ULore
     await u.get()
     await u.set('u_name', u_name)
     if dates and u.u_joindate == 0:
@@ -379,13 +380,14 @@ async def status_user(interaction, dates=None):
         uhome = "unregistered"
     else:
         uhome = ho.get(uhome)
-
+    ulv = u.u_lv
+    lore = lo.get(ulv)
     emood = await set_emood(ai_status.bot_mood)
-    embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description="Khách du lịch thăm quan Libra/IW", color=0x3db5ff)
+    embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description=f"{lore}", color=0x3db5ff)
     embed.set_author(name=f"{u.u_achv}", url=u_avatar,
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url=u_avatar)
-    embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="\u200b", inline=False)
+    embed.add_field(name=f"🪪 IW's card lv: {ulv}", value="\u200b", inline=False)
     embed.add_field(name=f"👑 {u.u_fame} CP", value=f"🪙 {u.u_blc} IRA", inline=True)
     embed.add_field(name=f"Home: {uhome}", value=f"From: {ufrom}", inline=True)
     embed.add_field(name=f"\u200b", value="", inline=False)

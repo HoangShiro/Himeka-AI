@@ -1,6 +1,29 @@
 import json
 
 
+class ULore:
+    def __init__(self):
+        self.lv1 = "Khách du lịch thăm quan IW."
+        self.lv2 = "Công dân IW."
+        self.lv3 = "Kỹ sư IW."
+        self.lv4 = "Sở hữu công ty tại IW."
+        self.lv5 = "Lãnh đạo cấp cao tại IW."
+        self.lvs = "Thành viên hội đồng quản trị ISTAR."
+
+    async def get(self, vname):
+        if vname == 1:
+            return getattr(self, 'lv1', None)
+        elif vname == 2:
+            return getattr(self, 'lv2', None)
+        elif vname == 3:
+            return getattr(self, 'lv3', None)
+        elif vname == 4:
+            return getattr(self, 'lv4', None)
+        elif vname == 5:
+            return getattr(self, 'lv5', None)
+        else:
+            return getattr(self, 'lvs', None)
+
 class UFrom:
     def __init__(self):
         self.fr_earth = "Earth 🌏"
