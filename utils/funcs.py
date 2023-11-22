@@ -310,34 +310,6 @@ async def user_card_check(message, mess, user_name, chat_log):
         uid = bot.user.id
         uname = bot.user.name
         fina_mess = await take_info(uid, mess, uname, chat_log)
-
-    async def take_info(uid, mess, user_name, chat_log):
-        u = UserData(uid)
-        fr = UFrom()
-        ho = UHome()
-        await u.get()
-        u_lv = u.u_lv
-        uachv = u.u_achv
-        ufame = u.u_fame
-        ublc = u.u_blc
-        ufrom = u.u_from
-        if not ufrom:
-            ufrom = "unregistered"
-        else:
-            ufrom = await fr.get(ufrom)
-        uhome = u.u_home
-        if not uhome:
-            uhome = "unregistered"
-        else:
-            uhome = await ho.get(uhome)
-        utech = "not displayed"
-        ujoin = u.u_joindate
-        tabans = f"\n[Himeka's tablet]: {user_name} real info is 'IW lv card - {u_lv}', 'Reputation - {uachv}', 'CP - {ufame}', 'Balace - {ublc}', 'From - {ufrom}', 'Home - {uhome}', 'Tech list - {utech}', 'join/register date - {ujoin}'"
-        if chat_log:
-            print(tabans)
-        fina_mess = f"{mess} \n {tabans}"
-        return fina_mess
-    
     
     if fina_mess:
         return fina_mess
@@ -380,7 +352,34 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
             user_voice_channel = mess.author.voice.channel
             if vc and vc == user_voice_channel:
                 await voice_make_tts(mess, answ)
-     
+
+async def take_info(uid, mess, user_name, chat_log):
+        u = UserData(uid)
+        fr = UFrom()
+        ho = UHome()
+        await u.get()
+        u_lv = u.u_lv
+        uachv = u.u_achv
+        ufame = u.u_fame
+        ublc = u.u_blc
+        ufrom = u.u_from
+        if not ufrom:
+            ufrom = "unregistered"
+        else:
+            ufrom = await fr.get(ufrom)
+        uhome = u.u_home
+        if not uhome:
+            uhome = "unregistered"
+        else:
+            uhome = await ho.get(uhome)
+        utech = "not displayed"
+        ujoin = u.u_joindate
+        tabans = f"\n[Himeka's tablet]: {user_name} real info is 'IW lv card - {u_lv}', 'Reputation - {uachv}', 'CP - {ufame}', 'Balace - {ublc}', 'From - {ufrom}', 'Home - {uhome}', 'Tech list - {utech}', 'join/register date - {ujoin}'"
+        if chat_log:
+            print(tabans)
+        fina_mess = f"{mess} \n {tabans}"
+        return fina_mess
+
 # Count downt
 async def count_down(user_timers, user):
     while user_timers[user] > 0:
