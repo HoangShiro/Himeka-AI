@@ -1,5 +1,6 @@
 import discord, datetime, pytz, asyncio
 from discord.ui import View
+from utils.user_data import *
 
 rmv_bt = discord.ui.Button(label="➖", custom_id="remove", style=discord.ButtonStyle.grey)
 irmv_bt = discord.ui.Button(label="➖", custom_id="remove", style=discord.ButtonStyle.grey)
@@ -322,8 +323,6 @@ async def status_card():
 
 async def status_user(interaction, dates=None):
     from utils.bot import ai_status
-    from utils.user_data import UserData
-
 
     u_name = None
     u_stt = "unknown"
@@ -353,7 +352,11 @@ async def status_user(interaction, dates=None):
         u_stt = "dnd 🔴"
     elif u_stt == "idle":
         u_stt = "idle 🌙"
+
+
     u = UserData(uid)
+    fr = UFrom
+    ho = UHome
     await u.get()
     await u.set('u_name', u_name)
     if dates and u.u_joindate == 0:
@@ -365,6 +368,18 @@ async def status_user(interaction, dates=None):
         emood = "💠" * emood_count
         return emood
     
+    ufrom = u.u_from
+    uhome = u.u_home
+    if not ufrom:
+        ufrom = "unregistered"
+    else:
+        ufrom = fr.get(ufrom)
+    uhome = u.u_home
+    if not uhome:
+        uhome = "unregistered"
+    else:
+        uhome = ho.get(uhome)
+
     emood = await set_emood(ai_status.bot_mood)
     embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description="Khách du lịch thăm quan Libra/IW", color=0x3db5ff)
     embed.set_author(name=f"{u.u_achv}", url=u_avatar,
@@ -372,7 +387,7 @@ async def status_user(interaction, dates=None):
     embed.set_thumbnail(url=u_avatar)
     embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="\u200b", inline=False)
     embed.add_field(name=f"👑 {u.u_fame} CP", value=f"🪙 {u.u_blc} IRA", inline=True)
-    embed.add_field(name=f"From: {u.u_from} ➖ Home: {u.u_home}", value=f"🕰️ {u.u_joindate}", inline=True)
+    embed.add_field(name=f"From: {ufrom} ➖ Home: {uhome}", value=f"🕰️ {u.u_joindate}", inline=True)
     embed.add_field(name=f"\u200b", value=" ", inline=False)
     embed.add_field(name=f"💠💠🔹🔹🔹", value="", inline=False)
     embed.set_footer(text="IW's Card dùng để truy cập các tiện ích tại IW, cũng như là định danh, ví điện tử của riêng bạn.")

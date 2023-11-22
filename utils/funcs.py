@@ -9,7 +9,7 @@ from mtranslate import translate
 from langdetect import detect
 from discord.ui import View
 
-from utils.user_data import UserData
+from utils.user_data import *
 from utils.status import *
 from utils.buttons import *
 from utils.ai_api import *
@@ -313,6 +313,8 @@ async def user_card_check(message, mess, user_name, chat_log):
 
     async def take_info(uid, mess, user_name, chat_log):
         u = UserData(uid)
+        fr = UFrom()
+        ho = UHome()
         await u.get()
         u_lv = u.u_lv
         uachv = u.u_achv
@@ -321,9 +323,13 @@ async def user_card_check(message, mess, user_name, chat_log):
         ufrom = u.u_from
         if not ufrom:
             ufrom = "unregistered"
+        else:
+            ufrom = fr.get(ufrom)
         uhome = u.u_home
         if not uhome:
             uhome = "unregistered"
+        else:
+            uhome = ho.get(uhome)
         utech = "not displayed"
         ujoin = u.u_joindate
         tabans = f"\n[Himeka's tablet]: {user_name} real info is 'IW lv card - {u_lv}', 'Reputation - {uachv}', 'CP - {ufame}', 'Balace - {ublc}', 'From - {ufrom}', 'Home - {uhome}', 'Tech list - {utech}', 'join/register date - {ujoin}'"

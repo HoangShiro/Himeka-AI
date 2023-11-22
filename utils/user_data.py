@@ -1,15 +1,24 @@
 import json
 
-# From
-fr_earth = "Earth 🌏"
-fr_catalia = "Catalia 😺"
-fr_astria = "Astria 🪐"
-fr_iw = "IW 🛰️"
-fr_orion = "Orion 🌑"
 
-# Home
-ho_iw = "IW 🛰️"
-ho_libra = "Libra ♎"
+class UFrom:
+    def __init__(self):
+        self.fr_earth = "Earth 🌏"
+        self.fr_catalia = "Catalia 😺"
+        self.fr_astria = "Astria 🪐"
+        self.fr_iw = "IW 🛰️"
+        self.fr_orion = "Orion 🌑"
+
+    async def get(self, vname):
+        return getattr(self, vname, None)
+
+class UHome:
+    def __init__(self):
+        self.ho_iw = "IW 🛰️"
+        self.ho_libra = "Libra ♎"
+
+    async def get(self, vname):
+        return getattr(self, vname, None)
 
 class UserData:
     def __init__(self, uid):
