@@ -361,7 +361,7 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
         await v_leave(mess)
     
     # Status/IW's card
-    if re.search(r'your|của bạn|his|her', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa|check|see', answ, re.IGNORECASE):
+    if re.search(r'your|của bạn', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa|check|see', answ, re.IGNORECASE):
         embed, view = await status_user(mess)
         await mess.channel.send(embed=embed, view=view)
     elif re.search(r'my|hime|tôi|mình|tớ', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa', answ, re.IGNORECASE):
@@ -446,4 +446,4 @@ async def money_with_hime():
     if uids:
         for uid in uids:
             u = UserData(uid)
-            await u.update('u_blc', 5)
+            await u.update('u_blc', 1)
