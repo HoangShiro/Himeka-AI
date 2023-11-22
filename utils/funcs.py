@@ -292,6 +292,7 @@ async def v_leave_nc():
             await vc.disconnect()
 
 async def user_card_check(message, mess, user_name, chat_log):
+    fina_mess = None
     if re.search(r'show|is|what|can|when', mess, re.IGNORECASE) and re.search(r'my|tôi|mình', mess, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|cp|ira|date|tech', mess, re.IGNORECASE):
         uid = message.author.id
         u = UserData(uid)
@@ -311,7 +312,10 @@ async def user_card_check(message, mess, user_name, chat_log):
         if chat_log:
             print(tabans)
         fina_mess = f"{mess} \n {tabans}"
+    if fina_mess:
         return fina_mess
+    else:
+        return mess
 
 # Himeka's tablet
 async def hime_tablet(mess, answ, chat_log, uname=None):
