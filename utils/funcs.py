@@ -292,7 +292,7 @@ async def v_leave_nc():
             await vc.disconnect()
 
 async def user_card_check(message, mess, user_name, chat_log):
-    if re.search(rf'show|is|what|can|when', mess, re.IGNORECASE) and re.search(rf'my|tôi|mình', mess, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ|info|money|cp|ira|date|tech', mess, re.IGNORECASE):
+    if re.search(r'show|is|what|can|when', mess, re.IGNORECASE) and re.search(r'my|tôi|mình', mess, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|cp|ira|date|tech', mess, re.IGNORECASE):
         uid = message.author.id
         u = UserData(uid)
         await u.get()
@@ -317,7 +317,7 @@ async def user_card_check(message, mess, user_name, chat_log):
 async def hime_tablet(mess, answ, chat_log, uname=None):
     from utils.bot import ai_name, ai_status
     # Voice
-    if re.search(rf'vc|voice channel|voice chat', answ, re.IGNORECASE) and re.search(rf'joi|jum', answ, re.IGNORECASE):
+    if re.search(r'vc|voice channel|voice chat', answ, re.IGNORECASE) and re.search(r'joi|jum', answ, re.IGNORECASE):
         if mess.author.voice and mess.author.voice.channel:
             await v_join(mess)
         else:
@@ -326,17 +326,17 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
                 await mess_send(mess, umess, chat_log)
                 await ai_status.set('bot_ivd', True)
             pass
-    if re.search(rf'vc|voice channel|voice chat', answ, re.IGNORECASE) and re.search(rf'leav|out', answ, re.IGNORECASE):
+    if re.search(r'vc|voice channel|voice chat', answ, re.IGNORECASE) and re.search(r'leav|out', answ, re.IGNORECASE):
         await v_leave(mess)
     
     # Status/IW's card
-    if re.search(rf'my|hime|tôi|mình|tớ', answ, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ', answ, re.IGNORECASE) and re.search(rf'here|show|give|đây|ra|đưa', answ, re.IGNORECASE):
+    if re.search(r'my|hime|tôi|mình|tớ', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa', answ, re.IGNORECASE):
         embed, view = await status_himeka()
         await mess.channel.send(embed=embed, view=view)
-    if re.search(rf'lev|lv', answ, re.IGNORECASE) and re.search(rf'of', answ, re.IGNORECASE) and re.search(rf'card', answ, re.IGNORECASE):
+    if re.search(r'lev|lv', answ, re.IGNORECASE) and re.search(rf'of', answ, re.IGNORECASE) and re.search(rf'card', answ, re.IGNORECASE):
         embed, view = await status_card()
         await mess.channel.send(embed=embed, view=view)
-    if re.search(rf'your|của bạn|his|her', answ, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ|info', answ, re.IGNORECASE) and re.search(rf'here|show|give|đây|ra|đưa|check|see', answ, re.IGNORECASE):
+    if re.search(r'your|của bạn|his|her', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa|check|see', answ, re.IGNORECASE):
         embed, view = await status_user(mess)
         await mess.channel.send(embed=embed, view=view)
 
