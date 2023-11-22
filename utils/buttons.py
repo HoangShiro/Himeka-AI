@@ -381,9 +381,9 @@ async def status_user(interaction, dates=None):
     else:
         uhome = ho.get(uhome)
     ulv = u.u_lv
-    #lore = lo.get(ulv)
+    lore = lo.get(str(ulv))
     emood = await set_emood(ai_status.bot_mood)
-    embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description=f"", color=0x3db5ff)
+    embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description=f"{lore}", color=0x3db5ff)
     embed.set_author(name=f"{u.u_achv}", url=u_avatar,
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url=u_avatar)
