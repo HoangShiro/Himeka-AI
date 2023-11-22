@@ -29,9 +29,9 @@ iw_bt = discord.ui.Button(label="🛰️ IW", custom_id="iw", style=discord.Butt
 iwm_bt = discord.ui.Button(label="🗺️ IW Map", custom_id="iwm", style=discord.ButtonStyle.green)
 iwc_bt = discord.ui.Button(label="🪪 IW Card", custom_id="iwc", style=discord.ButtonStyle.green)
 
-usc_bt = discord.ui.Button(label="🪪", custom_id="usc", style=discord.ButtonStyle.blurple)
-uet_bt = discord.ui.Button(label="📟", custom_id="uet", style=discord.ButtonStyle.blurple)
-uwh_bt = discord.ui.Button(label="📱", custom_id="uwh", style=discord.ButtonStyle.blurple)
+usc_bt = discord.ui.Button(label="🪪 Info", custom_id="usc", style=discord.ButtonStyle.blurple)
+uet_bt = discord.ui.Button(label="📟 Tech", custom_id="uet", style=discord.ButtonStyle.blurple)
+uwh_bt = discord.ui.Button(label="📱 Storage", custom_id="uwh", style=discord.ButtonStyle.blurple)
 
 # Button call
 async def load_btt():
@@ -479,7 +479,7 @@ async def status_warehouse(interaction):
     await u.get()
     await u.set('u_name', u_name)
 
-    embed=discord.Embed(title="Warehouse", description="Kho chứa item", color=0x9ea1ff)
+    embed=discord.Embed(title="Storage", description="Kho chứa item", color=0x9ea1ff)
     embed.set_author(name=u_name, icon_url=u_avatar)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
     embed.add_field(name=f"\u200b", value="", inline=False)
