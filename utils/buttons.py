@@ -345,13 +345,13 @@ async def status_user(interaction, dates=None):
 
     u_stt = str(u_stt)
     if u_stt == "online":
-        u_stt = "online 🟢"
+        u_stt = "online     🟢"
     elif u_stt == "offline":
-        u_stt = "offline ⚫"
+        u_stt = "offline    ⚫"
     elif u_stt == "dnd":
-        u_stt = "dnd 🔴"
+        u_stt = "dnd    🔴"
     elif u_stt == "idle":
-        u_stt = "idle 🌙"
+        u_stt = "idle   🌙"
 
 
     u = UserData(uid)
@@ -388,8 +388,7 @@ async def status_user(interaction, dates=None):
     embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="\u200b", inline=False)
     embed.add_field(name=f"👑 {u.u_fame} CP", value=f"🪙 {u.u_blc} IRA", inline=True)
     embed.add_field(name=f"Home: {uhome}", value=f"From: {ufrom}", inline=True)
-    embed.add_field(name=f"\u200b", value=" ", inline=False)
-    embed.add_field(name=f"", value=f"🕰️ {u.u_joindate}", inline=False)
+    embed.add_field(name=f"\u200b", value=f"🕰️ {u.u_joindate}", inline=False)
     embed.add_field(name=f"💠💠🔹🔹🔹", value="", inline=False)
     embed.set_footer(text="IW's Card dùng để truy cập các tiện ích tại IW, cũng như là định danh, ví điện tử của riêng bạn.")
     view = View(timeout=None)
