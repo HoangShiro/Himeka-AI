@@ -290,15 +290,21 @@ async def v_leave_nc():
         if vc and vc.is_connected():
             await vc.disconnect()
 
-async def user_card_check(mess, user_name, chat_log):
-    if re.search(rf'my|của bạn', mess, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ', mess, re.IGNORECASE):
-        pass
-
+async def user_card_check(message, mess, user_name, chat_log):
+    if re.search(rf'show|is|what|can', mess, re.IGNORECASE) and re.search(rf'my|tôi|mình', mess, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ|info|money|cp|ira|date', mess, re.IGNORECASE):
+        uid = message.author.id
+        u = UserData(uid)
+        await u.get()
+        u_lv = u.u_lv
+        uf = u.u_fame
+        ub = u.u_blc
+        ufr = u.u_from
+        uh = u.u_home
 # Himeka's tablet
 async def hime_tablet(mess, answ, chat_log, uname=None):
     from utils.bot import ai_name, ai_status
     # Voice
-    if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'jo|ju', answ, re.IGNORECASE):
+    if re.search(rf'vc|voice channel|voice chat', answ, re.IGNORECASE) and re.search(rf'joi|jum', answ, re.IGNORECASE):
         if mess.author.voice and mess.author.voice.channel:
             await v_join(mess)
         else:
@@ -307,7 +313,7 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
                 await mess_send(mess, umess, chat_log)
                 await ai_status.set('bot_ivd', True)
             pass
-    if re.search(rf'vc|vo', answ, re.IGNORECASE) and re.search(rf'leav|out', answ, re.IGNORECASE):
+    if re.search(rf'vc|voice channel|voice chat', answ, re.IGNORECASE) and re.search(rf'leav|out', answ, re.IGNORECASE):
         await v_leave(mess)
     
     # Status/IW's card
