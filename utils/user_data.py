@@ -12,7 +12,7 @@ class ULore:
             6: "Thành viên hội đồng quản trị ISTAR."
         }
 
-    async def get(self, vname):
+    def get(self, vname):
         return self.levels.get(vname, None)
 
 class UFrom:
