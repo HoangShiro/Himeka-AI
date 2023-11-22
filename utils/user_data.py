@@ -7,6 +7,10 @@ fr_astria = "Astria 🪐"
 fr_iw = "IW 🛰️"
 fr_orion = "Orion 🌑"
 
+# Home
+ho_iw = "IW 🛰️"
+ho_libra = "Libra ♎"
+
 class UserData:
     def __init__(self, uid):
         self.uid = uid

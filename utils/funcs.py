@@ -298,9 +298,20 @@ async def v_leave_nc():
             await vc.disconnect()
 
 async def user_card_check(message, mess, user_name, chat_log):
+    from utils.bot import bot
     fina_mess = None
-    if re.search(r'show|is|what|can|when|check|are', mess, re.IGNORECASE) and re.search(r'my|tôi|mình|tớ', mess, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value', mess, re.IGNORECASE):
-        uid = message.author.id
+    uid = message.author.id
+    uname = user_name
+    cmd = 'show|is|what|can|when|check|are'
+    item = 'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value'
+    if re.search(rf'{cmd}', mess, re.IGNORECASE) and re.search(r'my|tôi|mình|tớ', mess, re.IGNORECASE) and re.search(rf'{item}', mess, re.IGNORECASE):
+        fina_mess = await take_info(uid, mess, uname, chat_log)
+    elif re.search(rf'{cmd}', mess, re.IGNORECASE) and re.search(r'của bạn|your|hime|của cậu', mess, re.IGNORECASE) and re.search(rf'{item}', mess, re.IGNORECASE):
+        uid = bot.user.id
+        uname = bot.user.name
+        fina_mess = await take_info(uid, mess, uname, chat_log)
+
+    async def take_info(uid, mess, user_name, chat_log):
         u = UserData(uid)
         await u.get()
         u_lv = u.u_lv
@@ -318,6 +329,9 @@ async def user_card_check(message, mess, user_name, chat_log):
         if chat_log:
             print(tabans)
         fina_mess = f"{mess} \n {tabans}"
+        return fina_mess
+    
+    
     if fina_mess:
         return fina_mess
     else:

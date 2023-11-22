@@ -344,14 +344,15 @@ async def status_user(interaction, dates=None):
         if not u_name:
             u_name = interaction.user.name
 
+    u_stt = str(u_stt)
     if u_stt == "online":
-        u_stt = "🟢 online"
+        u_stt = "online 🟢"
     elif u_stt == "offline":
-        u_stt = "⚫ offline"
+        u_stt = "offline ⚫"
     elif u_stt == "dnd":
-        u_stt = "🔴 dnd"
+        u_stt = "dnd 🔴"
     elif u_stt == "idle":
-        u_stt = "🌙 idle"
+        u_stt = "idle 🌙"
     u = UserData(uid)
     await u.get()
     await u.set('u_name', u_name)
