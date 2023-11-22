@@ -324,12 +324,12 @@ async def user_card_check(message, mess, user_name, chat_log):
         if not ufrom:
             ufrom = "unregistered"
         else:
-            ufrom = fr.get(ufrom)
+            ufrom = await fr.get(ufrom)
         uhome = u.u_home
         if not uhome:
             uhome = "unregistered"
         else:
-            uhome = ho.get(uhome)
+            uhome = await ho.get(uhome)
         utech = "not displayed"
         ujoin = u.u_joindate
         tabans = f"\n[Himeka's tablet]: {user_name} real info is 'IW lv card - {u_lv}', 'Reputation - {uachv}', 'CP - {ufame}', 'Balace - {ublc}', 'From - {ufrom}', 'Home - {uhome}', 'Tech list - {utech}', 'join/register date - {ujoin}'"

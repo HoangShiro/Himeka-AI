@@ -374,14 +374,14 @@ async def status_user(interaction, dates=None):
     if not ufrom:
         ufrom = "unregistered"
     else:
-        ufrom = fr.get(ufrom)
+        ufrom = await fr.get(ufrom)
     uhome = u.u_home
     if not uhome:
         uhome = "unregistered"
     else:
-        uhome = ho.get(uhome)
+        uhome = await ho.get(uhome)
     ulv = u.u_lv
-    lore = lo.get(ulv)
+    lore = await lo.get(0, ulv)
     emood = await set_emood(ai_status.bot_mood)
     embed=discord.Embed(title=f"{u.u_name} ➖ {u_stt}", description=f"{lore}", color=0x3db5ff)
     embed.set_author(name=f"{u.u_achv}", url=u_avatar,
