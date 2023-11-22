@@ -337,11 +337,11 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
     if re.search(r'my|hime|tôi|mình|tớ', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa', answ, re.IGNORECASE):
         embed, view = await status_himeka()
         await mess.channel.send(embed=embed, view=view)
-    if re.search(r'lev|lv', answ, re.IGNORECASE) and re.search(rf'of', answ, re.IGNORECASE) and re.search(rf'card', answ, re.IGNORECASE):
-        embed, view = await status_card()
-        await mess.channel.send(embed=embed, view=view)
     if re.search(r'your|của bạn|his|her', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa|check|see', answ, re.IGNORECASE):
         embed, view = await status_user(mess)
+        await mess.channel.send(embed=embed, view=view)
+    elif re.search(r'lev|lv', answ, re.IGNORECASE) and re.search(rf'of', answ, re.IGNORECASE) and re.search(r'card', answ, re.IGNORECASE):
+        embed, view = await status_card()
         await mess.channel.send(embed=embed, view=view)
 
     # TTS
