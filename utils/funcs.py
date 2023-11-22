@@ -315,6 +315,7 @@ async def user_card_check(message, mess, user_name, chat_log):
         u = UserData(uid)
         await u.get()
         u_lv = u.u_lv
+        uachv = u.u_achv
         ufame = u.u_fame
         ublc = u.u_blc
         ufrom = u.u_from
@@ -325,7 +326,7 @@ async def user_card_check(message, mess, user_name, chat_log):
             uhome = "unregistered"
         utech = "not displayed"
         ujoin = u.u_joindate
-        tabans = f"\n[Himeka's tablet]: {user_name} real info is 'IW lv card - {u_lv}', 'CP - {ufame}', 'Balace - {ublc}', 'From - {ufrom}', 'Home - {uhome}', 'Tech list - {utech}', 'join/register date - {ujoin}'"
+        tabans = f"\n[Himeka's tablet]: {user_name} real info is 'IW lv card - {u_lv}', 'Reputation - {uachv}', 'CP - {ufame}', 'Balace - {ublc}', 'From - {ufrom}', 'Home - {uhome}', 'Tech list - {utech}', 'join/register date - {ujoin}'"
         if chat_log:
             print(tabans)
         fina_mess = f"{mess} \n {tabans}"
