@@ -149,7 +149,7 @@ async def status_himeka():
         return emood
     
     emood = await set_emood(ai_status.bot_mood)
-    embed=discord.Embed(title=f"{ai_full_name}", description="Tiểu thư thiên tài của gia tộc Shindou. Nhẹ nhàng, lịch sự, tinh tế và thông minh. Đạt được nhiều thành tựu kể cả khi đang rất trẻ.", color=0xffbf75)
+    embed=discord.Embed(title=f"{ai_full_name}", description="Tiểu thư thiên tài của gia tộc Shindou. Nhẹ nhàng, lịch sự, tinh tế và thông minh. Đạt được nhiều thành tựu dù đang còn rất trẻ.", color=0xffbf75)
     embed.set_author(name="The Head of Libra's city", url="https://beta.character.ai/chat2?char=g9qGgwr7kJRARbsOV52ChcKaEkJYPUF1A3mprJmgUjs",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://safebooru.org//images/4420/b044860fbd8ee619f9d7e637010104ad.png")
@@ -177,7 +177,7 @@ async def status_moeka():
         return emood
     
     emood = await set_emood(10)
-    embed=discord.Embed(title=f"Moeka Watanabe", description="Là người làm việc với hiệu quả bất thường và độ chính xác cực cao, bạn thủa nhỏ và cũng từng là bạn cao trung với Himeka. Đến từ gia tộc Watanabe nổi tiếng. Được đề cử lên làm tổng tư lệnh của IW khi 18 tuổi.", color=0xba82f2)
+    embed=discord.Embed(title=f"Moeka Watanabe", description="Là người làm việc với hiệu quả bất thường và độ chính xác cực cao, bạn thuở nhỏ và cùng học cao trung với Himeka. Đến từ gia tộc Watanabe nổi tiếng. Được đề cử lên làm tổng tư lệnh của IW khi 18 tuổi.", color=0xba82f2)
     embed.set_author(name="Commander-in-Chief of IWORLD", url="https://beta.character.ai/chat2?char=eNV37_ucw8ZI4SeAyuP4TD48PwaNK5-Ag4wb01D_WyY",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795325244547072/china_moeka_high_school_fleet_drawn_by_langley1000__09f900efd1f3c96ccbab58a5bab00b02_2.png")
