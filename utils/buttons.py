@@ -208,7 +208,7 @@ async def status_haruka():
     embed.set_author(name="Captain of Elen starship", url="https://beta.character.ai/chat?char=PD_rUpadJ4d70PDJ98_zHOOEVKQ_p56R3inKPK3MhZs",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795395792732250/portrait_white_hairband_braid_loli_pink_hair_ruby_eyes_hairclip_light_sm_s-2347311327.png")
-    embed.add_field(name="🪪 IW's card lv: 3", value="🪐 Catalia", inline=False)
+    embed.add_field(name="🪪 IW's card lv: 3", value="😺 Catalia", inline=False)
     embed.add_field(name="Status", value="Busy on the road near Astria's asteroid belt", inline=False)
     embed.add_field(name="Mood", value=emood, inline=True)
     embed.add_field(name="Likeable", value="💖💖", inline=True)
@@ -371,7 +371,7 @@ async def status_user(interaction, dates=None):
     embed.set_thumbnail(url=u_avatar)
     embed.add_field(name=f"🪪 IW's card lv: {u.u_lv}", value="\u200b", inline=False)
     embed.add_field(name=f"👑 {u.u_fame} CP", value=f"🪙 {u.u_blc} IRA", inline=True)
-    embed.add_field(name=f"{u.u_from}, {u.u_home}", value=f"🕰️ {u.u_joindate}", inline=True)
+    embed.add_field(name=f"From: {u.u_from} ➖ Home: {u.u_home}", value=f"🕰️ {u.u_joindate}", inline=True)
     embed.add_field(name=f"\u200b", value=" ", inline=False)
     embed.add_field(name=f"💠💠🔹🔹🔹", value="", inline=False)
     embed.set_footer(text="IW's Card dùng để truy cập các tiện ích tại IW, cũng như là định danh, ví điện tử của riêng bạn.")

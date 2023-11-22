@@ -1,5 +1,12 @@
 import json
 
+# From
+fr_earth = "Earth 🌏"
+fr_catalia = "Catalia 😺"
+fr_astria = "Astria 🪐"
+fr_iw = "IW 🛰️"
+fr_orion = "Orion 🌑"
+
 class UserData:
     def __init__(self, uid):
         self.uid = uid
@@ -7,11 +14,11 @@ class UserData:
         #self.u_avatar = "https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png"
         self.u_achv = "Newcomer"
         self.u_lv = 1
-        self.u_from = "🌏 Earth"
-        self.u_home = "🏠 IW"
+        self.u_from = None
+        self.u_home = None
         self.u_joindate = 0
         self.u_fame = 0
-        self.u_tech = "🔹"
+        self.u_techs = "🔹"
         self.u_blc = 1000 # Ira
 
     async def get(self):
@@ -62,4 +69,3 @@ class UserData:
     async def _save_data(self, data):
         with open('user_files/user_data.json', 'w', encoding="utf-8") as file:
             json.dump(data, file, indent=4)
-

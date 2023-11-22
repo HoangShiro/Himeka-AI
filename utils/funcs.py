@@ -129,6 +129,7 @@ def emojis_take(bot):
 def text_handle(text):
     # Emoji replace
     emoji_take = []
+    chosen_emoji = "yuuchill"
     emoji_name = None
     matches = re.finditer(r':([^:\s]+):', text)
     for match in matches:
@@ -289,6 +290,10 @@ async def v_leave_nc():
         if vc and vc.is_connected():
             await vc.disconnect()
 
+async def user_card_check(mess, user_name, chat_log):
+    if re.search(rf'my|của bạn', mess, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ', mess, re.IGNORECASE):
+        pass
+
 # Himeka's tablet
 async def hime_tablet(mess, answ, chat_log, uname=None):
     from utils.bot import ai_name, ai_status
@@ -312,7 +317,7 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
     if re.search(rf'lev|lv', answ, re.IGNORECASE) and re.search(rf'of', answ, re.IGNORECASE) and re.search(rf'card', answ, re.IGNORECASE):
         embed, view = await status_card()
         await mess.channel.send(embed=embed, view=view)
-    if re.search(rf'your|của bạn', answ, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ', answ, re.IGNORECASE) and re.search(rf'here|show|give|đây|ra|đưa|check|see', answ, re.IGNORECASE):
+    if re.search(rf'your|của bạn|his|her', answ, re.IGNORECASE) and re.search(rf'card|status|lv|thông|thẻ|info', answ, re.IGNORECASE) and re.search(rf'here|show|give|đây|ra|đưa|check|see', answ, re.IGNORECASE):
         embed, view = await status_user(mess)
         await mess.channel.send(embed=embed, view=view)
 
