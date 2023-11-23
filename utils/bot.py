@@ -589,7 +589,7 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item")
-async def item_show_list(interaction: discord.Interaction, id: int = None, name: str = None):
+async def item_show_list(interaction: discord.Interaction):
     items = item.items
 
     # Sắp xếp danh sách items theo ID tăng dần
