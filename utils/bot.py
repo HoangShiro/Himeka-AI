@@ -534,7 +534,7 @@ async def item_edit(interaction: discord.Interaction,
             discord.OptionChoice(name="thành phần/Linh kiện", value="components"),
             discord.OptionChoice(name="thiết bị", value="tech"),
         ],
-        default=None
+        default=None,
     ),
                       lore: str = None,
                       consum: int = None,
