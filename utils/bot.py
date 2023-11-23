@@ -1,7 +1,6 @@
-import asyncio, json, os, random, discord, time, datetime, re, logging, typing
+import asyncio, json, os, random, discord, time, datetime, re, logging
 from discord.ext import commands, tasks
 from discord.ui import View, button
-from discord import app_commands
 
 from user_files.config import *
 from utils.ai_api import *
@@ -503,24 +502,15 @@ async def test_cmd(interaction: discord.Interaction):
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
 
-async def item_type_auto(interaction: discord.Interaction, current: str
-                         ) -> typing.List[app_commands.Choice[str]]:
-    data = []
-    for type in ['raw', 'materials', 'components', 'tech']:
-        if current.lower() in type.lower():
-            data.append(app_commands.Choice(name=type, value=type))
-    return data
-
 @bot.slash_command(name="add_item", description=f"Thêm item cho {ai_name}")
-@app_commands.autocomplete(type=item_type_auto)
 async def item_add(interaction: discord.Interaction,
                     name: str,
-                    type: str,
+                    type: discord.Option(str, item_type=['raw', 'materials', 'components', 'tech']),
                     lore: str="item có thể sử dụng tại IW",
                     consum: int=0,
-                    stack: int=0,
+                    stack: discord.Option(int, item_type=[0, 8, 16, 32, 64, 128])=0,
                     sell: int=0,
-                    lv: int=1,
+                    lv: discord.Option(int, item_type=[1, 2, 3, 4, 5])=1,
                     cp: int=0,
                     spd: int=0,
                     skl: int=0,
@@ -533,16 +523,15 @@ async def item_add(interaction: discord.Interaction,
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="edit_item", description=f"Sửa item cho {ai_name}")
-@app_commands.autocomplete(type=item_type_auto)
 async def item_edit(interaction: discord.Interaction,
                       id: int,
                       name: str = None,
-                      type: str = None,
+                      type: discord.Option(str, item_type=['raw', 'materials', 'components', 'tech']) = None,
                       lore: str = None,
                       consum: int = None,
-                      stack: int = None,
+                      stack: discord.Option(int, item_type=[0, 8, 16, 32, 64, 128]) = None,
                       sell: int = None,
-                      lv: int = None,
+                      lv: discord.Option(int, item_type=[1, 2, 3, 4, 5]) = None,
                       cp: int = None,
                       spd: int = None,
                       skl: int = None,
