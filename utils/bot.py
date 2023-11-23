@@ -518,6 +518,7 @@ async def item_add(interaction: discord.Interaction,
                     lore: str="item có thể sử dụng tại IW",
                     consum: int=0,
                     stack: discord.Option(
+        input_type=int,
         description="Kích thước - khả năng xếp chồng",
         choices=[
             discord.OptionChoice(name="1", value=1),
@@ -531,6 +532,7 @@ async def item_add(interaction: discord.Interaction,
     ) = 0,
                     sell: int=0,
                     lv: discord.Option(
+        input_type=int,
         description="Yêu cầu IW's card lv",
         choices=[
             discord.OptionChoice(name="1", value=1),
@@ -569,6 +571,7 @@ async def item_edit(interaction: discord.Interaction,
                       lore: str = None,
                       consum: int = None,
                       stack: discord.Option(
+        input_type=int,
         description="Kích thước - khả năng xếp chồng",
         choices=[
             discord.OptionChoice(name="1", value=1),
@@ -582,6 +585,7 @@ async def item_edit(interaction: discord.Interaction,
     ) = None,
                       sell: int = None,
                       lv: discord.Option(
+        input_type=int,
         description="Yêu cầu IW's card lv",
         choices=[
             discord.OptionChoice(name="1", value=1),
