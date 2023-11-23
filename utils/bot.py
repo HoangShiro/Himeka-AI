@@ -660,12 +660,12 @@ async def item_show_list(interaction: discord.Interaction):
     # Tạo một dict để lưu trữ item theo từng type
     items_by_type = {}
 
-    for item in sorted_items:
-        item_type = item["Type"]
+    for it in sorted_items:
+        item_type = it["Type"]
         if item_type not in items_by_type:
             items_by_type[item_type] = []
 
-        items_by_type[item_type].append(f'🔸 {item["ID"]}: {item["Name"]} - {item["Type"]}')
+        items_by_type[item_type].append(f'🔸 {it["ID"]}: {it["Name"]} - {it["Type"]}')
 
     # Tạo danh sách item dưới dạng "type": "id1: name1, id2: name2, ..."
     items_list = [f'**{item_type}:**\n{", ".join(items)}' for item_type, items in items_by_type.items()]
