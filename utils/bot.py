@@ -522,11 +522,19 @@ async def item_add(interaction: discord.Interaction,
     embed, view = await item_show(itd)
     await interaction.response.send_message(embed=embed, view=view)
 
-@bot.slash_command(name="edit_item", description=f"Sửa item cho {ai_name}")
+@bot.slash_command(name="edit_item", description="Sửa item", options=discord.Option(str))
 async def item_edit(interaction: discord.Interaction,
                       id: int,
                       name: str = None,
-                      type: discord.Option(str, item_type=['raw', 'materials', 'components', 'tech']) = None,
+                      type: str = discord.Option(
+        description="Loại item",
+        choices=[
+            discord.OptionChoice(name="Nguyên liệu thô", value="raw"),
+            discord.OptionChoice(name="Vật liệu", value="materials"),
+            discord.OptionChoice(name="Thành phần/Linh kiện", value="components"),
+            discord.OptionChoice(name="Thiết bị", value="tech"),
+        ],
+    ),
                       lore: str = None,
                       consum: int = None,
                       stack: discord.Option(int, item_type=[0, 8, 16, 32, 64, 128]) = None,
