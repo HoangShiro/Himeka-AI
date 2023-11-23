@@ -21,7 +21,8 @@ class UItem:
         
     async def get(self, identifier):
         for item in self.items:
-            if str(item['ID']) == identifier or re.search(identifier, item['Name'].lower(), re.IGNORECASE):
+            iname = item['Name'].lower()
+            if str(item['ID']) == identifier or re.search(identifier, iname, re.IGNORECASE):
                 return item
         return None
 
