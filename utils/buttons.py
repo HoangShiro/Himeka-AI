@@ -30,8 +30,10 @@ iwm_bt = discord.ui.Button(label="🗺️ IW Map", custom_id="iwm", style=discor
 iwc_bt = discord.ui.Button(label="🪪 IW Card", custom_id="iwc", style=discord.ButtonStyle.green)
 
 usc_bt = discord.ui.Button(label="🪪 Info", custom_id="usc", style=discord.ButtonStyle.blurple)
-uet_bt = discord.ui.Button(label="📟 Tech", custom_id="uet", style=discord.ButtonStyle.blurple)
+uet_bt = discord.ui.Button(label="💠 Tech", custom_id="uet", style=discord.ButtonStyle.blurple)
 uwh_bt = discord.ui.Button(label="📱 Storage", custom_id="uwh", style=discord.ButtonStyle.blurple)
+shop_bt = discord.ui.Button(label="🪙 Store", custom_id="shop", style=discord.ButtonStyle.blurple)
+jp_bt = discord.ui.Button(label="👑 Jobs", custom_id="jp", style=discord.ButtonStyle.blurple)
 
 # Button call
 async def load_btt():

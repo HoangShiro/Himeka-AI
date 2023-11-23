@@ -20,8 +20,8 @@ class UFrom:
         self.fr_earth = "Earth 🌏"
         self.fr_catalia = "Catalia 😺"
         self.fr_astria = "Astria 🪐"
-        self.fr_iw = "IW 🛰️"
         self.fr_orion = "Orion 🌑"
+        #self.fr_iw = "IW 🛰️"
 
     async def get(self, vname):
         return getattr(self, vname, None)
