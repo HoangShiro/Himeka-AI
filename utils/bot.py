@@ -541,27 +541,27 @@ async def item_update(interaction: discord.Interaction,
     
     # Kiểm tra từng biến nếu không phải là None thì thêm vào dictionary update_data
     if name is not None:
-        update_data['name'] = name
+        update_data['Name'] = name
     if type is not None:
-        update_data['type'] = type
+        update_data['Type'] = type
     if lore is not None:
-        update_data['lore'] = lore
+        update_data['Lore'] = lore
     if consum is not None:
-        update_data['consum'] = consum
+        update_data['Consumable'] = consum
     if stack is not None:
-        update_data['stack'] = stack
+        update_data['Stackable'] = stack
     if sell is not None:
-        update_data['sell'] = sell
+        update_data['Sellable'] = sell
     if lv is not None:
-        update_data['lv'] = lv
+        update_data['Level'] = lv
     if cp is not None:
-        update_data['cp'] = cp
+        update_data['CP'] = cp
     if spd is not None:
-        update_data['spd'] = spd
+        update_data['Spd'] = spd
     if skl is not None:
-        update_data['skl'] = skl
+        update_data['Skl'] = skl
     if tech is not None:
-        update_data['tech'] = tech
+        update_data['Tech'] = tech
 
     # Nếu có ít nhất một biến không phải là None, thì gọi hàm item.update(id) với các thông số đã cập nhật
     if update_data:
