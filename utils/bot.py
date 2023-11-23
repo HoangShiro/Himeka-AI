@@ -529,11 +529,12 @@ async def item_edit(interaction: discord.Interaction,
                       type: str = discord.Option(
         description="Loại item",
         choices=[
-            discord.OptionChoice(name="Nguyên liệu thô", value="raw"),
-            discord.OptionChoice(name="Vật liệu", value="materials"),
-            discord.OptionChoice(name="Thành phần/Linh kiện", value="components"),
-            discord.OptionChoice(name="Thiết bị", value="tech"),
+            discord.OptionChoice(name="nguyên liệu thô", value="raw"),
+            discord.OptionChoice(name="vật liệu", value="materials"),
+            discord.OptionChoice(name="thành phần/Linh kiện", value="components"),
+            discord.OptionChoice(name="thiết bị", value="tech"),
         ],
+        default=discord.OptionChoice(name="Mặc định", value=None)
     ),
                       lore: str = None,
                       consum: int = None,
