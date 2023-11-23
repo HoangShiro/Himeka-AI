@@ -592,13 +592,17 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
 async def item_show_list(interaction: discord.Interaction, id: int = None, name: str = None):
     items = item.items
 
+    # Sắp xếp danh sách items theo ID tăng dần
+    sorted_items = sorted(items, key=lambda x: x["ID"])
+
     # Tạo danh sách item dưới dạng "id": "name"
-    items_list = [f'{item["ID"]}: {item["Name"]} - {item["Type"]}' for item in items]
+    items_list = [f'{item["ID"]}: {item["Name"]} - {item["Type"]}' for item in sorted_items]
 
     # Ghép các phần tử của danh sách thành một chuỗi, mỗi item trên một dòng
     items_str = '\n'.join(items_list)
 
     await interaction.response.send_message(content=items_str)
+
 
 @bot.slash_command(name="remove_item", description=f"Xoá item")
 async def item_delete(interaction: discord.Interaction, id: int):
