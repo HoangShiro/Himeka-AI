@@ -601,7 +601,7 @@ async def item_show_list(interaction: discord.Interaction, id: int = None, name:
     await interaction.response.send_message(content=items_str)
 
 @bot.slash_command(name="remove_item", description=f"Xoá item")
-async def item_get(interaction: discord.Interaction, id: int):
+async def item_delete(interaction: discord.Interaction, id: int):
     i = await item.get(id)
     if not i:
         await interaction.response.send_message(f"Không có item nào có id là {id}.")
