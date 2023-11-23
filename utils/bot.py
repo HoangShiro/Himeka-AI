@@ -8,6 +8,7 @@ from utils.funcs import *
 from utils.buttons import *
 from utils.daily import *
 from utils.status import *
+from utils.user_data import *
 
 logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
@@ -90,6 +91,7 @@ class AllStatus:
             print(f"[vals.json] - {attr}: {value}")
 
 ai_status = AllStatus()
+item = UItem()
 
 # AI name
 ai_name = "Himeka"
@@ -499,6 +501,91 @@ async def test_cmd(interaction: discord.Interaction):
         await interaction.response.send_message(f"Pong~!", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
+
+@bot.slash_command(name="add_item", description=f"Cập nhật item cho {ai_name}")
+async def item_add(interaction: discord.Interaction,
+                    name: str,
+                    type: str,
+                    lore: str="item có thể sử dụng tại IW",
+                    consum: int=0,
+                    stack: int=0,
+                    sell: int=0,
+                    lv: int=1,
+                    cp: int=0,
+                    spd: int=0,
+                    skl: int=0,
+                    tech: int=0):
+    await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp)
+    itds = await vals_load_all('user_files/items.json')
+    if itds:
+        itd =  itds[-1]["ID"]
+    embed, view = await item_show(itd)
+    await interaction.response.send_message(embed=embed, view=view)
+
+@bot.slash_command(name="update_item", description=f"Cập nhật item cho {ai_name}")
+async def item_update(interaction: discord.Interaction,
+                      id: int,
+                      name: str = None,
+                      type: str = None,
+                      lore: str = None,
+                      consum: int = None,
+                      stack: int = None,
+                      sell: int = None,
+                      lv: int = None,
+                      cp: int = None,
+                      spd: int = None,
+                      skl: int = None,
+                      tech: int = None):
+
+    update_data = {}
+    
+    # Kiểm tra từng biến nếu không phải là None thì thêm vào dictionary update_data
+    if name is not None:
+        update_data['name'] = name
+    if type is not None:
+        update_data['type'] = type
+    if lore is not None:
+        update_data['lore'] = lore
+    if consum is not None:
+        update_data['consum'] = consum
+    if stack is not None:
+        update_data['stack'] = stack
+    if sell is not None:
+        update_data['sell'] = sell
+    if lv is not None:
+        update_data['lv'] = lv
+    if cp is not None:
+        update_data['cp'] = cp
+    if spd is not None:
+        update_data['spd'] = spd
+    if skl is not None:
+        update_data['skl'] = skl
+    if tech is not None:
+        update_data['tech'] = tech
+
+    # Nếu có ít nhất một biến không phải là None, thì gọi hàm item.update(id) với các thông số đã cập nhật
+    if update_data:
+        await item.update(id, **update_data)
+
+    embed, view = await item_show(id)
+    await interaction.response.send_message(embed=embed, view=view)
+
+@bot.slash_command(name="get_item", description=f"Lấy item")
+async def item_get(interaction: discord.Interaction, id: int=None, name: str=None):
+    embed, view = await item_show(id, name)
+    await interaction.response.send_message(embed=embed, view=view)
+
+@bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item")
+async def item_show(interaction: discord.Interaction, id: int = None, name: str = None):
+    items = await item.items
+
+    # Tạo danh sách item dưới dạng "id": "name"
+    items_list = [f'"{item["ID"]}": "{item["Name"]}"' for item in items]
+
+    # Ghép các phần tử của danh sách thành một chuỗi, mỗi item trên một dòng
+    items_str = '\n'.join(items_list)
+
+    await interaction.response.send_message(content=items_str)
 
 def bot_run():
     bot.run(discord_bot_key)

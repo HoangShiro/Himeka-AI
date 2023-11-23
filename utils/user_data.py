@@ -1,5 +1,58 @@
 import json
 
+class UItem:
+    def __init__(self):
+        self.items = []
+        self.load_items()
+
+    def load_items(self):
+        try:
+            with open('user_files/items.json', 'r') as file:
+                self.items = json.load(file)
+        except FileNotFoundError:
+            # Không tìm thấy file, tạo một danh sách trống
+            self.items = []
+
+    def save_items(self):
+        with open('user_files/items.json', 'w') as file:
+            json.dump(self.items, file, indent=2)
+
+        self.load_items()
+        
+    async def get(self, identifier):
+        for item in self.items:
+            if str(item['ID']) == identifier or identifier.lower() in item['Name'].lower():
+                return item
+        return None
+
+    async def set(self, name, type_, spd, skl, tech, lore, stack, consu, sellable, lv, cp):
+        new_id = len(self.items) + 1
+        new_item = {
+            'ID': new_id,
+            'Name': name,
+            'Type': type_,
+            'Spd': spd,
+            'Skl': skl,
+            'Tech': tech,
+            'Lore': lore,
+            'Stackable': stack,
+            'Consumable': consu,
+            'Sellable': sellable,
+            'Level': lv,
+            'CP': cp
+        }
+        self.items.append(new_item)
+        self.save_items()
+
+    async def update(self, item_id, **kwargs):
+        for item in self.items:
+            if item['ID'] == item_id:
+                for key, value in kwargs.items():
+                    if key in item:
+                        item[key] = value
+                self.save_items()
+                return True
+        return False
 
 class ULore:
     def __init__(self):

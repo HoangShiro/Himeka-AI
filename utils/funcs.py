@@ -47,6 +47,11 @@ async def vals_load(file_name, variable_name):
         print(f"File '{file_name}' not found.")
         return None
 
+async def vals_load_all(path):
+    with open(path, 'r', encoding="utf-8") as file:
+        data = json.load(file)
+    return data
+
 # Prompting
 def extract_nouns(text):
     words = word_tokenize(text)

@@ -502,6 +502,44 @@ async def status_warehouse(interaction):
     view.add_item(uet_bt)
     return embed, view
 
+async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None):
+    from utils.bot import item
+    if not name:
+        list = await item.get(id)
+    if not id:
+        list = await item.get(name)
+    if not name or not id:
+        name = list['Name']
+        type = list['Type']
+        lore= list['Lore']
+        consum= list['Consumable']
+        stack= list['Stackable']
+        sell= list['Sellable']
+        lv= list['Level']
+        cp= list['CP']
+        spd= list['Spd']
+        skl= list['Skl']
+        tech= list['Tech']
+
+    embed=discord.Embed(title=name, description=lore, color=0x9ea1ff)
+    embed.set_author(name=id, icon_url="https://media.discordapp.net/attachments/1176773810192650250/1177190600357990420/image.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
+    embed.add_field(name=f"\u200b", value="", inline=False)
+    embed.add_field(name=f"**Type: {type}**", value="", inline=False)
+    embed.add_field(name=f"Consumable: {consum}", value="", inline=False)
+    embed.add_field(name=f"Stackable: {stack}", value="", inline=False)
+    embed.add_field(name=f"Price: {sell}", value="", inline=False)
+    embed.add_field(name=f"IW's card lv RQ: {lv}", value="", inline=False)
+    embed.add_field(name=f"CP RQ: {cp}", value="", inline=False)
+    embed.add_field(name=f"Speed: +{spd}", value="", inline=False)
+    embed.add_field(name=f"Skillful: +{skl}", value="", inline=False)
+    embed.add_field(name=f"Tech: +{tech}", value="", inline=False)
+    embed.add_field(name=f"\u200b", value="", inline=False)
+    embed.set_footer(text="Own: 999")
+    view = View(timeout=None)
+    view.add_item(irmv_bt)
+    return embed, view
+
 async def rena_notice(answ=None, uname=None):
     embed=discord.Embed(title="📑 Himeka đang bận", description="Himeka đang bận hoặc kết nối không ổn định, thử ấn nút `reconnect`, đợi 20s rồi gọi lại cô ấy.", color=0xffbf75)
     if "sleep" in answ:
