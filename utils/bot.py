@@ -537,6 +537,11 @@ async def item_update(interaction: discord.Interaction,
                       skl: int = None,
                       tech: int = None):
 
+    i = await item.get(id)
+    if not i:
+        await interaction.response.send_message(f"Không có item nào có id là {id}.")
+        return
+
     update_data = {}
     
     # Kiểm tra từng biến nếu không phải là None thì thêm vào dictionary update_data
@@ -572,7 +577,15 @@ async def item_update(interaction: discord.Interaction,
 
 @bot.slash_command(name="get_item", description=f"Lấy item")
 async def item_get(interaction: discord.Interaction, id: int=None, name: str=None):
-    embed, view = await item_show(id, name)
+    if not name:
+        e = id
+    if not id:
+        e = name
+    i = await item.get(e)
+    if not i:
+        await interaction.response.send_message(f"Không có item nào có id là {id}.")
+        return
+    embed, view = await item_show(e)
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item")
@@ -586,6 +599,16 @@ async def item_show_list(interaction: discord.Interaction, id: int = None, name:
     items_str = '\n'.join(items_list)
 
     await interaction.response.send_message(content=items_str)
+
+@bot.slash_command(name="remove_item", description=f"Xoá item")
+async def item_get(interaction: discord.Interaction, id: int):
+    i = await item.get(id)
+    if not i:
+        await interaction.response.send_message(f"Không có item nào có id là {id}.")
+        return
+    iname = i['Name']
+    await item.delete(id)
+    await interaction.response.send_message(f"Item {id} có tên '{iname}' đã bị xoá.")
 
 def bot_run():
     bot.run(discord_bot_key)

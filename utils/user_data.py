@@ -27,7 +27,10 @@ class UItem:
         return None
 
     async def set(self, name, type_, spd, skl, tech, lore, stack, consu, sellable, lv, cp):
-        new_id = len(self.items) + 1
+        taken_ids = [item['ID'] for item in self.items]
+        new_id = 1
+        while new_id in taken_ids:
+            new_id += 1
         new_item = {
             'ID': new_id,
             'Name': name,
@@ -51,6 +54,14 @@ class UItem:
                 for key, value in kwargs.items():
                     if key in item:
                         item[key] = value
+                self.save_items()
+                return True
+        return False
+    
+    async def delete(self, item_id):
+        for item in self.items:
+            if item['ID'] == item_id:
+                self.items.remove(item)
                 self.save_items()
                 return True
         return False
