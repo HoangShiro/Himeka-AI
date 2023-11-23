@@ -7,14 +7,17 @@ class UItem:
 
     def load_items(self):
         try:
-            with open('user_files/items.json', 'r') as file:
+            with open('user_files/items.json', 'r', encoding="utf-8") as file:
                 self.items = json.load(file)
         except FileNotFoundError:
             # Không tìm thấy file, tạo một danh sách trống
             self.items = []
+        else:
+            with open('user_files/items.json', 'w', encoding="utf-8") as file:
+                json.dump(self.items, file, indent=2)
 
     def save_items(self):
-        with open('user_files/items.json', 'w') as file:
+        with open('user_files/items.json', 'w', encoding="utf-8") as file:
             json.dump(self.items, file, indent=2)
 
         self.load_items()
