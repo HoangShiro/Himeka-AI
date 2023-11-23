@@ -522,7 +522,7 @@ async def item_add(interaction: discord.Interaction,
     embed, view = await item_show(itd)
     await interaction.response.send_message(embed=embed, view=view)
 
-@bot.slash_command(name="edit_item", description="Sửa item", options=discord.Option(str))
+@bot.slash_command(name="edit_item", description="Sửa item")
 async def item_edit(interaction: discord.Interaction,
                       id: int,
                       name: str = None,
