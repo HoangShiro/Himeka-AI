@@ -526,7 +526,7 @@ async def item_add(interaction: discord.Interaction,
 async def item_edit(interaction: discord.Interaction,
                       id: int,
                       name: str = None,
-                      type: str = discord.Option(
+                      type: discord.Option(
         description="Loại item",
         choices=[
             discord.OptionChoice(name="nguyên liệu thô", value="raw"),
@@ -534,8 +534,7 @@ async def item_edit(interaction: discord.Interaction,
             discord.OptionChoice(name="thành phần/Linh kiện", value="components"),
             discord.OptionChoice(name="thiết bị", value="tech"),
         ],
-        default=None,
-    ),
+    ) = None,
                       lore: str = None,
                       consum: int = None,
                       stack: discord.Option(int, item_type=[0, 8, 16, 32, 64, 128]) = None,

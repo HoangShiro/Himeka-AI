@@ -524,9 +524,8 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     embed=discord.Embed(title=name, description=lore, color=0x9ea1ff)
     embed.set_author(name=f"ID: #{id}", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
-    embed.add_field(name=f"\u200b", value="", inline=False)
 
-    embed.add_field(name="", value=f"ℹ️  **Type ➖ {type}**", inline=False)
+    embed.add_field(name="\u200b", value=f"ℹ️  **Type ➖ {type}**", inline=False)
     if not sell or sell == 0:
         sell = "Không thể bán."
     embed.add_field(name=f"**•**    Price: {sell}", value="\u200b", inline=False)
