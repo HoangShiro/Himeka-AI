@@ -526,7 +526,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
     #embed.add_field(name=f"\u200b", value="", inline=False)
 
-    embed.add_field(name="", value=f"🏷️ **Type ➖ {type}**", inline=False)
+    embed.add_field(name="", value=f"ℹ️ **Type ➖ {type}**", inline=False)
     if not sell or sell == 0:
         sell = "Không thể bán."
     embed.add_field(name=f"**•**    Price: {sell}", value="\u200b", inline=False)
@@ -544,9 +544,9 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     if tech or tech != 0:
         embed.add_field(name=f"**•**    Tech: +{tech}", value="", inline=False)
     
-    if lv and lv != 0 or cp or cp != 0:
+    if lv and lv != 1 or cp or cp != 0:
         embed.add_field(name=f"\u200b", value="⚠️ **Requirements**", inline=False)
-    if lv and lv != 0:
+    if lv and lv != 1:
         embed.add_field(name=f"**•**    Yêu cầu lv card: {lv}", value="", inline=False)
     if cp or cp != 0:
         embed.add_field(name=f"**•**    CP RQ: {cp}", value="", inline=False)
