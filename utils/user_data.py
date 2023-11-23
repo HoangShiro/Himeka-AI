@@ -12,7 +12,8 @@ class UItem:
         except FileNotFoundError:
             # Không tìm thấy file, tạo một danh sách trống
             self.items = []
-        else:
+        except Exception as e:
+            print("Error while load items: ", str(e))
             with open('user_files/items.json', 'w', encoding="utf-8") as file:
                 json.dump(self.items, file, indent=2)
 
