@@ -593,7 +593,7 @@ async def item_show_list(interaction: discord.Interaction, id: int = None, name:
     items = item.items
 
     # Tạo danh sách item dưới dạng "id": "name"
-    items_list = [f'"{item["ID"]}": "{item["Name"]}"' for item in items]
+    items_list = [f'{item["ID"]}: {item["Name"]} - {item["Type"]}' for item in items]
 
     # Ghép các phần tử của danh sách thành một chuỗi, mỗi item trên một dòng
     items_str = '\n'.join(items_list)

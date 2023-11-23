@@ -504,8 +504,11 @@ async def status_warehouse(interaction):
 
 async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None):
     from utils.bot import item
-    if not id:
+    if not name:
         list = await item.get(id)
+    if not id:
+        list = await item.get(name)
+    if not name or not id:
         name = list['Name']
         type = list['Type']
         lore= list['Lore']
@@ -523,9 +526,9 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
     embed.add_field(name=f"\u200b", value="", inline=False)
     embed.add_field(name=f"**Type: {type}**", value="", inline=False)
+    embed.add_field(name=f"- Price: {sell}", value="\u200b", inline=False)
     embed.add_field(name=f"- Consumable: {consum}", value="", inline=False)
     embed.add_field(name=f"- Stackable: {stack}", value="", inline=False)
-    embed.add_field(name=f"- Price: {sell}", value="", inline=False)
     embed.add_field(name=f"- IW's card lv RQ: {lv}", value="", inline=False)
     embed.add_field(name=f"- CP RQ: {cp}", value="", inline=False)
     embed.add_field(name=f"\u200b", value="", inline=False)
