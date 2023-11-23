@@ -504,6 +504,7 @@ async def status_warehouse(interaction):
 
 async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None):
     from utils.bot import item
+    from utils.funcs import dot_num
     if not name:
         list = await item.get(id)
     if not id:
@@ -541,8 +542,11 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     embed.add_field(name="\u200b", value=f"ℹ️  **Type ➖ {type}**", inline=False)
     if not sell or sell == 0:
         sell = "Không thể bán."
-    embed.add_field(name=f"**•**    Price: {sell}", value="\u200b", inline=False)
+    else:
+        sell = await dot_num(sell)
+    embed.add_field(name=f"**•**    Giá: {sell} Ira", value="\u200b", inline=False)
     if consum or consum != 0:
+        consum = await dot_num(consum)
         embed.add_field(name=f"**•**    Số lần dùng: {consum}", value="", inline=False)
     if stack or stack != 0:
         embed.add_field(name=f"**•**    Có thể xếp chồng: {stack}", value="", inline=False)
@@ -550,10 +554,13 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     if spd or spd != 0 or skl or skl != 0 or tech or tech != 0:
         embed.add_field(name=f"\u200b", value="💠 **Technical**", inline=False)
     if spd or spd != 0:
+        spd = await dot_num(spd)
         embed.add_field(name=f"**•**    Speed: +{spd}", value="", inline=False)
     if skl or skl != 0:
+        skl = await dot_num(skl)
         embed.add_field(name=f"**•**    Skillful: +{skl}", value="", inline=False)
     if tech or tech != 0:
+        tech = await dot_num(tech)
         embed.add_field(name=f"**•**    Tech: +{tech}", value="", inline=False)
     
     if lv and lv != 1 or cp or cp != 0:
@@ -561,7 +568,8 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     if lv and lv != 1:
         embed.add_field(name=f"**•**    IW's card lv: {lv}", value="", inline=False)
     if cp or cp != 0:
-        embed.add_field(name=f"**•**    Danh vọng(CP): {cp}", value="", inline=False)
+        cp = await dot_num(cp)
+        embed.add_field(name=f"**•**    Danh vọng: {cp} CP", value="", inline=False)
 
     embed.set_footer(text="Own: 999")
     view = View(timeout=None)
