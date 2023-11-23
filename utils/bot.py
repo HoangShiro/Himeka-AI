@@ -576,8 +576,8 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item")
-async def item_show(interaction: discord.Interaction, id: int = None, name: str = None):
-    items = await item.items
+async def item_show_list(interaction: discord.Interaction, id: int = None, name: str = None):
+    items = item.items
 
     # Tạo danh sách item dưới dạng "id": "name"
     items_list = [f'"{item["ID"]}": "{item["Name"]}"' for item in items]
