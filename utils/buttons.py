@@ -524,34 +524,33 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     embed=discord.Embed(title=name, description=lore, color=0x9ea1ff)
     embed.set_author(name=f"ID: #{id}", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
-    embed.add_field(name=f"\u200b", value="", inline=False)
+    #embed.add_field(name=f"\u200b", value="", inline=False)
 
-    embed.add_field(name="", value=f"**Type: {type}**", inline=False)
+    embed.add_field(name="", value=f"🏷️ **Type ➖ {type}**", inline=False)
     if not sell or sell == 0:
         sell = "Không thể bán."
-    embed.add_field(name=f"**•** Price: {sell}", value="\u200b", inline=False)
-    if consum:
-        embed.add_field(name=f"**•** Số lần dùng: {consum}", value="", inline=False)
+    embed.add_field(name=f"**•**    Price: {sell}", value="\u200b", inline=False)
+    if consum or consum != 0:
+        embed.add_field(name=f"**•**    Số lần dùng: {consum}", value="", inline=False)
     if stack or stack != 0:
-        embed.add_field(name=f"**•** Có thể xếp chồng: {stack}", value="", inline=False)
+        embed.add_field(name=f"**•**    Có thể xếp chồng: {stack}", value="", inline=False)
 
     if spd or spd != 0 or skl or skl != 0 or tech or tech != 0:
-        embed.add_field(name=f"\u200b", value="**Technical**", inline=False)
+        embed.add_field(name=f"\u200b", value="💠 **Technical**", inline=False)
     if spd or spd != 0:
-        embed.add_field(name=f"**•** Speed: +{spd}", value="", inline=False)
+        embed.add_field(name=f"**•**    Speed: +{spd}", value="", inline=False)
     if skl or skl != 0:
-        embed.add_field(name=f"**•** Skillful: +{skl}", value="", inline=False)
+        embed.add_field(name=f"**•**    Skillful: +{skl}", value="", inline=False)
     if tech or tech != 0:
-        embed.add_field(name=f"**•** Tech: +{tech}", value="", inline=False)
+        embed.add_field(name=f"**•**    Tech: +{tech}", value="", inline=False)
     
     if lv and lv != 0 or cp or cp != 0:
-        embed.add_field(name=f"\u200b", value="**Requirements**", inline=False)
+        embed.add_field(name=f"\u200b", value="⚠️ **Requirements**", inline=False)
     if lv and lv != 0:
-        embed.add_field(name=f"**•** Yêu cầu lv card: {lv}", value="", inline=False)
+        embed.add_field(name=f"**•**    Yêu cầu lv card: {lv}", value="", inline=False)
     if cp or cp != 0:
-        embed.add_field(name=f"**•** CP RQ: {cp}", value="", inline=False)
+        embed.add_field(name=f"**•**    CP RQ: {cp}", value="", inline=False)
 
-    embed.add_field(name=f"\u200b", value="", inline=False)
     embed.set_footer(text="Own: 999")
     view = View(timeout=None)
     view.add_item(irmv_bt)

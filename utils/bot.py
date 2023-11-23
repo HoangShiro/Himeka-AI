@@ -1,6 +1,7 @@
-import asyncio, json, os, random, discord, time, datetime, re, logging
+import asyncio, json, os, random, discord, time, datetime, re, logging, typing
 from discord.ext import commands, tasks
 from discord.ui import View, button
+from discord import app_commands
 
 from user_files.config import *
 from utils.ai_api import *
@@ -502,7 +503,16 @@ async def test_cmd(interaction: discord.Interaction):
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
 
-@bot.slash_command(name="add_item", description=f"Cập nhật item cho {ai_name}")
+async def item_type_auto(interaction: discord.Interaction, current: str
+                         ) -> typing.List[app_commands.Choice[str]]:
+    data = []
+    for type in ['raw', 'materials', 'components', 'tech']:
+        if current.lower() in type.lower():
+            data.append(app_commands.Choice(name=type, value=type))
+    return data
+
+@bot.slash_command(name="add_item", description=f"Thêm item cho {ai_name}")
+@app_commands.autocomplete(type=item_type_auto)
 async def item_add(interaction: discord.Interaction,
                     name: str,
                     type: str,
@@ -522,7 +532,8 @@ async def item_add(interaction: discord.Interaction,
     embed, view = await item_show(itd)
     await interaction.response.send_message(embed=embed, view=view)
 
-@bot.slash_command(name="edit_item", description=f"Cập nhật item cho {ai_name}")
+@bot.slash_command(name="edit_item", description=f"Sửa item cho {ai_name}")
+@app_commands.autocomplete(type=item_type_auto)
 async def item_edit(interaction: discord.Interaction,
                       id: int,
                       name: str = None,
