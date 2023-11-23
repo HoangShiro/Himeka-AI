@@ -665,10 +665,10 @@ async def item_show_list(interaction: discord.Interaction):
         if item_type not in items_by_type:
             items_by_type[item_type] = []
 
-        items_by_type[item_type].append(f'🔸 {it["ID"]}: {it["Name"]} - {it["Type"]}')
+        items_by_type[item_type].append(f'🔸 {it["ID"]}:    {it["Name"]}\n')
 
     # Tạo danh sách item dưới dạng "type": "id1: name1, id2: name2, ..."
-    items_list = [f'\n**{item_type}:**\n{", ".join(items)}\n' for item_type, items in items_by_type.items()]
+    items_list = [f'**{item_type}:**\n{", ".join(items)}\n' for item_type, items in items_by_type.items()]
 
     # Ghép các phần tử của danh sách thành một chuỗi, mỗi item type trên một dòng
     items_str = '\n'.join(items_list)
