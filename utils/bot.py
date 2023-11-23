@@ -522,8 +522,8 @@ async def item_add(interaction: discord.Interaction,
     embed, view = await item_show(itd)
     await interaction.response.send_message(embed=embed, view=view)
 
-@bot.slash_command(name="update_item", description=f"Cập nhật item cho {ai_name}")
-async def item_update(interaction: discord.Interaction,
+@bot.slash_command(name="edit_item", description=f"Cập nhật item cho {ai_name}")
+async def item_edit(interaction: discord.Interaction,
                       id: int,
                       name: str = None,
                       type: str = None,
