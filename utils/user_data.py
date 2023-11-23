@@ -1,4 +1,4 @@
-import json
+import json, re
 
 class UItem:
     def __init__(self):
@@ -21,7 +21,7 @@ class UItem:
         
     async def get(self, identifier):
         for item in self.items:
-            if str(item['ID']) == identifier or identifier.lower() in item['Name'].lower():
+            if str(item['ID']) == identifier or re.search(identifier, item['Name'].lower(), re.IGNORECASE):
                 return item
         return None
 
