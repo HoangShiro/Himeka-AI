@@ -512,6 +512,7 @@ async def item_add(interaction: discord.Interaction,
             discord.OptionChoice(name="vật liệu", value="materials"),
             discord.OptionChoice(name="thành phần/Linh kiện", value="components"),
             discord.OptionChoice(name="thiết bị", value="tech"),
+            discord.OptionChoice(name="Nhu yếu phẩm", value="food"),
             discord.OptionChoice(name="đặc biệt", value="special"),
         ],
     ) = "raw",
@@ -563,6 +564,7 @@ async def item_edit(interaction: discord.Interaction,
             discord.OptionChoice(name="vật liệu", value="materials"),
             discord.OptionChoice(name="thành phần/Linh kiện", value="components"),
             discord.OptionChoice(name="thiết bị", value="tech"),
+            discord.OptionChoice(name="Nhu yếu phẩm", value="food"),
             discord.OptionChoice(name="đặc biệt", value="special"),
         ],
     ) = None,
@@ -648,20 +650,31 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     embed, view = await item_show(e)
     await interaction.response.send_message(embed=embed, view=view)
 
-@bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item")
+@bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item theo từng type")
 async def item_show_list(interaction: discord.Interaction):
     items = item.items
 
     # Sắp xếp danh sách items theo ID tăng dần
     sorted_items = sorted(items, key=lambda x: x["ID"])
 
-    # Tạo danh sách item dưới dạng "id": "name"
-    items_list = [f'{item["ID"]}: {item["Name"]} - {item["Type"]}' for item in sorted_items]
+    # Tạo một dict để lưu trữ item theo từng type
+    items_by_type = {}
 
-    # Ghép các phần tử của danh sách thành một chuỗi, mỗi item trên một dòng
+    for item in sorted_items:
+        item_type = item["Type"]
+        if item_type not in items_by_type:
+            items_by_type[item_type] = []
+
+        items_by_type[item_type].append(f'🔸 {item["ID"]}: {item["Name"]} - {item["Type"]}')
+
+    # Tạo danh sách item dưới dạng "type": "id1: name1, id2: name2, ..."
+    items_list = [f'**{item_type}:**\n{", ".join(items)}' for item_type, items in items_by_type.items()]
+
+    # Ghép các phần tử của danh sách thành một chuỗi, mỗi item type trên một dòng
     items_str = '\n'.join(items_list)
 
     await interaction.response.send_message(content=items_str)
+
 
 
 @bot.slash_command(name="remove_item", description=f"Xoá item")

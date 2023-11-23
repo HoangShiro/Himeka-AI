@@ -521,6 +521,19 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
         skl= list['Skl']
         tech= list['Tech']
 
+    if "raw" in type:
+        type = "Nguyên liệu 💎"
+    elif "materials" in type:
+        type = "Vật liệu 🧱"
+    elif "components" in type:
+        type = "Linh kiện ⚙️"
+    elif "tech" in type:
+        type = "Thiết bị 📟"
+    elif "food" in type:
+        type = "Nhu yếu phẩm 🍱"
+    elif "special" in type:
+        type = "Đặc biệt 🎁"
+
     embed=discord.Embed(title=name, description=lore, color=0x9ea1ff)
     embed.set_author(name=f"ID: #{id}", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
@@ -544,11 +557,11 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
         embed.add_field(name=f"**•**    Tech: +{tech}", value="", inline=False)
     
     if lv and lv != 1 or cp or cp != 0:
-        embed.add_field(name=f"\u200b", value="⚠️ **Requirements**", inline=False)
+        embed.add_field(name=f"\u200b", value="🪪 **Requirements**", inline=False)
     if lv and lv != 1:
-        embed.add_field(name=f"**•**    Yêu cầu lv card: {lv}", value="", inline=False)
+        embed.add_field(name=f"**•**    IW's card lv: {lv}", value="", inline=False)
     if cp or cp != 0:
-        embed.add_field(name=f"**•**    CP RQ: {cp}", value="", inline=False)
+        embed.add_field(name=f"**•**    Danh vọng(CP): {cp}", value="", inline=False)
 
     embed.set_footer(text="Own: 999")
     view = View(timeout=None)
