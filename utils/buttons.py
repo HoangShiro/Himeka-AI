@@ -510,7 +510,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     if not id:
         list = await item.get(name)
         print(list)
-    """if not name or not id:
+    if not name or not id:
         name = list['Name']
         type = list['Type']
         lore= list['Lore']
@@ -521,7 +521,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
         cp= list['CP']
         spd= list['Spd']
         skl= list['Skl']
-        tech= list['Tech']"""
+        tech= list['Tech']
 
     embed=discord.Embed(title=name, description=lore, color=0x9ea1ff)
     embed.set_author(name=id, icon_url="https://media.discordapp.net/attachments/1176773810192650250/1177190600357990420/image.png")

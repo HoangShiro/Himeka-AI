@@ -20,6 +20,7 @@ class UItem:
         self.load_items()
         
     async def get(self, identifier):
+        self.load_items()
         for item in self.items:
             if str(item['ID']) == identifier or re.search(str(identifier), item['Name'].lower(), re.IGNORECASE):
                 return item
