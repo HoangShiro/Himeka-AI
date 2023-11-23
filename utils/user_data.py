@@ -22,7 +22,7 @@ class UItem:
     async def get(self, identifier):
         self.load_items()
         for item in self.items:
-            if str(item['ID']) == identifier or re.search(str(identifier), item['Name'].lower(), re.IGNORECASE):
+            if str(item['ID']) == str(identifier) or re.search(str(identifier), item['Name'].lower(), re.IGNORECASE):
                 return item
         return None
 

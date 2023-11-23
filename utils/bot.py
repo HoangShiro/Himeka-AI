@@ -519,7 +519,6 @@ async def item_add(interaction: discord.Interaction,
     itds = await vals_load_all('user_files/items.json')
     if itds:
         itd =  itds[-1]["ID"]
-        print(itd)
     embed, view = await item_show(itd)
     await interaction.response.send_message(embed=embed, view=view)
 

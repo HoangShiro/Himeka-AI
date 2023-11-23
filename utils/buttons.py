@@ -506,10 +506,8 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     from utils.bot import item
     if not name:
         list = await item.get(id)
-        print(list)
     if not id:
         list = await item.get(name)
-        print(list)
     if not name or not id:
         name = list['Name']
         type = list['Type']
