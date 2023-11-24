@@ -7,7 +7,6 @@ from user_files.openai_key import *
 from user_files.config import *
 
 CAc = PyAsyncCAI(cai_key)
-CAcr = c_token
 
 alt_trans = False
 
@@ -27,6 +26,10 @@ oa_key = KeyM()
 # Chat - CAI
 async def CAI(message):
     from utils.bot import ai_name, ai_status
+    if not ai_status.char_id:
+        CAcr = c_token
+    else:
+        CAcr = ai_status.char_id
     name = "Rena"
     busy = True
     if not ai_status.sleeping:
