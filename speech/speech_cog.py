@@ -86,7 +86,7 @@ class SpeechCog(commands.Cog):
                         print(text)
                         print(f"{ain}: {answ}")
                         print()
-                self.vwait = False
+            self.vwait = False
         else:
             print("pong~")
 
