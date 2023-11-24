@@ -122,6 +122,7 @@ def remove_act(text):
     text = re.sub(r'\([^)]+\)', '', text)
     text = re.sub(r'<[^>]+>', '', text)
     text = re.sub(r'https?://\S+', '', text)
+    text = re.sub(r':3', '', text)
     return text
 
 # Emoji load
