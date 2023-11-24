@@ -308,7 +308,7 @@ async def user_card_check(message, mess, user_name, chat_log):
     uid = message.author.id
     uname = user_name
     cmd = 'show|is|what|can|when|check|are'
-    item = 'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value'
+    item = 'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value|profile'
     if re.search(rf'{cmd}', mess, re.IGNORECASE) and re.search(r'my|tôi|mình|tớ', mess, re.IGNORECASE) and re.search(rf'{item}', mess, re.IGNORECASE):
         fina_mess = await take_info(uid, mess, uname, chat_log)
     elif re.search(rf'{cmd}', mess, re.IGNORECASE) and re.search(r'của bạn|your|hime|của cậu', mess, re.IGNORECASE) and re.search(rf'{item}', mess, re.IGNORECASE):
@@ -338,10 +338,10 @@ async def hime_tablet(mess, answ, chat_log, uname=None):
         await v_leave(mess)
     
     # Status/IW's card
-    if re.search(r'your|của bạn', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa|check|see', answ, re.IGNORECASE):
+    if re.search(r'your|của bạn', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value|profile', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa|check|see', answ, re.IGNORECASE):
         embed, view = await status_user(mess)
         await mess.channel.send(embed=embed, view=view)
-    elif re.search(r'my|hime|tôi|mình|tớ', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa', answ, re.IGNORECASE):
+    elif re.search(r'my|hime|tôi|mình|tớ', answ, re.IGNORECASE) and re.search(r'card|status|lv|thông|thẻ|info|money|blc|balance|coin|cp|ira|date|tech|value|profile', answ, re.IGNORECASE) and re.search(r'here|show|give|đây|ra|đưa', answ, re.IGNORECASE):
         embed, view = await status_himeka()
         await mess.channel.send(embed=embed, view=view)
     elif re.search(r'lev|lv', answ, re.IGNORECASE) and re.search(rf'of', answ, re.IGNORECASE) and re.search(r'card', answ, re.IGNORECASE):
