@@ -81,6 +81,7 @@ class SpeechCog(commands.Cog):
                     chat_log = ai_status.chat_log
                     text = "{}: {}".format(username, text)
                     answ, ain, busy = await CAI(text)
+                    answ = f"*{ain} trả lời {username}:*\n{answ}"
                     await ctx.send(answ)
                     voice_channel = ctx.author.voice.channel
                     if voice_channel:
