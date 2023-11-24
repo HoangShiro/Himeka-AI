@@ -71,7 +71,7 @@ class SpeechCog(commands.Cog):
             )
         else:
             async with ctx.typing():
-                chat_log = vals_load('user_files/vals.json', 'chat_log')
+                chat_log = await vals_load('user_files/vals.json', 'chat_log')
                 answ, ain = await CAI(text)
                 await ctx.send(answ)
                 url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
