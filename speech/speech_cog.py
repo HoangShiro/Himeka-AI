@@ -62,11 +62,6 @@ class SpeechCog(commands.Cog):
         from utils.bot import ai_status
         if not self.vwait:
             self.vwait = True
-            guild = ctx.guild
-            member = await guild.fetch_member(int(user))
-            username = member.nick
-            if not username:
-                username = member.name
             try:
                 text = recognizer.recognize_google(audio, language='vi-VN')
             except UnknownValueError:
@@ -78,6 +73,11 @@ class SpeechCog(commands.Cog):
                 )
             else:
                 async with ctx.typing():
+                    guild = ctx.guild
+                    member = await guild.fetch_member(int(user))
+                    username = member.nick
+                    if not username:
+                        username = member.name
                     chat_log = ai_status.chat_log
                     text = "{}: {}".format(username, text)
                     answ, ain, busy = await CAI(text)
