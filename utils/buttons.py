@@ -422,6 +422,7 @@ async def status_user(interaction, dates=None):
     return embed, view
 
 async def status_tech(interaction):
+    from utils.funcs import dot_num
     u_name = None
     if isinstance(interaction, discord.Message):
         if interaction.guild:
@@ -446,6 +447,13 @@ async def status_tech(interaction):
     embed.set_author(name=u_name, icon_url=u_avatar)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
     embed.add_field(name=f"\u200b", value="", inline=False)
+    embed.add_field(name=f"\u200b", value="💠 **Technical Stats**", inline=False)
+    spd = await dot_num(u.u_speed_st)
+    embed.add_field(name=f"**•**    Speed: {spd}", value="", inline=False)
+    skl = await dot_num(u.u_skl_st)
+    embed.add_field(name=f"**•**    Skillful: {skl}", value="", inline=False)
+    tech = await dot_num(u.u_tech_st)
+    embed.add_field(name=f"**•**    Tech: {tech}", value="\u200b", inline=False)
     embed.add_field(name="1 - Empty 🟦", value="", inline=True)
     embed.add_field(name="2 - Empty 🟦", value="", inline=True)
     embed.add_field(name="3 - Empty 🟦", value="", inline=True)

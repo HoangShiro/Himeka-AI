@@ -116,6 +116,9 @@ class UserData:
         self.u_fame = 0
         self.u_techs = "🔹"
         self.u_blc = 1000 # Ira
+        self.u_tech_st = 1
+        self.u_speed_st = 1
+        self.u_skl_st = 1
 
     async def get(self):
         user_data = await self._load_data()
