@@ -79,7 +79,7 @@ class SpeechCog(commands.Cog):
                     st_log = ai_status.st_log
                     if st_log:
                         print("User STT: ", text)
-                    answ, ain = await CAI(text)
+                    answ, ain, busy = await CAI(text)
                     if st_log:
                         print("Bot answer: ", answ)
                     await ctx.send(answ)
