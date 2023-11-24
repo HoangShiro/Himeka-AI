@@ -511,7 +511,7 @@ async def test_cmd(interaction: discord.Interaction):
 async def chat_channel_change(interaction: discord.Interaction, chat_channel: str = "0"):
     if interaction.user.id == dev_id:
         if not chat_channel == "0":
-            channel = bot.get_channel(chat_channel)
+            channel = bot.get_channel(int(chat_channel))
             if channel:
                 path = 'user_files/config.py'
                 noti = await change_keys(path, 'chat_channel', chat_channel)
