@@ -10,6 +10,7 @@ from speech.sr_sink import SRSink
 
 logger = logging.getLogger("speech.speech_cog")
 
+vwait = False
 
 class SpeechCog(commands.Cog):
     def __init__(self, bot):
@@ -60,31 +61,34 @@ class SpeechCog(commands.Cog):
     async def speech_callback(self, recognizer, audio, ctx, user):
         from utils.ai_api import CAI, tts_get
         from utils.funcs import vals_load
-        try:
-            text = recognizer.recognize_google(audio, language='vi-VN')
-        except UnknownValueError:
-            logger.debug("Google Speech Recognition could not understand audio")
-        except RequestError as e:
-            logger.exception(
-                "Could not request results from Google Speech Recognition service",
-                exc_info=e,
-            )
-        else:
-            async with ctx.typing():
-                chat_log = await vals_load('user_files/vals.json', 'chat_log')
-                answ, ain = await CAI(text)
-                await ctx.send(answ)
-                url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
-                voice_channel = ctx.author.voice.channel
-                if voice_channel:
-                    voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-                await asyncio.sleep(0.5)
-                voice_client.play(FFmpegPCMAudio(url), after=lambda e: print('done', e))
-
-                if chat_log:
-                    print(text)
-                    print(f"{ain}: {answ}")
-                    print()
+        global vwait
+        if not vwait:
+            vwait = True
+            try:
+                text = recognizer.recognize_google(audio, language='vi-VN')
+            except UnknownValueError:
+                logger.debug("Google Speech Recognition could not understand audio")
+            except RequestError as e:
+                logger.exception(
+                    "Could not request results from Google Speech Recognition service",
+                    exc_info=e,
+                )
+            else:
+                async with ctx.typing():
+                    chat_log = await vals_load('user_files/vals.json', 'chat_log')
+                    answ, ain = await CAI(text)
+                    await ctx.send(answ)
+                    url = await tts_get(answ, speaker, pitch, intonation_scale, speed)
+                    voice_channel = ctx.author.voice.channel
+                    if voice_channel:
+                        voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+                    await asyncio.sleep(0.5)
+                    voice_client.play(FFmpegPCMAudio(url), after=lambda e: print('done', e))
+                    vwait = False
+                    if chat_log:
+                        print(text)
+                        print(f"{ain}: {answ}")
+                        print()
 
 
 def setup(bot):
