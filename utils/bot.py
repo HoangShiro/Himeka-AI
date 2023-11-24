@@ -507,7 +507,7 @@ async def test_cmd(interaction: discord.Interaction):
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
 
-@bot.tree.command(name="chat_channel", description=f"Đổi chat channel cho {ai_name}.")
+@bot.slash_command(name="chat_channel", description=f"Đổi chat channel cho {ai_name}.")
 async def chat_channel_change(interaction: discord.Interaction, chat_channel: int = 0):
     if interaction.user.id == dev_id:
         if chat_channel != 0:
