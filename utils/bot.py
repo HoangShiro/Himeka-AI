@@ -178,7 +178,9 @@ async def on_voice_state_update(member, before, after):
 async def on_message(message):
     if message.author == bot.user or message.content.startswith((".", "<", "!", ",", "/")):
         return
-    
+    if chat_channel != 0:
+        if message.channel.id != chat_channel:
+            return
     # Phản hồi chat
     if message.content:
         if ai_status.bot_ivd:
@@ -383,6 +385,9 @@ async def img_gen(interaction, prompt, quality, size):
         image_file = discord.File(file_path, filename=f"{img_id}.png")
         embed.set_image(url=f"attachment://{image_file.filename}")
         await message.edit(embed=embed, view=view, files=[image_file])
+
+        os.remove(file_path)
+
     if img or eimg:
         igen_flw = True
         await ai_status.set('igen_flw', igen_flw)
@@ -499,6 +504,22 @@ async def cslog(interaction: discord.Interaction, chat: bool = False, command: b
 async def test_cmd(interaction: discord.Interaction):
     if interaction.user.id == dev_id:
         await interaction.response.send_message(f"Pong~!", ephemeral=True)
+    else:
+        await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
+
+@bot.tree.command(name="chat_channel", description=f"Đổi chat channel cho {ai_name}.")
+async def chat_channel_change(interaction: discord.Interaction, chat_channel: int = 0):
+    if interaction.user.id == dev_id:
+        if chat_channel != 0:
+            channel = bot.get_channel(chat_channel)
+            if channel:
+                path = 'user_files/config.py'
+                noti = await change_keys(path, 'chat_channel', chat_channel)
+                await interaction.response.send_message(f"{ai_name} sẽ chat với mọi người tại {channel.name}.", ephemeral=True)
+            else:
+                await interaction.response.send_message(f"ID của channel không hợp lệ.", ephemeral=True)
+        else:
+            await interaction.response.send_message(f"{ai_name} sẽ chat với mọi người trên tất cả chat channel được cấp role.", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
 
@@ -674,8 +695,6 @@ async def item_show_list(interaction: discord.Interaction):
     items_str = '\n'.join(items_list)
 
     await interaction.response.send_message(content=items_str)
-
-
 
 @bot.slash_command(name="remove_item", description=f"Xoá item")
 async def item_delete(interaction: discord.Interaction, id: int):

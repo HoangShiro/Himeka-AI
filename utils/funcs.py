@@ -451,3 +451,24 @@ async def money_with_hime():
         for uid in uids:
             u = UserData(uid)
             await u.update('u_blc', 1)
+
+# Keys update
+async def change_keys(file_path, key_name, new_key_value):
+
+    with open(file_path, 'r') as config_file:
+        content = config_file.read()
+
+        pattern = re.compile(rf'{key_name} = .*')
+        if re.search(pattern, content):
+            if isinstance(new_key_value, int):
+                # Nếu new_key_value là kiểu int, không thêm ngoặc kép
+                content = re.sub(pattern, f'{key_name} = {new_key_value}', content)
+            else:
+                # Ngược lại, thêm ngoặc kép cho new_key_value
+                content = re.sub(pattern, f'{key_name} = "{new_key_value}"', content)
+
+            with open(file_path, 'w') as updated_config_file:
+                updated_config_file.write(content)
+            return key_name
+        else:
+            return None
