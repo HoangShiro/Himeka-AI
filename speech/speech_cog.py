@@ -10,11 +10,10 @@ from speech.sr_sink import SRSink
 
 logger = logging.getLogger("speech.speech_cog")
 
-vwait = False
-
 class SpeechCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.vwait = False
         self.connections = {}  # Cache of voice connections
 
     @discord.slash_command()
@@ -61,9 +60,8 @@ class SpeechCog(commands.Cog):
     async def speech_callback(self, recognizer, audio, ctx, user):
         from utils.ai_api import CAI, tts_get
         from utils.bot import ai_status
-        global vwait
-        if not vwait:
-            vwait = True
+        if not self.vwait:
+            self.vwait = True
             try:
                 text = recognizer.recognize_google(audio, language='vi-VN')
             except UnknownValueError:
@@ -76,12 +74,7 @@ class SpeechCog(commands.Cog):
             else:
                 async with ctx.typing():
                     chat_log = ai_status.chat_log
-                    st_log = ai_status.st_log
-                    if st_log:
-                        print("User STT: ", text)
                     answ, ain, busy = await CAI(text)
-                    if st_log:
-                        print("Bot answer: ", answ)
                     await ctx.send(answ)
                     voice_channel = ctx.author.voice.channel
                     if voice_channel:
@@ -89,11 +82,11 @@ class SpeechCog(commands.Cog):
                         voice_client = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
                         await asyncio.sleep(0.5)
                         voice_client.play(FFmpegPCMAudio(url), after=lambda e: print('done', e))
-                    vwait = False
                     if chat_log:
                         print(text)
                         print(f"{ain}: {answ}")
                         print()
+                self.vwait = False
 
 
 def setup(bot):
