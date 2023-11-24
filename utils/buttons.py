@@ -446,7 +446,7 @@ async def status_tech(interaction):
     embed=discord.Embed(title="Equipment technology", description="Các thiết bị hiện tại của bạn.", color=0x9ea1ff)
     embed.set_author(name=u_name, icon_url=u_avatar)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
-    embed.add_field(name=f"\u200b", value="", inline=False)
+    #embed.add_field(name=f"\u200b", value="", inline=False)
     embed.add_field(name=f"\u200b", value="💠 **Technical Stats**", inline=False)
     spd = await dot_num(u.u_speed_st)
     embed.add_field(name=f"**•**    Speed: {spd}", value="", inline=False)
