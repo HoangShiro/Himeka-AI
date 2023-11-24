@@ -60,7 +60,7 @@ class SpeechCog(commands.Cog):
 
     async def speech_callback(self, recognizer, audio, ctx, user):
         from utils.ai_api import CAI, tts_get
-        from utils.funcs import vals_load
+        from utils.bot import ai_status
         global vwait
         if not vwait:
             vwait = True
@@ -75,8 +75,13 @@ class SpeechCog(commands.Cog):
                 )
             else:
                 async with ctx.typing():
-                    chat_log = await vals_load('user_files/vals.json', 'chat_log')
+                    chat_log = ai_status.chat_log
+                    st_log = ai_status.st_log
+                    if st_log:
+                        print("User STT: ", text)
                     answ, ain = await CAI(text)
+                    if st_log:
+                        print("Bot answer: ", answ)
                     await ctx.send(answ)
                     voice_channel = ctx.author.voice.channel
                     if voice_channel:
