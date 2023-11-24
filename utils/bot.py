@@ -57,6 +57,7 @@ class AllStatus:
         self.bot_cls = 0
         self.chat_channel = 0
         self.char_id = None
+        self.char_key = None
 
     async def update(self, val_name, value):
         if hasattr(self, val_name):
@@ -526,13 +527,15 @@ async def chat_channel_change(interaction: discord.Interaction, chat_channel: st
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
 
 @bot.slash_command(name="cchar", description=f"Đổi character.")
-async def character_change(interaction: discord.Interaction, char_id: str = None):
+async def character_change(interaction: discord.Interaction, char_id: str = None, char_key: str = None):
     if interaction.user.id == dev_id:
-        if char_id:
+        if char_id and char_key:
                 await ai_status.set('char_id', char_id)
+                await ai_status.set('char_key', char_key)
                 await interaction.response.send_message(f"Đã đổi nhân vật thành công.", ephemeral=True)
         else:
             await ai_status.set('char_id', char_id)
+            await ai_status.set('char_key', char_key)
             await interaction.response.send_message(f"Character sẽ là {ai_name}.", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)

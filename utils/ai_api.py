@@ -6,9 +6,10 @@ from utils.prompting import *
 from user_files.openai_key import *
 from user_files.config import *
 
-CAc = PyAsyncCAI(cai_key)
-
 alt_trans = False
+
+CAc = PyAsyncCAI(cai_key)
+CAcr = c_token
 
 # Roll key
 class KeyM:
@@ -26,10 +27,10 @@ oa_key = KeyM()
 # Chat - CAI
 async def CAI(message):
     from utils.bot import ai_name, ai_status
-    if not ai_status.char_id:
-        CAcr = c_token
-    else:
+    if ai_status.char_id and ai_status.char_key:
+        CAc = PyAsyncCAI(ai_status.char_key)
         CAcr = ai_status.char_id
+        
     name = "Rena"
     busy = True
     if not ai_status.sleeping:
