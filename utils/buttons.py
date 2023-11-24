@@ -523,28 +523,26 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
         tech= list['Tech']
 
     if "raw" in type:
-        type = "Nguyên liệu 💎"
+        type = "💎 Nguyên liệu"
     elif "materials" in type:
-        type = "Vật liệu 🧱"
+        type = "🧱 Vật liệu"
     elif "components" in type:
-        type = "Linh kiện ⚙️"
+        type = "⚙️ Linh kiện"
     elif "tech" in type:
-        type = "Thiết bị 📟"
+        type = "📡 Thiết bị"
     elif "food" in type:
-        type = "Nhu yếu phẩm 🍱"
+        type = "🍱 Nhu yếu phẩm"
     elif "special" in type:
-        type = "Đặc biệt 🎁"
+        type = "🎖️ Đặc biệt"
 
     embed=discord.Embed(title=name, description=lore, color=0x9ea1ff)
     embed.set_author(name=f"ID: #{id}", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
 
-    embed.add_field(name="\u200b", value=f"ℹ️  **Type ➖ {type}**", inline=False)
-    if not sell or sell == 0:
-        sell = "Không thể bán."
-    else:
+    embed.add_field(name="\u200b", value=f"**{type}**", inline=False)
+    if sell or sell != 0:
         sell = await dot_num(sell)
-    embed.add_field(name=f"**•**    Giá: {sell} Ira", value="\u200b", inline=False)
+        embed.add_field(name=f"**•**    Giá: {sell} Ira", value="\u200b", inline=False)
     if consum or consum != 0:
         consum = await dot_num(consum)
         embed.add_field(name=f"**•**    Số lần dùng: {consum}", value="", inline=False)
