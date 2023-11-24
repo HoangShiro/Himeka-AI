@@ -87,6 +87,8 @@ class SpeechCog(commands.Cog):
                         print(f"{ain}: {answ}")
                         print()
                 self.vwait = False
+        else:
+            print("pong~")
 
 
 def setup(bot):
