@@ -60,13 +60,13 @@ class SpeechCog(commands.Cog):
     async def speech_callback(self, recognizer, audio, ctx, user):
         from utils.ai_api import CAI, tts_get
         from utils.bot import ai_status
-        guild = ctx.guild
-        member = await guild.fetch_member(int(user))
-        username = member.nick
-        if not username:
-            username = member.name
         if not self.vwait:
             self.vwait = True
+            guild = ctx.guild
+            member = await guild.fetch_member(int(user))
+            username = member.nick
+            if not username:
+                username = member.name
             try:
                 text = recognizer.recognize_google(audio, language='vi-VN')
             except UnknownValueError:
