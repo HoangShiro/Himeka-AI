@@ -519,6 +519,7 @@ async def chat_channel_change(interaction: discord.Interaction, chat_channel: st
             else:
                 await interaction.response.send_message(f"ID của channel không hợp lệ.", ephemeral=True)
         else:
+            await ai_status.set('chat_channel', 0)
             await interaction.response.send_message(f"{ai_name} sẽ chat với mọi người trên tất cả chat channel được cấp role.", ephemeral=True)
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
