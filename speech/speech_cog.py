@@ -60,6 +60,7 @@ class SpeechCog(commands.Cog):
     async def speech_callback(self, recognizer, audio, ctx, user):
         from utils.ai_api import CAI, tts_get
         from utils.bot import ai_status
+        print(str(user))
         if not self.vwait:
             self.vwait = True
             try:
