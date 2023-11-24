@@ -695,7 +695,12 @@ async def item_show_list(interaction: discord.Interaction):
     # Ghép các phần tử của danh sách thành một chuỗi, mỗi item type trên một dòng
     items_str = '\n'.join(items_list)
 
-    await interaction.response.send_message(content=items_str)
+    # Kiểm tra nếu items_str không chứa giá trị
+    if not items_str.strip():
+        await interaction.response.send_message("Danh sách item trống.", ephemeral=True)
+    else:
+        await interaction.response.send_message(content=items_str)
+
 
 @bot.slash_command(name="remove_item", description=f"Xoá item")
 async def item_delete(interaction: discord.Interaction, id: int):
