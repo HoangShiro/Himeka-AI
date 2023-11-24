@@ -55,6 +55,7 @@ class AllStatus:
         self.bot_ivd = False
         self.rt_c = 0
         self.bot_cls = 0
+        self.chat_channel = 0
 
     async def update(self, val_name, value):
         if hasattr(self, val_name):
@@ -178,8 +179,8 @@ async def on_voice_state_update(member, before, after):
 async def on_message(message):
     if message.author == bot.user or message.content.startswith((".", "<", "!", ",", "/")):
         return
-    if chat_channel != 0:
-        if message.channel.id != chat_channel:
+    if ai_status.chat_channel != 0:
+        if message.channel.id != ai_status.chat_channel:
             return
     # Phản hồi chat
     if message.content:
@@ -513,9 +514,8 @@ async def chat_channel_change(interaction: discord.Interaction, chat_channel: st
         if not chat_channel == "0":
             channel = bot.get_channel(int(chat_channel))
             if channel:
-                path = 'user_files/config.py'
-                noti = await change_keys(path, 'chat_channel', chat_channel)
-                await interaction.response.send_message(f"{ai_name} sẽ chat với mọi người tại {channel.name}.", ephemeral=True)
+                await ai_status.set('chat_channel', int(chat_channel))
+                await interaction.response.send_message(f"{ai_name} sẽ chat với mọi người tại **{channel.name}**.", ephemeral=True)
             else:
                 await interaction.response.send_message(f"ID của channel không hợp lệ.", ephemeral=True)
         else:

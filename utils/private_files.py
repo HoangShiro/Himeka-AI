@@ -9,7 +9,6 @@ openai_key = {
 
 # Config.py
 vals_list = {
-    "chat_channel": 0,
     "cai_key": '',
     "c_token": '',
     "discord_bot_key": '',
