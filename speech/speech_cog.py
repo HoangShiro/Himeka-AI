@@ -60,6 +60,7 @@ class SpeechCog(commands.Cog):
     async def speech_callback(self, recognizer, audio, ctx, user):
         from utils.ai_api import CAI, tts_get
         from utils.bot import ai_status
+        from utils.funcs import text_handle
         if not self.vwait:
             self.vwait = True
             try:
@@ -79,6 +80,7 @@ class SpeechCog(commands.Cog):
                     if not username:
                         username = member.name
                     chat_log = ai_status.chat_log
+                    text = text_handle(text)
                     text = "{}: {}".format(username, text)
                     answ, ain, busy = await CAI(text)
                     answ = f"*{ain} trả lời {username}:*\n{answ}"
@@ -91,7 +93,7 @@ class SpeechCog(commands.Cog):
                         voice_client.play(FFmpegPCMAudio(url), after=lambda e: print('done', e))
                     if chat_log:
                         print(text)
-                        print(f"{ain}: {answ}")
+                        print(answ)
                         print()
             self.vwait = False
         else:
