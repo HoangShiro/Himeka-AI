@@ -60,7 +60,11 @@ class SpeechCog(commands.Cog):
     async def speech_callback(self, recognizer, audio, ctx, user):
         from utils.ai_api import CAI, tts_get
         from utils.bot import ai_status
-        print(str(user))
+        guild = ctx.guild
+        member = await guild.fetch_member(int(user))
+        username = member.nick
+        if not username:
+            username = member.name
         if not self.vwait:
             self.vwait = True
             try:
@@ -75,6 +79,7 @@ class SpeechCog(commands.Cog):
             else:
                 async with ctx.typing():
                     chat_log = ai_status.chat_log
+                    text = "{}: {}".format(username, text)
                     answ, ain, busy = await CAI(text)
                     await ctx.send(answ)
                     voice_channel = ctx.author.voice.channel
