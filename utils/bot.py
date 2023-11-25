@@ -721,7 +721,7 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
         iid: discord.Option(
         description="#ID của item.", input_type=int) = -1,
         index: discord.Option(
-        description="Số thứ tự item đó trong Storage của user.", input_type=int) = -1,
+        description="Số thứ tự item đó trong Storage của user.", input_type=int) = 0,
         quantity: discord.Option(
         description="Số lượng item cần thay đổi.", input_type=float) = 0,
         consum: discord.Option(
