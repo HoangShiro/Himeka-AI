@@ -503,9 +503,8 @@ async def status_warehouse(interaction):
         item_name = item_info.get('Name', 'Unknown')  # Replace 'Unknown' with a default value if 'Name' is not found
         item_qtt = item['qtt']
 
-        field_name = f"{item_name} ({item_id})"
-        field_value = f"Quantity: {item_qtt}"
-        embed.add_field(name=field_name, value=field_value, inline=True)
+        field_name = f"{item_name} ({item_qtt})"
+        embed.add_field(name=field_name, value="", inline=True)
 
     embed.add_field(name=f"\u200b", value="", inline=False)
     embed.set_footer(text="Sức chứa tuỳ vào spacecraft bạn đang sở hữu, có thể mở rộng sức chứa tối đa.")
