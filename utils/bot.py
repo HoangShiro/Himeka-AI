@@ -584,11 +584,11 @@ async def item_add(interaction: discord.Interaction,
     uname = interaction.user.nick
     if not uname:
         uname = interaction.user.name
-    await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp, rare, icon, uname=uname)
+    await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp, rare, icon)
     itds = await vals_load_all('user_files/items.json')
     if itds:
         itd =  itds[-1]["ID"]
-    embed, view = await item_show(itd, uid=uid)
+    embed, view = await item_show(itd, uid=uid, uname=uname)
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="edit_item", description="Sửa item, DEV-only")
