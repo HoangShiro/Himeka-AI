@@ -163,22 +163,14 @@ class UserData:
                 return f"Item ID {id} đã tồn tại, hãy thêm số lượng hoặc dùng lệnh 'Cập nhật' thay thế."
             else:
                 self.items[existing_item_index]['qtt'] += qtt
-        else:
-            if used is None:
-                with open('user_files/items.json', 'r') as f:
-                    items_data = json.load(f)
-                consumable_default = next((item['Consumable'] for item in items_data if item['ID'] == id), None)
-                if consumable_default is not None:
-                    if consumable_default == 0:
-                        used = -1
-                    else:
-                        used = consumable_default
-            qtt = qtt if qtt is not None else 1
-            self.items.append({
-                'id': id,
-                'used': used,
-                'qtt': qtt,
-            })
+        if not used:
+            used = ex['Consumable']
+
+        self.items.append({
+            'id': id,
+            'used': used,
+            'qtt': qtt,
+        })
         await self._save_data()
 
     async def update_item(self, item_index, value, sell=False):
