@@ -733,6 +733,7 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
     uid = interaction.user.id
     u = UserData(uid)
     noti = None
+    no = None
     if index:
         index = int(index) - 1
     print(index, ", ", quantity)
