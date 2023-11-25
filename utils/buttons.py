@@ -553,20 +553,27 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     elif "special" in type:
         type = "🎖️ Đặc biệt"
 
+    trare = ""
     if rare:
         rare = int(rare)
         if rare == 1:
             rare = "⬜"
+            trare = "Common"
         elif rare == 2:
             rare = "🟩"
+            trare = "Uncommon"
         elif rare == 3:
             rare = "🟦"
+            trare = "Rare"
         elif rare == 4:
             rare = "🟪"
+            trare = "Epic"
         elif rare == 5:
             rare = "🟨"
+            trare = "Legendary"
         elif rare == 6:
             rare = "🟥"
+            trare = "Artifact"
     qtt = 0
     if uid:
         udt = UserData(uid)
@@ -584,7 +591,8 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     embed.set_author(name=f"ID: #{id}", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url=icon)
 
-    embed.add_field(name="\u200b", value=f"**{type}** ➖ Độ hiếm: {rare}", inline=False)
+    embed.add_field(name="\u200b", value=f"**{type}**", inline=False)
+    embed.add_field(name=f"{rare} Độ hiếm: {trare}", value=f"", inline=False)
     if sell or sell != 0:
         sell = await dot_num(sell)
         embed.add_field(name=f"**•**    Giá: {sell} Ira", value="\u200b", inline=False)
