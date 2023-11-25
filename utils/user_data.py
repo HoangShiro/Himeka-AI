@@ -222,7 +222,7 @@ class UserData:
             return self.items
 
     async def remove_item(self, item_index):
-        if item_index < 0 or item_index >= len(self.items):
+        if int(item_index) < 0 or int(item_index) >= int(len(self.items)):
             print("Sai vị trí item cần xoá.")
             return "Sai vị trí item cần xoá."
         self.items.pop(item_index)
