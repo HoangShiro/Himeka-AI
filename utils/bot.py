@@ -700,14 +700,14 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     uname = interaction.user.nick
     if not uname:
         uname = interaction.user.name
-
+    i = None
     e = None
     if id:
         i = await item.get(id)
         if i:
             embed, view = await item_show(id=id, uid=uid, uname=uname)
         e = id
-    if name:
+    elif name:
         i = await item.get(name)
         if i:
             embed, view = await item_show(name=name, uid=uid, uname=uname)
