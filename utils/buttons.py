@@ -489,7 +489,7 @@ async def status_warehouse(interaction):
     u = UserData(uid)
     await u.get()
     await u.set('u_name', u_name)
-    items = u.get_item()
+    items = await u.get_item()
 
     embed=discord.Embed(title="Storage", description="Kho chứa item", color=0x9ea1ff)
     embed.set_author(name=u_name, icon_url=u_avatar)
