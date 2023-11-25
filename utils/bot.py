@@ -694,6 +694,20 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     embed, view = await item_show(e)
     await interaction.response.send_message(embed=embed, view=view)
 
+@bot.slash_command(name="edit_item_ptt", description=f"Xoá item, DEV-only")
+async def item_new_ptt(interaction: discord.Interaction, command: discord.Option(
+        description="Chọn cách xử lý item.",
+        choices=[
+            discord.OptionChoice(name="Thêm - [name, value]", value="add"),
+            discord.OptionChoice(name="Xoá - [name]", value="del"),
+        ]), name: str, value: str = None):
+    if "add" in command:
+        await item.add_ptt(name, value)
+        await interaction.response.send_message(f"Thuộc tính mới {name} đã được thêm vào tất cả các item hiện tại.")
+    elif "del" in command:
+        await item.remove_ptt(name)
+        await interaction.response.send_message(f"Thuộc tính mới {name} đã được xoá thành công cho tất cả các item hiện tại.")
+
 @bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item theo từng type, DEV-only")
 async def item_show_list(interaction: discord.Interaction):
     items = item.items

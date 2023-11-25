@@ -76,6 +76,12 @@ class UItem:
             item[name] = value
         self.save_items()
 
+    async def remove_ptt(self, name):
+        for item in self.items:
+            if name in item:
+                del item[name]
+        self.save_items()
+
 class ULore:
     def __init__(self):
         self.levels = {
