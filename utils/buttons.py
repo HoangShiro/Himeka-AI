@@ -516,7 +516,7 @@ async def status_warehouse(interaction):
 
 #embed.add_field(name="🟩 1", value="🟩 2", inline=True)
 
-async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None, qtt=None):
+async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None, qtt=None, rare=None):
     from utils.bot import item
     from utils.funcs import dot_num
     if not name:
@@ -535,6 +535,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
         spd= list['Spd']
         skl= list['Skl']
         tech= list['Tech']
+        rare= list['Rare']
 
     if "raw" in type:
         type = "💎 Nguyên liệu"
@@ -549,7 +550,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     elif "special" in type:
         type = "🎖️ Đặc biệt"
 
-    embed=discord.Embed(title=name, description=lore, color=0x9ea1ff)
+    embed=discord.Embed(title=f"{name} ➖ {rare}", description=lore, color=0x9ea1ff)
     embed.set_author(name=f"ID: #{id}", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
 

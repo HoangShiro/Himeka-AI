@@ -566,8 +566,19 @@ async def item_add(interaction: discord.Interaction,
                     cp: int=0,
                     spd: int=0,
                     skl: int=0,
-                    tech: int=0):
-    await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp)
+                    tech: int=0,
+                    rare: discord.Option(
+        description="Độ hiếm",
+        choices=[
+            discord.OptionChoice(name="Common", value="1"),
+            discord.OptionChoice(name="Uncommon", value="2"),
+            discord.OptionChoice(name="Rare", value="3"),
+            discord.OptionChoice(name="Epic", value="4"),
+            discord.OptionChoice(name="Legendary", value="5"),
+            discord.OptionChoice(name="Artifact", value="6"),
+        ],
+    ) = "1"):
+    await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp, rare)
     itds = await vals_load_all('user_files/items.json')
     if itds:
         itd =  itds[-1]["ID"]
@@ -618,7 +629,18 @@ async def item_edit(interaction: discord.Interaction,
                       cp: int = None,
                       spd: int = None,
                       skl: int = None,
-                      tech: int = None):
+                      tech: int = None,
+                    rare: discord.Option(
+        description="Độ hiếm",
+        choices=[
+            discord.OptionChoice(name="Common", value="1"),
+            discord.OptionChoice(name="Uncommon", value="2"),
+            discord.OptionChoice(name="Rare", value="3"),
+            discord.OptionChoice(name="Epic", value="4"),
+            discord.OptionChoice(name="Legendary", value="5"),
+            discord.OptionChoice(name="Artifact", value="6"),
+        ],
+    ) = None):
 
     i = await item.get(id)
     if not i:
@@ -650,7 +672,8 @@ async def item_edit(interaction: discord.Interaction,
         update_data['Skl'] = skl
     if tech is not None:
         update_data['Tech'] = tech
-
+    if rare is not None:
+        update_data['Rare'] = rare
     # Nếu có ít nhất một biến không phải là None, thì gọi hàm item.update(id) với các thông số đã cập nhật
     if update_data:
         await item.update(id, **update_data)
@@ -686,7 +709,7 @@ async def item_show_list(interaction: discord.Interaction):
         if item_type not in items_by_type:
             items_by_type[item_type] = []
 
-        items_by_type[item_type].append(f'🔸 {it["ID"]}:    {it["Name"]}\n')
+        items_by_type[item_type].append(f'➖ {it["ID"]}:    {it["Name"]}\n')
 
     # Tạo danh sách item dưới dạng "type": "id1: name1, id2: name2, ..."
     items_list = [f'**{item_type}:**\n{"".join(items)}' for item_type, items in items_by_type.items()]

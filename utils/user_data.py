@@ -30,7 +30,7 @@ class UItem:
                 return item
         return None
 
-    async def set(self, name, type_, spd, skl, tech, lore, stack, consu, sellable, lv, cp):
+    async def set(self, name, type_, spd, skl, tech, lore, stack, consu, sellable, lv, cp, rare):
         taken_ids = [item['ID'] for item in self.items]
         new_id = 1
         while new_id in taken_ids:
@@ -47,7 +47,8 @@ class UItem:
             'Consumable': consu,
             'Sellable': sellable,
             'Level': lv,
-            'CP': cp
+            'CP': cp,
+            'Rare': rare
         }
         self.items.append(new_item)
         self.save_items()
