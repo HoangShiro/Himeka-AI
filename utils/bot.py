@@ -735,7 +735,7 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
     noti = None
     if index:
         index = int(index) - 1
-    print(index)
+    print(index, ", ", quantity)
     if "add" in command:
         noti = await u.add_item(iid, quantity, consum)
         embed, view = await status_warehouse(interaction)

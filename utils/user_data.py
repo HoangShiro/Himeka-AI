@@ -175,7 +175,6 @@ class UserData:
 
     async def update_item(self, item_index, value, sell=False):
         await self.get()
-        value = float(value)
         if item_index < 0 or item_index >= len(self.items):
             print("Sai vị trí item cần update.")
             return "Sai vị trí item cần update."
