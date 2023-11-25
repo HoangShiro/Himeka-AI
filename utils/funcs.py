@@ -446,7 +446,7 @@ async def check_cai_ready(answ):
         return ready
 
 async def money_with_hime():
-    from utils.bot import ai_status, bot
+    from utils.bot import ai_status, bot, ai_name
     for guild in bot.guilds:
         bot_voice_state = guild.get_member(bot.user.id).voice
         if bot_voice_state:
@@ -455,6 +455,8 @@ async def money_with_hime():
             vc_u = [member.id for member in members if member.voice and member.voice.channel == bot_voice_channel]
             await ai_status.set('u_in_vc', vc_u)
         else:
+            if ai_status.st_log:
+                print(f"{ai_name} đang không ở trong voice.")
             vc_u = []
             await ai_status.set('u_in_vc', vc_u)
 
