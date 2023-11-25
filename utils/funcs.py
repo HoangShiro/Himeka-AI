@@ -165,6 +165,9 @@ async def mess_rep(message, mess, user_name, chat_log):
     from utils.bot import img_gen_chat, ai_status, bot
     fmess = await user_card_check(message, mess, user_name, chat_log)
     umess = "{}: {}".format(user_name, fmess)
+    if "baka" in mess:
+        await message.reply(f"{user_name} baka baka baka~")
+        return
     async with message.channel.typing():
         view = View(timeout=None)
         view.add_item(irmv_bt)
@@ -181,7 +184,7 @@ async def mess_rep(message, mess, user_name, chat_log):
             else:
                 view.add_item(rcn_bt)
             await message.reply(embed=embed, view=view)
-        else: 
+        else:
             await message.reply(answ)
             asyncio.create_task(stt_inchat(user_name))
 
