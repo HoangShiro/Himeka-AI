@@ -716,6 +716,7 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
         choices=[
             discord.OptionChoice(name="Thêm - [iid, quantity(optional), consum(optional)]", value="add"),
             discord.OptionChoice(name="Cập nhật - [index, quantity, sell(optional)]", value="update"),
+            discord.OptionChoice(name="Hiển thị - [index]", value="get"),
             discord.OptionChoice(name="Xoá - [index]", value="remove"),
         ]),
         iid: discord.Option(
@@ -736,13 +737,22 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
         index = int(index) + 1
     if "add" in command:
         noti = await u.add_item(iid, quantity, consum)
+        embed, view = await status_warehouse(interaction)
     elif "update" in command:
         noti = await u.update_item(index, quantity, sell)
+        embed, view = await status_warehouse(interaction)
+    elif "get" in command:
+        no = await u.get_item(index)
+        if no:
+            iid = no['id']
+        embed, view = await item_show(iid)
+        if not no:
+            noti = "Sai vị trí item."
     elif "remove" in command:
         await u.get()
         noti = await u.remove_item(index)
-    if not noti:
         embed, view = await status_warehouse(interaction)
+    if not noti and not no:
         await interaction.response.send_message(embed=embed, view=view)
     else:
         await interaction.response.send_message(f"{noti}", ephemeral=True)

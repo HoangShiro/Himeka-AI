@@ -516,7 +516,7 @@ async def status_warehouse(interaction):
 
 #embed.add_field(name="🟩 1", value="🟩 2", inline=True)
 
-async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None):
+async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None, qtt=None):
     from utils.bot import item
     from utils.funcs import dot_num
     if not name:
@@ -582,8 +582,8 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     if cp or cp != 0:
         cp = await dot_num(cp)
         embed.add_field(name=f"**•**    Danh vọng: {cp} CP", value="", inline=False)
-
-    embed.set_footer(text="Own: 999")
+    if qtt:
+        embed.set_footer(text=f"Bạn đang có: {qtt}")
     view = View(timeout=None)
     view.add_item(irmv_bt)
     return embed, view
