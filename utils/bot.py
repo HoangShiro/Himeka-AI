@@ -735,6 +735,7 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
     noti = None
     if index:
         index = int(index) + 1
+    print(index)
     if "add" in command:
         noti = await u.add_item(iid, quantity, consum)
         embed, view = await status_warehouse(interaction)
@@ -745,7 +746,7 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
         no = await u.get_item(index)
         if no:
             iid = no['id']
-        embed, view = await item_show(iid)
+            embed, view = await item_show(iid)
         if not no:
             noti = "Sai vị trí item."
     elif "remove" in command:
