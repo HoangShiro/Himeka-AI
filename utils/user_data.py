@@ -166,6 +166,8 @@ class UserData:
         if not used:
             used = ex['Consumable']
 
+        qtt = int(qtt)
+
         self.items.append({
             'id': id,
             'used': used,
@@ -198,6 +200,8 @@ class UserData:
                 item['qtt'] -= min(item['qtt'], abs(value))
                 if item['qtt'] == 0:
                     await self.remove_item(item_index)
+
+        item['qtt'] = int(item['qtt'])
 
         await self._save_data()
     
