@@ -31,7 +31,9 @@ class UItem:
                     return item
         elif name:
             for item in self.items:
-                if re.search(str(name), str(item['Name']), re.IGNORECASE):
+                name = iname
+                iname = str(item['Name'])
+                if re.search(name, iname, re.IGNORECASE):
                     return item
         return None
 

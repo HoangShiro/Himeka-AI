@@ -651,7 +651,7 @@ async def item_edit(interaction: discord.Interaction,
 
     i = await item.get(id)
     if not i:
-        await interaction.response.send_message(f"Không có item nào có id là {id}.")
+        await interaction.response.send_message(f"Không có item nào có id là {id}.", ephemeral=True)
         return
 
     update_data = {}
@@ -713,7 +713,7 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
             embed, view = await item_show(name=name, uid=uid, uname=uname)
         e = name
     if not i:
-        await interaction.response.send_message(f"Không có item nào có id hoặc name là {e}.")
+        await interaction.response.send_message(f"Không có item nào có id hoặc name là {e}.", ephemeral=True)
     else:
         await interaction.response.send_message(embed=embed, view=view)
 
