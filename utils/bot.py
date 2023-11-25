@@ -578,11 +578,14 @@ async def item_add(interaction: discord.Interaction,
             discord.OptionChoice(name="Artifact", value="6"),
         ],
     ) = "1"):
+
+    uid = interaction.user.id
+
     await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp, rare)
     itds = await vals_load_all('user_files/items.json')
     if itds:
         itd =  itds[-1]["ID"]
-    embed, view = await item_show(itd)
+    embed, view = await item_show(itd, uid=uid)
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="edit_item", description="Sửa item, DEV-only")
@@ -649,6 +652,8 @@ async def item_edit(interaction: discord.Interaction,
 
     update_data = {}
     
+    uid = interaction.user.id
+
     # Kiểm tra từng biến nếu không phải là None thì thêm vào dictionary update_data
     if name is not None:
         update_data['Name'] = name
@@ -678,11 +683,12 @@ async def item_edit(interaction: discord.Interaction,
     if update_data:
         await item.update(id, **update_data)
 
-    embed, view = await item_show(id)
+    embed, view = await item_show(id, uid=uid)
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="get_item", description=f"Lấy item, DEV-only")
 async def item_get(interaction: discord.Interaction, id: int=None, name: str=None):
+    uid = interaction.user.id
     if not name:
         e = id
     if not id:
@@ -691,7 +697,7 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     if not i:
         await interaction.response.send_message(f"Không có item nào có id là {id}.")
         return
-    embed, view = await item_show(e)
+    embed, view = await item_show(e, uid=uid)
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="edit_item_ptt", description=f"Xoá item, DEV-only")

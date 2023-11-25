@@ -516,14 +516,16 @@ async def status_warehouse(interaction):
 
 #embed.add_field(name="🟩 1", value="🟩 2", inline=True)
 
-async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None, qtt=None, rare=None):
+async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None, uid=None, rare=None):
     from utils.bot import item
     from utils.funcs import dot_num
+    from utils.user_data import UserData, UItem
     if not name:
         list = await item.get(id)
     if not id:
         list = await item.get(name)
     if not name or not id:
+        iid = list['ID']
         name = list['Name']
         type = list['Type']
         lore= list['Lore']
@@ -564,8 +566,18 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
             rare = "🟨"
         elif rare == 6:
             rare = "🟥"
-
-
+    qtt = 0
+    if uid:
+        udt = UserData(uid)
+        items = udt['items']
+        ie = None  # Khởi tạo ie là None
+        for item in items:
+            if iid == item['id']:  # So sánh iid với id của từng phần tử
+                ie = item
+                break
+        if ie:
+            qtt = ie['qtt']
+    
     embed=discord.Embed(title=f"{name}", description=lore, color=0x9ea1ff)
     embed.set_author(name=f"ID: #{id}", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
