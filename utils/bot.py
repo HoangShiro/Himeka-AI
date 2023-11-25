@@ -748,7 +748,7 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
         if no:
             iid = no['id']
             embed, view = await item_show(iid)
-        if not no:
+        else:
             noti = "Sai vị trí item."
     elif "remove" in command:
         await u.get()
