@@ -585,7 +585,7 @@ async def item_add(interaction: discord.Interaction,
     if not uname:
         uname = interaction.user.name
     await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp, rare, icon)
-    ie = item.get(name=name)
+    ie = await item.get(name=name)
     if ie:
         itd =  ie["ID"]
     embed, view = await item_show(id=itd, uid=uid, uname=uname)
