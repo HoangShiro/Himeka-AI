@@ -154,13 +154,13 @@ class UserData:
         ex = await ie.get(id)
         if not ex:
             print(f"Lỗi khi add item: ID {id} không tồn tại.")
-            return
+            return f"Lỗi khi add item: ID {id} không tồn tại."
 
         await self.get()
         existing_item_index = next((index for index, item in enumerate(self.items) if item['id'] == id), None)
         if existing_item_index is not None:
             if qtt is None:
-                return
+                return f"Item ID {id} đã tồn tại, hãy thêm số lượng hoặc dùng lệnh 'Cập nhật' thay thế."
             else:
                 self.items[existing_item_index]['qtt'] += qtt
         else:
@@ -185,7 +185,7 @@ class UserData:
         await self.get()
         if item_index < 0 or item_index >= len(self.items):
             print("Sai vị trí item cần update.")
-            return
+            return "Sai vị trí item cần update."
 
         item = self.items[item_index]
 
@@ -222,6 +222,9 @@ class UserData:
             return self.items
 
     async def remove_item(self, item_index):
+        if item_index < 0 or item_index >= len(self.items):
+            print("Sai vị trí item cần xoá.")
+            return "Sai vị trí item cần xoá."
         self.items.pop(item_index)
         await self._save_data()
 

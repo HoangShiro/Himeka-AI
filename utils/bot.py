@@ -731,13 +731,17 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
     
     uid = interaction.user.id
     u = UserData(uid)
+    noti = None
     if "add" in command:
-        await u.add_item(iid, quantity, consum)
+        noti = await u.add_item(iid, quantity, consum)
     elif "update" in command:
-        await u.update_item(index, quantity, sell)
+        noti = await u.update_item(index, quantity, sell)
     elif "remove" in command:
-        await u.remove_item(index)
-    await interaction.response.send_message(f"Item {id} có tên '{iname}' đã bị xoá.")
+        noti = await u.remove_item(index)
+    if not noti:
+        embed, view = await status_warehouse(interaction)
+        await interaction.response.send_message(embed=embed, view=view)
+    await interaction.response.send_message(f"{noti}", ephemeral=True)
 
 def bot_run():
     bot.run(discord_bot_key)
