@@ -715,7 +715,22 @@ async def item_new_ptt(interaction: discord.Interaction, command: discord.Option
         await interaction.response.send_message(f"Thuộc tính mới {name} đã được xoá thành công cho tất cả các item hiện tại.")
 
 @bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item theo từng type, DEV-only")
-async def item_show_list(interaction: discord.Interaction):
+async def item_show_list(interaction: discord.Interaction, classify: discord.Option(
+        description="Phân loại theo:",
+        choices=[
+            discord.OptionChoice(name="Loại item", value="Type"),
+            discord.OptionChoice(name="Độ hiếm", value="Rare"),
+            discord.OptionChoice(name="Độ xếp chồng", value="Stackable"),
+            discord.OptionChoice(name="Số lần dùng", value="Consumable"),
+            discord.OptionChoice(name="Giá Ira", value="Sellable"),
+            discord.OptionChoice(name="IW's lv card", value="Level"),
+            discord.OptionChoice(name="CP", value="CP"),
+            discord.OptionChoice(name="IW's lv card", value="Level"),
+            discord.OptionChoice(name="Techs - Speed", value="Spd"),
+            discord.OptionChoice(name="Techs - Skillful", value="Skl"),
+            discord.OptionChoice(name="Techs - Tech", value="Tech"),
+        ],
+    ) = "Type"):
     items = item.items
 
     # Sắp xếp danh sách items theo ID tăng dần
@@ -725,7 +740,7 @@ async def item_show_list(interaction: discord.Interaction):
     items_by_type = {}
 
     for it in sorted_items:
-        item_type = it["Type"]
+        item_type = it[classify]
         if item_type not in items_by_type:
             items_by_type[item_type] = []
 
