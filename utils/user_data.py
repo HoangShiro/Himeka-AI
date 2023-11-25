@@ -23,11 +23,16 @@ class UItem:
 
         self.load_items()
         
-    async def get(self, identifier):
+    async def get(self, id, name=None):
         self.load_items()
-        for item in self.items:
-            if str(item['ID']) == str(identifier) or re.search(str(identifier), item['Name'].lower(), re.IGNORECASE):
-                return item
+        if id:
+            for item in self.items:
+                if str(item['ID']) == str(id):
+                    return item
+        elif name:
+            for item in self.items:
+                if str(item['Name']) == str(name):
+                    return item
         return None
 
     async def set(self, name, type_, spd, skl, tech, lore, stack, consu, sellable, lv, cp, rare, icon):
@@ -164,7 +169,7 @@ class UserData:
 
     async def add_item(self, id, qtt=None, used=None):
         ie = UItem()
-        ex = await ie.get(id)
+        ex = await ie.get(id=id)
         if not ex:
             print(f"Lỗi khi add item: ID {id} không tồn tại.")
             return f"Lỗi khi add item: ID {id} không tồn tại."
@@ -205,7 +210,7 @@ class UserData:
                 item['used'] -= min(item['used'], abs(value))
                 if item['used'] == 0:
                     ie = UItem()
-                    ie = await ie.get(item['id'])
+                    ie = await ie.get(id=item['id'])
                     item['used'] = ie['Consumable']
                     item['qtt'] -= 1
                     if item['qtt'] == 0:

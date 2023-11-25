@@ -520,10 +520,10 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     from utils.bot import item
     from utils.funcs import dot_num
     from utils.user_data import UserData, UItem
-    if not name:
-        list = await item.get(id)
-    if not id:
-        list = await item.get(name)
+    if id:
+        list = await item.get(id=id)
+    if name:
+        list = await item.get(name=name)
     if not name or not id:
         iid = list['ID']
         name = list['Name']

@@ -585,10 +585,10 @@ async def item_add(interaction: discord.Interaction,
     if not uname:
         uname = interaction.user.name
     await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp, rare, icon)
-    itds = await vals_load_all('user_files/items.json')
-    if itds:
-        itd =  itds[-1]["ID"]
-    embed, view = await item_show(itd, uid=uid, uname=uname)
+    ie = item.get(name=name)
+    if ie:
+        itd =  ie["ID"]
+    embed, view = await item_show(id=itd, uid=uid, uname=uname)
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="edit_item", description="Sửa item, DEV-only")
@@ -700,16 +700,18 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     uname = interaction.user.nick
     if not uname:
         uname = interaction.user.name
-    if not name:
-        e = id
-    if not id:
-        e = name
-    i = await item.get(e)
+    if id:
+        i = await item.get(id)
+        if i:
+            embed, view = await item_show(id=id, uid=uid, uname=uname)
+    if name:
+        i = await item.get(name)
+        if i:
+            embed, view = await item_show(name=name, uid=uid, uname=uname)
     if not i:
         await interaction.response.send_message(f"Không có item nào có id là {id}.")
-        return
-    embed, view = await item_show(e, uid=uid, uname=uname)
-    await interaction.response.send_message(embed=embed, view=view)
+    else:
+        await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="edit_item_ptt", description=f"Xoá item, DEV-only")
 async def item_new_ptt(interaction: discord.Interaction, command: discord.Option(
