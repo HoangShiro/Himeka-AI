@@ -538,6 +538,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
         skl= list['Skl']
         tech= list['Tech']
         rare= list['Rare']
+        icon = list['icon']
 
     if "raw" in type:
         type = "💎 Nguyên liệu"
@@ -582,7 +583,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     
     embed=discord.Embed(title=f"{name}", description=lore, color=0x9ea1ff)
     embed.set_author(name=f"ID: #{id}", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
+    embed.set_thumbnail(url=icon)
 
     embed.add_field(name="\u200b", value=f"**{type}** ➖ Độ hiếm: {rare}", inline=False)
     if sell or sell != 0:
