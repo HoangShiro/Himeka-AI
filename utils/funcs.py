@@ -187,6 +187,11 @@ async def mess_rep(message, mess, user_name, chat_log):
                 view.add_item(rcn_bt)
             await message.reply(embed=embed, view=view)
         else:
+            messf = answ.lower()
+            messf = messf.strip()
+            if "baka" in messf or "3k" in messf:
+                await message.reply(f"{user_name} baka baka baka~")
+                return
             await message.reply(answ)
             asyncio.create_task(stt_inchat(user_name))
 
