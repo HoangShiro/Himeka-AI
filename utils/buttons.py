@@ -525,7 +525,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     if name:
         list = await item.get(name=name)
     if not name or not id:
-        iid = list['ID']
+        id = list['ID']
         name = list['Name']
         type = list['Type']
         lore= list['Lore']
@@ -581,7 +581,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
         items = udt.items
         ie = None  # Khởi tạo ie là None
         for item in items:
-            if iid == item['id']:  # So sánh iid với id của từng phần tử
+            if id == item['id']:  # So sánh iid với id của từng phần tử
                 ie = item
                 break
         if ie:
