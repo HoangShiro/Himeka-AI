@@ -733,7 +733,7 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
     u = UserData(uid)
     noti = None
     if index:
-        index = int(index) + 1
+        index += 1
     if "add" in command:
         noti = await u.add_item(iid, quantity, consum)
     elif "update" in command:
