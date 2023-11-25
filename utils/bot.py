@@ -577,11 +577,12 @@ async def item_add(interaction: discord.Interaction,
             discord.OptionChoice(name="Legendary", value="5"),
             discord.OptionChoice(name="Artifact", value="6"),
         ],
-    ) = "1"):
+    ) = "1",
+    icon: str = "https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png"):
 
     uid = interaction.user.id
 
-    await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp, rare)
+    await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp, rare, icon)
     itds = await vals_load_all('user_files/items.json')
     if itds:
         itd =  itds[-1]["ID"]
@@ -643,7 +644,8 @@ async def item_edit(interaction: discord.Interaction,
             discord.OptionChoice(name="Legendary", value="5"),
             discord.OptionChoice(name="Artifact", value="6"),
         ],
-    ) = None):
+    ) = None,
+    icon: str = None):
 
     i = await item.get(id)
     if not i:
@@ -679,6 +681,8 @@ async def item_edit(interaction: discord.Interaction,
         update_data['Tech'] = tech
     if rare is not None:
         update_data['Rare'] = rare
+    if icon is not None:
+        update_data['icon'] = icon
     # Nếu có ít nhất một biến không phải là None, thì gọi hàm item.update(id) với các thông số đã cập nhật
     if update_data:
         await item.update(id, **update_data)

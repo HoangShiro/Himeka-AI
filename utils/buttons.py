@@ -516,7 +516,7 @@ async def status_warehouse(interaction):
 
 #embed.add_field(name="🟩 1", value="🟩 2", inline=True)
 
-async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None, uid=None, rare=None):
+async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None, uid=None, rare=None, icon = None):
     from utils.bot import item
     from utils.funcs import dot_num
     from utils.user_data import UserData, UItem
