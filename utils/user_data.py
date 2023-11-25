@@ -222,10 +222,12 @@ class UserData:
             return self.items
 
     async def remove_item(self, item_index):
+        if item_index < 0 or item_index >= len(self.items):
+            print("Sai vị trí item cần xoá.")
+            return "Sai vị trí item cần xoá."
         self.items.pop(item_index)
         await self._save_data()
-        return
-    
+
     async def _load_data(self):
         try:
             with open('user_files/user_data.json', 'r', encoding="utf-8") as file:
