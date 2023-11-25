@@ -523,7 +523,7 @@ async def character_change(interaction: discord.Interaction, char_id: str = None
     else:
         await interaction.response.send_message(f"`Chỉ {ai_name} mới có thể mở tablet của cô ấy.`", ephemeral=True)
 
-@bot.slash_command(name="add_item", description=f"Thêm item cho {ai_name}")
+@bot.slash_command(name="add_item", description=f"Thêm item cho {ai_name}, DEV-only")
 async def item_add(interaction: discord.Interaction,
                     name: str,
                     type: discord.Option(
@@ -574,7 +574,7 @@ async def item_add(interaction: discord.Interaction,
     embed, view = await item_show(itd)
     await interaction.response.send_message(embed=embed, view=view)
 
-@bot.slash_command(name="edit_item", description="Sửa item")
+@bot.slash_command(name="edit_item", description="Sửa item, DEV-only")
 async def item_edit(interaction: discord.Interaction,
                       id: int,
                       name: str = None,
@@ -658,7 +658,7 @@ async def item_edit(interaction: discord.Interaction,
     embed, view = await item_show(id)
     await interaction.response.send_message(embed=embed, view=view)
 
-@bot.slash_command(name="get_item", description=f"Lấy item")
+@bot.slash_command(name="get_item", description=f"Lấy item, DEV-only")
 async def item_get(interaction: discord.Interaction, id: int=None, name: str=None):
     if not name:
         e = id
@@ -671,7 +671,7 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     embed, view = await item_show(e)
     await interaction.response.send_message(embed=embed, view=view)
 
-@bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item theo từng type")
+@bot.slash_command(name="show_item_list", description=f"Hiện toàn bộ danh sách item theo từng type, DEV-only")
 async def item_show_list(interaction: discord.Interaction):
     items = item.items
 
@@ -700,8 +700,7 @@ async def item_show_list(interaction: discord.Interaction):
     else:
         await interaction.response.send_message(content=items_str)
 
-
-@bot.slash_command(name="remove_item", description=f"Xoá item")
+@bot.slash_command(name="remove_item", description=f"Xoá item, DEV-only")
 async def item_delete(interaction: discord.Interaction, id: int):
     i = await item.get(id)
     if not i:
@@ -709,6 +708,35 @@ async def item_delete(interaction: discord.Interaction, id: int):
         return
     iname = i['Name']
     await item.delete(id)
+    await interaction.response.send_message(f"Item {id} có tên '{iname}' đã bị xoá.")
+
+@bot.slash_command(name="user_item", description=f"Quản lý item của user, DEV-only")
+async def user_item(interaction: discord.Interaction, command: discord.Option(
+        description="Chọn cách xử lý item.",
+        choices=[
+            discord.OptionChoice(name="Thêm - [iid, quantity(optional), consum(optional)]", value="add"),
+            discord.OptionChoice(name="Cập nhật - [index, quantity, sell(optional)]", value="update"),
+            discord.OptionChoice(name="Xoá - [index]", value="remove"),
+        ]),
+        iid: discord.Option(
+        description="#ID của item.", input_type=int) = -1,
+        index: discord.Option(
+        description="Số thứ tự item đó trong Storage của user.", input_type=int) = -1,
+        quantity: discord.Option(
+        description="Số lượng item cần thay đổi.", input_type=float) = 0,
+        consum: discord.Option(
+        description="Item đó có thể sử dụng bao nhiêu lần? Có thể dùng: > 0, để trống = mặc định", input_type=float) = None,
+        sell: discord.Option(
+        description="Khi chọn 'cập nhật' và giảm số lượng item, 'sell' sẽ giúp bỏ qua 'consum'.", input_type=bool) = False):
+    
+    uid = interaction.user.id
+    u = UserData(uid)
+    if "add" in command:
+        await u.add_item(iid, quantity, consum)
+    elif "update" in command:
+        await u.update_item(index, quantity, sell)
+    elif "remove" in command:
+        await u.remove_item(index)
     await interaction.response.send_message(f"Item {id} có tên '{iname}' đã bị xoá.")
 
 def bot_run():

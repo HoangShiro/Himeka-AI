@@ -485,24 +485,28 @@ async def status_warehouse(interaction):
         if not u_name:
             u_name = interaction.user.name
 
+    ie = UItem()
     u = UserData(uid)
     await u.get()
     await u.set('u_name', u_name)
+    items = u.get_item()
 
     embed=discord.Embed(title="Storage", description="Kho chứa item", color=0x9ea1ff)
     embed.set_author(name=u_name, icon_url=u_avatar)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
     embed.add_field(name=f"\u200b", value="", inline=False)
-    embed.add_field(name="🟩 1", value="🟩 2", inline=True)
-    embed.add_field(name="🟩 3", value="🟩 4", inline=True)
-    embed.add_field(name="🟩 5", value="🟩 6", inline=True)
-    embed.add_field(name="🟩 7", value="🟩 8", inline=True)
-    embed.add_field(name="🟩 9", value="🟩 10", inline=True)
-    embed.add_field(name="🟩 11", value="🟩 12", inline=True)
-    embed.add_field(name="🟩 13", value="🟩 14", inline=True)
-    embed.add_field(name="🟩 15", value="🟩 16", inline=True)
-    embed.add_field(name="🟩 17", value="🟩 18", inline=True)
-    embed.add_field(name="🟩 19", value="🟩 20", inline=True)
+
+    # Iterate through items and add 'Name' and 'qtt' to the embed
+    for item in items:
+        item_id = item['id']
+        item_info = ie.get(item_id)
+        item_name = item_info.get('Name', 'Unknown')  # Replace 'Unknown' with a default value if 'Name' is not found
+        item_qtt = item['qtt']
+
+        field_name = f"{item_name} ({item_id})"
+        field_value = f"Quantity: {item_qtt}"
+        embed.add_field(name=field_name, value=field_value, inline=True)
+
     embed.add_field(name=f"\u200b", value="", inline=False)
     embed.set_footer(text="Sức chứa tuỳ vào spacecraft bạn đang sở hữu, có thể mở rộng sức chứa tối đa.")
     view = View(timeout=None)
@@ -510,6 +514,8 @@ async def status_warehouse(interaction):
     view.add_item(usc_bt)
     view.add_item(uet_bt)
     return embed, view
+
+#embed.add_field(name="🟩 1", value="🟩 2", inline=True)
 
 async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack=None, sell=None, lv=None, cp=None, spd=None, skl=None, tech=None):
     from utils.bot import item
