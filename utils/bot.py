@@ -736,6 +736,10 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
     no = None
     if index:
         index = int(index) - 1
+    if quantity:
+        quantity = float(quantity)
+    if consum:
+        consum = int(consum)
     print(index, ", ", quantity)
     if "add" in command:
         noti = await u.add_item(iid, quantity, consum)
