@@ -30,7 +30,7 @@ class UItem:
                 return item
         return None
 
-    async def set(self, name, type_, spd, skl, tech, lore, stack, consu, sellable, lv, cp, rare):
+    async def set(self, name, type_, spd, skl, tech, lore, stack, consu, sellable, lv, cp, rare, icon):
         taken_ids = [item['ID'] for item in self.items]
         new_id = 1
         while new_id in taken_ids:
@@ -49,7 +49,7 @@ class UItem:
             'Level': lv,
             'CP': cp,
             'Rare': rare,
-            'icon': "https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png"
+            'icon': icon
         }
         self.items.append(new_item)
         self.save_items()
