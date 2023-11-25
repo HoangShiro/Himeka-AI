@@ -741,7 +741,8 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
     if not noti:
         embed, view = await status_warehouse(interaction)
         await interaction.response.send_message(embed=embed, view=view)
-    await interaction.response.send_message(f"{noti}", ephemeral=True)
+    else:
+        await interaction.response.send_message(f"{noti}", ephemeral=True)
 
 def bot_run():
     bot.run(discord_bot_key)
