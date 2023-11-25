@@ -593,13 +593,13 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
 
     embed.add_field(name="\u200b", value=f"**{type}**", inline=False)
     embed.add_field(name=f"{rare} Độ hiếm: {trare}", value=f"", inline=False)
-    if sell or sell != 0:
+    if sell and int(sell) > 0:
         sell = await dot_num(sell)
         embed.add_field(name=f"**•**    Giá: {sell} Ira", value="\u200b", inline=False)
-    if consum or consum != 0:
+    if consum and float(consum) > 0:
         consum = await dot_num(consum)
         embed.add_field(name=f"**•**    Số lần dùng: {consum}", value="", inline=False)
-    if stack or stack > 1:
+    if stack and int(stack) > 1:
         embed.add_field(name=f"**•**    Có thể xếp chồng: {stack}", value="", inline=False)
 
     if spd or spd != 0 or skl or skl != 0 or tech or tech != 0:
