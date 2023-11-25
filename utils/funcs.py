@@ -167,7 +167,7 @@ async def mess_rep(message, mess, user_name, chat_log):
     umess = "{}: {}".format(user_name, fmess)
     messf = mess.lower()
     messf = messf.strip()
-    if "baka" in messf or "3k" in messf:
+    if "baka" in messf or "3k" in messf or "バカ" in messf or "バカ" in messf:
         await message.reply(f"{user_name} baka baka baka~")
         return
     async with message.channel.typing():
@@ -189,7 +189,7 @@ async def mess_rep(message, mess, user_name, chat_log):
         else:
             messf = answ.lower()
             messf = messf.strip()
-            if "baka" in messf or "3k" in messf:
+            if "baka" in messf or "3k" in messf or "バカ" in messf or "baká" in messf:
                 await message.reply(f"{user_name} baka baka baka~")
                 return
             await message.reply(answ)
