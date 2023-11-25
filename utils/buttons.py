@@ -550,11 +550,27 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     elif "special" in type:
         type = "🎖️ Đặc biệt"
 
-    embed=discord.Embed(title=f"{name} ➖ {rare}", description=lore, color=0x9ea1ff)
+    if rare:
+        rare = int(rare)
+        if rare == 1:
+            rare = "⬜"
+        elif rare == 2:
+            rare = "🟩"
+        elif rare == 3:
+            rare = "🟦"
+        elif rare == 4:
+            rare = "🟪"
+        elif rare == 5:
+            rare = "🟨"
+        elif rare == 6:
+            rare = "🟥"
+
+
+    embed=discord.Embed(title=f"{name}", description=lore, color=0x9ea1ff)
     embed.set_author(name=f"ID: #{id}", icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175855216063680554/IWCard.png")
 
-    embed.add_field(name="\u200b", value=f"**{type}**", inline=False)
+    embed.add_field(name="\u200b", value=f"**{type}** ➖ Độ hiếm: {rare}", inline=False)
     if sell or sell != 0:
         sell = await dot_num(sell)
         embed.add_field(name=f"**•**    Giá: {sell} Ira", value="\u200b", inline=False)
