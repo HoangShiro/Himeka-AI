@@ -48,7 +48,8 @@ class UItem:
             'Sellable': sellable,
             'Level': lv,
             'CP': cp,
-            'Rare': rare
+            'Rare': rare,
+            'icon': "https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png"
         }
         self.items.append(new_item)
         self.save_items()
