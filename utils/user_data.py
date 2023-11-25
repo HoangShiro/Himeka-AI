@@ -70,6 +70,11 @@ class UItem:
                 self.save_items()
                 return True
         return False
+    
+    async def add_ptt(self, name, value):
+        for item in self.items:
+            item[name] = value
+        self.save_items()
 
 class ULore:
     def __init__(self):
