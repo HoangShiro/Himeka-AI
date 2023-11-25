@@ -572,7 +572,6 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
         udt = UserData(uid)
         await udt.get()
         items = udt.items
-        print(items)
         ie = None  # Khởi tạo ie là None
         for item in items:
             if iid == item['id']:  # So sánh iid với id của từng phần tử
