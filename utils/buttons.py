@@ -569,6 +569,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     qtt = 0
     if uid:
         udt = UserData(uid)
+        await udt.get()
         items = udt.items
         print(items)
         ie = None  # Khởi tạo ie là None
