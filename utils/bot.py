@@ -738,7 +738,8 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
         noti = await u.add_item(iid, quantity, consum)
     elif "update" in command:
         noti = await u.update_item(index, quantity, sell)
-    elif "remove" in command: 
+    elif "remove" in command:
+        await u.get()
         noti = await u.remove_item(index)
     if not noti:
         embed, view = await status_warehouse(interaction)
