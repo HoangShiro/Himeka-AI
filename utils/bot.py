@@ -719,16 +719,16 @@ async def user_item(interaction: discord.Interaction, command: discord.Option(
             discord.OptionChoice(name="Hiển thị - [index]", value="get"),
             discord.OptionChoice(name="Xoá - [index]", value="remove"),
         ]),
-        iid: discord.Option(
-        description="#ID của item.", input_type=int) = -1,
-        index: discord.Option(
-        description="Số thứ tự item đó trong Storage của user.", input_type=int) = 0,
-        quantity: discord.Option(
-        description="Số lượng item cần thay đổi.", input_type=float) = 0,
-        consum: discord.Option(
-        description="Item đó có thể sử dụng bao nhiêu lần? Có thể dùng: > 0, để trống = mặc định", input_type=float) = None,
-        sell: discord.Option(
-        description="Khi chọn 'cập nhật' và giảm số lượng item, 'sell' sẽ giúp bỏ qua 'consum'.", input_type=bool) = False):
+        iid: discord.Option(int,
+        description="#ID của item.") = -1,
+        index: discord.Option(int,
+        description="Số thứ tự item đó trong Storage của user.") = 0,
+        quantity: discord.Option(float,
+        description="Số lượng item cần thay đổi.") = 0,
+        consum: discord.Option(float,
+        description="Item đó có thể sử dụng bao nhiêu lần? Có thể dùng: > 0, để trống = mặc định") = None,
+        sell: discord.Option(bool,
+        description="Khi chọn 'cập nhật' và giảm số lượng item, 'sell' sẽ giúp bỏ qua 'consum'.") = False):
     
     uid = interaction.user.id
     u = UserData(uid)

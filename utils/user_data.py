@@ -166,7 +166,9 @@ class UserData:
         if not used:
             used = ex['Consumable']
 
+        id = int(id)
         qtt = int(qtt)
+        used = float(used)
 
         self.items.append({
             'id': id,
@@ -201,6 +203,7 @@ class UserData:
                 if item['qtt'] == 0:
                     await self.remove_item(item_index)
 
+        item['used'] = float(item['used'])
         item['qtt'] = int(item['qtt'])
 
         await self._save_data()
