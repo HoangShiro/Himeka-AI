@@ -700,16 +700,20 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     uname = interaction.user.nick
     if not uname:
         uname = interaction.user.name
+
+    e = None
     if id:
         i = await item.get(id)
         if i:
             embed, view = await item_show(id=id, uid=uid, uname=uname)
+        e = id
     if name:
         i = await item.get(name)
         if i:
             embed, view = await item_show(name=name, uid=uid, uname=uname)
+        e = name
     if not i:
-        await interaction.response.send_message(f"Không có item nào có id là {id}.")
+        await interaction.response.send_message(f"Không có item nào có id hoặc name là {e}.")
     else:
         await interaction.response.send_message(embed=embed, view=view)
 

@@ -23,7 +23,7 @@ class UItem:
 
         self.load_items()
         
-    async def get(self, id, name=None):
+    async def get(self, id=None, name=None):
         self.load_items()
         if id:
             for item in self.items:
