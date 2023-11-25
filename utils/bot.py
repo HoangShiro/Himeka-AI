@@ -581,13 +581,15 @@ async def item_add(interaction: discord.Interaction,
     icon: str = "https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png"):
 
     uid = interaction.user.id
-
+    uname = interaction.user.nick
+    if not uname:
+        uname = interaction.user.name
     await item.set(name, type, spd, skl, tech, lore, stack, consum, sell, lv, cp, rare, icon)
     itds = await vals_load_all('user_files/items.json')
     if itds:
         itd =  itds[-1]["ID"]
     embed, view = await item_show(itd, uid=uid)
-    await interaction.response.send_message(embed=embed, view=view)
+    await interaction.response.send_message(embed=embed, view=view, uname=uname)
 
 @bot.slash_command(name="edit_item", description="Sửa item, DEV-only")
 async def item_edit(interaction: discord.Interaction,
@@ -655,7 +657,9 @@ async def item_edit(interaction: discord.Interaction,
     update_data = {}
     
     uid = interaction.user.id
-
+    uname = interaction.user.nick
+    if not uname:
+        uname = interaction.user.name
     # Kiểm tra từng biến nếu không phải là None thì thêm vào dictionary update_data
     if name is not None:
         update_data['Name'] = name
@@ -688,11 +692,14 @@ async def item_edit(interaction: discord.Interaction,
         await item.update(id, **update_data)
 
     embed, view = await item_show(id, uid=uid)
-    await interaction.response.send_message(embed=embed, view=view)
+    await interaction.response.send_message(embed=embed, view=view, uname=uname)
 
 @bot.slash_command(name="get_item", description=f"Lấy item, DEV-only")
 async def item_get(interaction: discord.Interaction, id: int=None, name: str=None):
     uid = interaction.user.id
+    uname = interaction.user.nick
+    if not uname:
+        uname = interaction.user.name
     if not name:
         e = id
     if not id:
@@ -701,7 +708,7 @@ async def item_get(interaction: discord.Interaction, id: int=None, name: str=Non
     if not i:
         await interaction.response.send_message(f"Không có item nào có id là {id}.")
         return
-    embed, view = await item_show(e, uid=uid)
+    embed, view = await item_show(e, uid=uid, uname=uname)
     await interaction.response.send_message(embed=embed, view=view)
 
 @bot.slash_command(name="edit_item_ptt", description=f"Xoá item, DEV-only")
