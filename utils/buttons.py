@@ -599,7 +599,7 @@ async def item_show(id=None, name=None, type=None, lore=None, consum=None, stack
     if consum or consum != 0:
         consum = await dot_num(consum)
         embed.add_field(name=f"**•**    Số lần dùng: {consum}", value="", inline=False)
-    if stack or stack != 0:
+    if stack or stack > 1:
         embed.add_field(name=f"**•**    Có thể xếp chồng: {stack}", value="", inline=False)
 
     if spd or spd != 0 or skl or skl != 0 or tech or tech != 0:
