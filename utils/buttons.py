@@ -499,7 +499,7 @@ async def status_warehouse(interaction):
     # Iterate through items and add 'Name' and 'qtt' to the embed
     for item in items:
         item_id = item['id']
-        item_info = ie.get(item_id)
+        item_info = await ie.get(item_id)
         item_name = item_info.get('Name', 'Unknown')  # Replace 'Unknown' with a default value if 'Name' is not found
         item_qtt = item['qtt']
 
