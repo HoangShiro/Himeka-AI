@@ -152,9 +152,6 @@ async def on_voice_state_update(member, before, after):
     if member == bot.user:
         return
     bot_voice_channel = bot.voice_clients[0].channel if bot.voice_clients else None
-    bot_voice_channel_id = None
-    if bot_voice_channel:
-        bot_voice_channel_id = bot_voice_channel.id
     if after.channel == bot_voice_channel and after.channel is not None and before.channel is None:
         if member.name not in user_timers:
             uid = member.id
@@ -164,17 +161,6 @@ async def on_voice_state_update(member, before, after):
             asyncio.create_task(mess_id_send(bot, ai_status.pr_ch_id, umess, ai_status.chat_log))
             u = UserData(uid)
             await u.update('u_fame', 1)
-    if before.channel != after.channel:
-        u_in_vc = []
-        if ai_status.u_in_vc:
-            u_in_vc = ai_status.u_in_vc
-        if before.channel and before.channel.id == bot_voice_channel_id:
-            if member.id in u_in_vc:
-                u_in_vc.remove(member.id)
-                await ai_status.set('u_in_vc', u_in_vc)
-        if after.channel and after.channel.id == bot_voice_channel_id:
-            u_in_vc.append(member.id)
-            await ai_status.set('u_in_vc', u_in_vc)
 
 @bot.event
 async def on_message(message):

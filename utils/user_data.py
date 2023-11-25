@@ -107,7 +107,6 @@ class UserData:
     def __init__(self, uid):
         self.uid = uid
         self.u_name = "IW Citizen"
-        #self.u_avatar = "https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png"
         self.u_achv = "Newcomer"
         self.u_lv = 1
         self.u_from = None
@@ -115,10 +114,24 @@ class UserData:
         self.u_joindate = 0
         self.u_fame = 0
         self.u_techs = "🔹"
-        self.u_blc = 1000 # Ira
+        self.u_blc = 1000
         self.u_tech_st = 1
         self.u_speed_st = 1
         self.u_skl_st = 1
+
+
+        self.items = [
+            {
+                'id': 8,
+                'used': 2,
+                'qtt': 5,
+            },
+            {
+                'id': 2,
+                'used': -1,
+                'qtt': 32,
+            }
+        ]
 
     async def get(self):
         user_data = await self._load_data()
@@ -127,7 +140,6 @@ class UserData:
             for key, value in vars(self).items():
                 setattr(self, key, user.get(key, value))
         else:
-            # Nếu uid không có trong dữ liệu, lưu giá trị mặc định vào file
             user_data[str(self.uid)] = {key: value for key, value in vars(self).items()}
             await self._save_data(user_data)
 
@@ -138,12 +150,11 @@ class UserData:
             if str(self.uid) in user_data:
                 user_data[str(self.uid)][variable] = new_value
             else:
-                # Nếu uid không tồn tại, tạo một bản ghi mới
                 user_data[str(self.uid)] = {variable: new_value}
             await self._save_data(user_data)
 
     async def update(self, variable, value):
-        await self.get()  # Load existing data
+        await self.get()
         if variable in self.__dict__:
             current_value = getattr(self, variable)
             setattr(self, variable, current_value + value)
@@ -151,16 +162,37 @@ class UserData:
             if str(self.uid) in user_data:
                 user_data[str(self.uid)][variable] = current_value + value
             else:
-                # Nếu uid không tồn tại, tạo một bản ghi mới
                 user_data[str(self.uid)] = {variable: current_value + value}
             await self._save_data(user_data)
+
+    async def add_item(self, id, used=None, qtt=None):
+        user_data = await self._load_data()
+
+        if used is None:
+            with open('user_files/items.json', 'r') as f:
+                items_data = json.load(f)
+            consumable_default = next((item['Consumable'] for item in items_data if item['id'] == id), None)
+            if consumable_default is not None:
+                if consumable_default == 0:
+                    used = -1
+                else:
+                    used = consumable_default
+        qtt = qtt if qtt is not None else 1
+        self.items.append({
+            'id': id,
+            'used': used,
+            'qtt': qtt,
+        })
+        user_data[self.uid] = {'items': self.items}
+        await self._save_data(user_data)
+
+    
 
     async def _load_data(self):
         try:
             with open('user_files/user_data.json', 'r', encoding="utf-8") as file:
                 return json.load(file)
         except FileNotFoundError:
-            # Create a new file if not found
             with open('user_files/user_data.json', 'w') as file:
                 json.dump({}, file, indent=4)
             return {}

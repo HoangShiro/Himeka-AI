@@ -446,7 +446,17 @@ async def check_cai_ready(answ):
         return ready
 
 async def money_with_hime():
-    from utils.bot import ai_status
+    from utils.bot import ai_status, bot
+    for guild in bot.guilds:
+        bot_voice_channel = discord.utils.get(guild.voice_channels, id=bot.user.voice.channel.id if bot.user.voice else None)
+        if bot_voice_channel:
+            members = bot_voice_channel.members
+            vc_u = [member.id for member in members if member.voice and member.voice.channel == bot_voice_channel]
+            await ai_status.set('u_in_vc', vc_u)
+        else:
+            vc_u = []
+            await ai_status.set('u_in_vc', vc_u)
+
     uids = ai_status.u_in_vc
     if uids:
         for uid in uids:
