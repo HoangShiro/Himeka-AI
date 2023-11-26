@@ -458,10 +458,12 @@ async def check_cai_ready(answ):
 async def money_with_hime():
     from utils.bot import ai_status, bot, ai_name
 
-    for guild in bot.guilds:
+    guild = bot.get_guild(server_id)  # Lấy thông tin của server dựa trên server_id
+
+    if guild:
         bot_member = guild.get_member(bot.user.id)
 
-        if bot_member.voice:  # Check if the bot is in a voice channel
+        if bot_member.voice:  # Kiểm tra nếu bot đang ở trong voice channel
             bot_voice_channel = bot_member.voice.channel
             members = bot_voice_channel.members
             vc_u = [member.id for member in members if member.voice and member.voice.channel == bot_voice_channel]
@@ -473,6 +475,8 @@ async def money_with_hime():
                 print(f"{ai_name} đang không ở trong voice.")
             vc_u = []
             await ai_status.set('u_in_vc', vc_u)
+    else:
+        print(f"Không thể tìm thấy server với id {server_id}")
 
 
     uids = ai_status.u_in_vc
