@@ -85,6 +85,8 @@ async def h_check():
 @tasks.loop(seconds=random.randint(120, 180))
 async def m_check():
     from utils.bot import ai_status
+    my_timezone = pytz.timezone('Asia/Bangkok')
+    vn_time = datetime.datetime.now(my_timezone)
     await status_change()
 
     # Add money
@@ -94,7 +96,8 @@ async def m_check():
     if ai_status.sleep_cd > 0:
         await ai_status.update('sleep_cd', -1)
     elif ai_status.sleep_cd == 0:
-        await ai_status.set('sleeping', True)
+        if vn_time.hour < 7:
+            await ai_status.set('sleeping', True)
         await ai_status.set('sleep_cd', -1)
         await ai_status.set('sleep_rd', False)
         await v_leave_nc()
