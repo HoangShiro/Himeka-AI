@@ -1,5 +1,5 @@
-import json, os, nltk, requests, discord, random, re, jaconv
-import cv2, asyncio
+import json, os, nltk, requests, discord, random, re, jaconv, asyncio
+#import cv2
 import numpy as np
 
 from discord import FFmpegPCMAudio
@@ -404,7 +404,7 @@ async def count_down(user_timers, user):
     del user_timers[user]
 
 # Get IMG color
-async def img_get_color(path):
+"""async def img_get_color(path):
     image = cv2.imread(path)
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     hist = cv2.calcHist([image_rgb], [0, 1, 2], None, [256, 256, 256], [100, 200, 100, 200, 100, 200])
@@ -426,7 +426,7 @@ async def img_get_color(path):
     if b > cmax:
         b -= cmin
 
-    return r, g, b
+    return r, g, b"""
 
 # Add dot to number
 async def dot_num(number):
