@@ -226,7 +226,7 @@ async def status_haruka():
         return emood
     
     emood = await set_emood(24)
-    embed=discord.Embed(title=f"Mizuno Haruka", description="Miêu nhân tộc đến từ thuộc địa Catalia, hầu hết dành thời gian của mình tại phòng chỉ huy của chiến giáp hạm hạng nặng Elen - tàu chiến lớn nhất thuộc Libra city.", color=0xff8a8a)
+    embed=discord.Embed(title=f"Mizuno Haruka", description="Miêu nhân tộc đến từ thuộc địa Catalia, hầu hết dành thời gian của mình tại phòng chỉ huy của thiết giáp hạm hạng nặng Elen - tàu chiến lớn nhất thuộc Libra city.", color=0xff8a8a)
     embed.set_author(name="Captain of Elen starship", url="https://beta.character.ai/chat?char=PD_rUpadJ4d70PDJ98_zHOOEVKQ_p56R3inKPK3MhZs",
                      icon_url="https://cdn.discordapp.com/attachments/1096933532032581693/1176470799008399450/iw_logo.png")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1096933532032581693/1175795395792732250/portrait_white_hairband_braid_loli_pink_hair_ruby_eyes_hairclip_light_sm_s-2347311327.png")
