@@ -500,7 +500,10 @@ async def status_warehouse(interaction):
     for item in items:
         item_id = item['id']
         item_info = await ie.get(item_id)
-        item_name = item_info.get('Name', 'Unknown')  # Replace 'Unknown' with a default value if 'Name' is not found
+        if item_info:
+            item_name = item_info.get('Name', 'Unknown')  # Replace 'Unknown' with a default value if 'Name' is not found
+        else:
+            item_name = "Unknown"
         item_qtt = item['qtt']
 
         field_name = f"{item_name} ({item_qtt})"
