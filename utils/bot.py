@@ -13,7 +13,7 @@ from utils.user_data import *
 logging.getLogger('discord.gateway').setLevel(logging.ERROR)
 
 intents = discord.Intents.all()
-bot = commands.Bot(intents=intents)
+bot = commands.Bot(intents=intents, command_prefix="!")
 
 bot.load_extension("speech.speech_cog")
 # Configuration of speech logger
