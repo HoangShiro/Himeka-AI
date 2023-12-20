@@ -12,7 +12,7 @@ idle_status = discord.Status.idle
 onl_status = discord.Status.online
 dnd_status = discord.Status.dnd
 invisible = discord.Status.invisible
-streaming = discord.Status.streaming
+#streaming = discord.Status.streaming
 
 watching = discord.ActivityType.watching
 playing = discord.ActivityType.playing
@@ -52,7 +52,7 @@ async def status_change():
 
     # Night
     elif 18 <= h <= 22:
-        await atv_change(streaming, in_idle)
+        await atv_change(idle_status, in_idle)
         await stt_change(streaming)
     
     # Sleep
