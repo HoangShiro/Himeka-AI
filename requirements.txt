@@ -11,6 +11,7 @@ websockets
 PyNaCl
 opencv-python
 mtranslate
+discord
 
 aiohttp
 aiosignal
@@ -22,7 +23,6 @@ charset-normalizer
 frozenlist
 idna
 multidict
-py-cord
 pycparser
 requests
 SpeechRecognition
